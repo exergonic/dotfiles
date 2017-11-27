@@ -1,0 +1,3 @@
+export PATH=${HOME}/usr/bin:${HOME}/usr/scripts:/usr/local/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:$GOPATH/bin:$PATH
+export MANPATH="/usr/local/man:$MANPATH"
+

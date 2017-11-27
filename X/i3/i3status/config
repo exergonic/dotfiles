@@ -1,0 +1,75 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 2
+}
+
+#order += "ipv4"
+order += "wireless wlp3s0"
+#order += "ethernet enp2s0"
+order += "disk /"
+order += "disk /home"
+#order += "run_watch DHCP"
+#order += "run_watch VPN"
+order += "battery 0"
+#order += "load"
+order += "tztime local"
+order += "volume master"
+
+wireless wlp3s0 {
+        format_up = " ▲  %essid "
+        # format_up = " ▲  %essid %ip (%bitrate %quality) "
+        format_down = " ▼ "
+}
+
+ethernet enp2s0 {
+        # if you use %speed, i3status requires root privileges
+        format_up = " enp2s0: ▲ %ip "
+        format_down = " enp2s0 : ▼ "
+}
+
+battery 0 {
+        format = " 🔋  %percentage" # %remaining "
+        #format = "BATTERY: %status %percentage %remaining "
+        #path = "/sys/devices/LNXSYSTM:00/device:00/PNP0C0A:00/power_supply/BAT1/uevent"
+        #path = "/sys/devices/LNXSYSTM:00/LNXSYBUS:01/uevent
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPN {
+        pidfile = "/var/run/vpnc/pid"
+}
+
+tztime local {
+        format = " %a %b %d %I:%M %p "
+}
+
+load {
+        format = " load: %1min"
+}
+
+disk "/" {
+        format = " / %avail "
+}
+
+disk "/home" {
+        format = " ~ %avail "
+}
+
+volume master {
+       format = " ♪: %volume"
+       format_muted = "♪: muted (%volume)"
+       device = "default"
+       mixer = "Master"
+       mixer_idx = 0
+}

@@ -1,0 +1,208 @@
+
+cd() {
+	# ls the contents once cd'ed into a dir
+	builtin cd "${@:-$HOME}" && ls
+} #// cd
+
+cdm() {
+	# cd into a directory from a menu
+	local PS3
+	local dirs
+	PS3="Select a directory #: "
+	dirs=($( find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*" | sort))
+	#
+	select dir in ${dirs[@]}
+	do
+		builtin cd "$dir" && ls
+		break
+	done
+} #// cmd
+
+get_X_key() {
+	# Find the X key code for a given key press"
+	xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+}
+
+recent_pkgs() {
+	# show recently installed packages. show 20 by default
+	local number="${1:-20}"
+	expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail "-$number"
+}
+
+mcd() {
+	# make a directory and cd into at the same time
+	[[ -n "$1" ]] &&	mkdir -p "$@" && cd "$1";
+} #// mcd
+
+mntuser() {
+	# mount a dev as user
+	local dev="$1"
+	local mntpoint="$2"
+	sudo mount -ouser,umask=0000 "$dev $mntpoint"
+}
+
+lmv() {
+	# mv a file or directory and make a symbolic link to it
+	[[ -e $1 ]] && [[ -e $2 ]] &&	mv $1 $2 && ln -s $2/$(basename $1) $(dirname $1);
+} #// lmv
+
+readmd() {
+	# read a Markdown file in terminal
+	readonly mfile="$1"
+
+	if which marked &> /dev/null
+	then
+		md=$(which marked)
+	elif which markdown &> /dev/null
+	then
+		md=$(which markdown)
+	else
+		printf "Markdown parser not installed\n"
+	fi
+
+	if [[ -n "$md" ]]
+	then
+		"$md $mfile" | lynx --stdin
+	fi
+} #// readmd
+
+
+rename() {
+	# substitute substrings within filenames
+	if [[ "${#@}" == "0" ]]
+	then
+		echo "usage: rename old_string new_string files"
+	else
+		declare orig_string="$1"
+		declare new_string="$2"
+		shift 2
+		for name in "$@"
+		do
+			mv -v "${name}" "${name//${orig_string}/${new_string}}"
+		done
+	fi
+} #// rename
+
+mkcp() {
+	# make a newdir, cp files into newdir, specified as last argument
+	local args="$@"
+	mkdir -p --  $args[(w)-1] && cp -- ${args[(ws: ' ' :)]}
+} # // mkcp
+
+mkmv() {
+	# make a newdir, mv files into newdir, specified as last argument
+	local args="$@"
+	mkdir -p -- $args[(w)-1] && mv -- $args
+} # // mkmv
+
+swap_file_names() {
+	# rename file1 to file2 and vice versa
+	local f1="$1"
+	local f2="$2"
+	mv "$f1" "temp"
+	mv "$f2" "$f1"
+	mv "temp" "$f2"
+} #// swap_file_names
+
+man() {
+	# colorized man pages
+	env LESS_TERMCAP_mb=$'\E[01;31m' \
+		LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+		LESS_TERMCAP_me=$'\E[0m' \
+		LESS_TERMCAP_se=$'\E[0m' \
+		LESS_TERMCAP_so=$'\E[38;5;246m' \
+		LESS_TERMCAP_ue=$'\E[0m' \
+		LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+		man "$@"
+} #// man
+
+topdf() {
+	# text to pdf
+	enscript --quiet --no-header --output=- ${1}  | ps2pdf - ${1%.*}.pdf
+} #// topdf
+
+mergepdf() {
+	# merge pdfs
+	local output="${1}" ; shift
+	gs -q -dnopause -dbatch -sdevice=pdfwrite -soutputfile=$output $*
+} #// mergepdf
+
+dosubdir() {
+	# perform an operation on all files in all subdirectories
+	local cmd="$@"
+	if [[ "${OSTYPE:0:6}" == "darwin" ]]
+	then
+		dirs="$( find . -maxdepth 1 -type d ! -wholename '.')"
+	else
+		dirs="$( find . -mindepth 1 -maxdepth 1 -type d ! -wholename '.')"
+	fi
+	for dir in "$dirs"
+	do
+		builtin cd "$dir" && "$cmd" && builtin cd ..
+	done
+} #// dosubdir
+
+# help() {
+	# pipe help output to less
+#	builtin help $1 | less
+#} #// help
+
+kc() {
+	# start keychain
+	eval $( keychain --eval id_rsa 56146040)
+} #// kc
+
+map() {
+	# ape map function from functional languages
+	msg="Supply arguments in the form 'map command [args] : items."
+	local args="${@?$msg}"
+	local command="$( echo $args | cut -d: -f1 )"
+	local objects="$( echo $args | cut -d: -f2 )"
+	for i in "$objects"
+	do
+		"$command $i"
+	done
+} #// map
+
+virc() {
+	#edit an rc file
+	PS3="select file # to edit : "
+	files=( "${config_dir}/bash/*" )
+	files=($(	printf '%s\n' ${files[@]} |	sort) )
+	select rcfile in "${files[@]}"
+	do
+		vim "$rcfile"
+		read -p "would you like to source it now? (y|n) " response
+		[[ "${response}" == "y" ]] && source $rcfile && echo $rcfile sourced
+		break
+	done
+} #// virc
+
+srcrc() {
+	# source an rc file
+	local -a files
+	local file
+	ps3="select file # to source: "
+	files=( "${config_dir}/bash/*" )
+	files=( $( printf '%s\n' ${files[@]} | sort ) )
+	select file  in "${files[@]}"
+	do
+		source "$file"
+		break
+	done
+} #//srcrc
+
+symmetrize() {
+	# molecular symmetrizer
+	input=$1
+	output=${1%.*}.sym.xyz
+	java -jar ~/usr/bin/symmetrizer.jar -o "$output" "$input"
+} #// symmetrize
+
+
+#whoneeds() {
+#	comm -12 <(pactree -lru $1|sort) <(pacman -Qqe|sort) | grep -v $1
+#}
+
+
+# vim: ft=sh

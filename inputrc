@@ -1,0 +1,26 @@
+set editing-mode vi
+set keymap vi
+set match-hidden-files Off
+
+$if mode=vi
+    set keymap vi-insert
+    ",,": vi-movement-mode
+    ",,": vi-movement-mode
+    "\\t": transpose-chars
+    "\\T": transpose-words
+    #"\\": character-search
+    #"?": character-search-backward
+$endif
+
+set blink-matching-paren on
+set bell-style off
+#possible completions uses colors
+set colored-stats on
+set completion-display-width 80
+set completion-prefix-display-length 5
+set completion-query-items 250
+set horizontal-scroll-mode off
+set show-all-if-ambiguous on
+set completion-ignore-case on
+set enable-keypad on
+set history-preserve-point on

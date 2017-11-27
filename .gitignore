@@ -1,0 +1,12 @@
+.DS_Store
+irssi/config*
+irssi/away.log
+tmux/plugins/
+tmux/resurrect
+zsh/zsh-git-prompt
+vim/plugged
+nvim/plugged
+vim/.netrwhist
+nvim/autoload/plug.vim.old 
+vim/.netrwhist
+vim/autoload/plug.vim.old

@@ -1,0 +1,61 @@
+
+
+nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
+function! GrabLastFromFireplace()
+    :Last
+    normal y$
+    :q
+    normal o;; =>
+    normal p
+endfunction
+
+nnoremap <silent>cw :call <SID>StripTrailingWhitespaces()<CR>
+function! <SID>StripTrailingWhitespaces()
+    "Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    "Strip trailing white space
+    %s/\s\+$//e
+    "restore previous search history and cursor position
+    let @/=_s
+    call cursor(l, c)
+    :w
+    :echo "Whitespace stripped!"
+endfunction
+
+" gpg sign
+function! Sign()
+    silent !clear
+    execute "!" . "gpg --clearsign" . " " . bufname("%")
+    :e ./%.asc
+endfunction
+
+" Let me focus sometimes.
+let g:clarity = "off"
+function! Clarity()
+   let g:clarity = "on"
+   set foldcolumn=8
+   highlight! link FoldColumn Normal
+   set nonumber
+   set norelativenumber
+   set laststatus=0
+endfunction
+
+function! NoClarity()
+   let g:clarity = "off"
+   set foldcolumn=0
+   set number
+   set relativenumber
+   set laststatus=2
+endfunction
+
+function! InvClarity()
+    if g:clarity == "off"
+        call Clarity()
+    elseif g:clarity == "on"
+        call NoClarity()
+    end
+endfunction
+
+" vim: ft=vim

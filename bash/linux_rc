@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+export PATH=${PATH}:/usr/local/games:/opt/intel/composerxe/bin:/opt/gamess:${HOME}/usr/boss4702:${HOME}/usr/boss4702/miscexec:${HOME}/usr/boss4702/scripts:${HOME}/scripts/boss:
+export BOSSdir="${HOME}/usr/boss4702"
+
+# command-not-found
+[[ -r /etc/profile.d/cnf.sh ]] && . /etc/profile.d/cnf.sh
+
+export PULS_LATENCY_MSEC=60
+export HD_DIR="$HOME/usr/lib/hostd"
+export ENGINE_DIR="$HOME/usr/lib/engine"
+
+alias pacinstall='sudo pacman -S'
+alias pacupgrade='sudo pacman -Syu'
+alias pacremove='sudo pacman -Rsnu'
+alias sprunge="curl -F'sprunge=<-' sprunge.us"
+alias xclock='xclock -fg white -bg black -chime'
+alias clipboard='xclip -sel clip'
+alias xflux='xflux -z 37923'
+alias mopac='/opt/mopac/MOPAC2012.exe'
+
+
+symmetrize() {
+	# molecular symmetrizer
+	input=$1
+	output=${1%.*}.sym.xyz
+	java -jar ~/usr/bin/symmetrizer.jar -o "$output" "$input"
+} #// symmetrize
+
+orphans() {
+	# see and optionally remove orphans from Arch
+	local orphs="$(pacman -Qtdq)"
+	local res
+	if [[ ! -n "$orphs" ]]
+	then
+		printf "%s\n" "No orphans to remove."
+	else
+		printf "%s\n" $orphs
+		read -p "Remove all?" res
+		[[ "$res" == "y" ]] && sudo pacman -Rns "$orphs"
+	fi
+} # // orphans

@@ -1,0 +1,106 @@
+# vim: ft=sh
+
+alias	ls='ls -F'
+[[ "$OSTYPE" == "linux-gnu" ]] &&
+		alias	ls='ls --color -h --group-directories-first'
+
+alias \.\.="cd .."
+alias \.\.\.="cd ../.."
+alias l='ls -1'
+alias l.='ls -d .??*'
+alias ll='ls -l'
+alias la='ls -A'
+alias du='du -sh'
+alias f='find . -name'
+alias mv='mv -vi'
+alias grep='grep --color=auto'
+alias hddtemp='hddtemp --unit=F'
+alias i3help='less ~/.config/i3/config'
+alias info='info --vi-keys'
+alias myip='curl v4.ifconfig.co'
+alias netstat="netstat -nputwc"
+alias nethogs='sudo nethogs enp2s0'
+alias pepall="pep8 --show-source --show-pep8 --statistics --count"
+alias pg='ping -c 3 www.google.com'
+alias restartconn='sudo systemctl restart connman.service'
+alias sys="sudo systemctl"
+alias startcups="start org.cups.cupsd.service"
+alias restart='reboot'
+alias rm='trash-put'
+alias rsync='rsync --progress'
+alias sicp="racket -i -p neil/sicp -l xrepl"
+alias srcbash="source ~/.bashrc"
+alias srczsh="source ~/.zshrc"
+alias vizsh="vi ~/.zshrc"
+alias srcfxns="source ${configdir}/shell/functions"
+alias srcaliases="source ${configdir}/shell/aliases"
+alias trash='trash-put'
+alias tbz='tar -cjvf'
+alias tgz='tar -czvf'
+alias txz='tar -cJvf'
+alias trashsize='du -sh ~/.local/usr/share/Trash'
+alias untbz='tar -xjvf'
+alias untgz='tar -xzvf'
+alias untxz='tar -xJvf'
+
+# VIM
+alias vi='vim'
+alias vibash="vim ${configdir}/bash/bashrc"
+alias vialiases="vim ${configdir}/shell/aliases"
+alias vifunctions="vim ${configdir}/shell/functions"
+alias vims="vim -O"	#vim: open in verticle split
+alias vimt="vim -p"	#vim: open in tabs
+alias vivi="vim ${configdir}/vim/vimrc"
+
+# command-not-found
+[[ -r /etc/profile.d/cnf.sh ]] && . /etc/profile.d/cnf.sh
+
+# some shitty workround
+export PULS_LATENCY_MSEC=60
+
+# from when I used hostdesigner at ORNL.
+export HD_DIR="$HOME/usr/lib/hostd"
+export ENGINE_DIR="$HOME/usr/lib/engine"
+
+# Arch Package Management
+alias pacinstall='sudo pacman -S'
+alias pacupgrade='sudo pacman -Syu'
+alias pacremove='sudo pacman -Rsnu'
+alias pacsearch='pacman -Ss'
+alias newmirrors="reflector --verbose --protocol https --score 30 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
+alias paccleane'sudo paccache -r -k 1 -v'
+# yaourt
+alias ya='yaourt'
+alias yainstall='ya -S'
+alias yasearch='ya -Ss'
+alias yaupgrade="ya -Syua"
+
+alias packages="pacman -Qqen" # Display packages explicitly installed
+alias orphans="pacman -Qtdq" # Display unused packages
+
+
+# Pasta from command line
+alias sprunge="curl -F'sprunge=<-' sprunge.us"
+
+# Tmux complains
+alias tmux="TERM=tmux-256color tmux"
+
+# Decent initial clock
+alias xclock='xclock -fg white -bg black -chime'
+
+# Simple alias for piping text unto the X clipboard
+alias clipboard='xclip -selection clip'
+
+# Manual xflux management
+alias xflux='xflux -z 37921'
+
+# MOPAC chemistry set
+alias mopac='/opt/mopac/MOPAC2012.exe'
+
+
+# I just want to type `open' on the command line and have it open
+[[ "$OSTYPE" == "cygwin" ]] 	&& alias open="cygstart"
+[[ "$OSTYPE" == "linux-gnu" ]]  && alias open="mimeopen"
+
+
+# vim: ft=zsh

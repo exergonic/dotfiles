@@ -1,0 +1,15 @@
+# vim: ft=cfg
+
+[user]
+	name = Billy Wayne McCann
+	email = thebillywayne@gmail.com
+[core]
+	editor = vim
+[merge]
+	tool = vimdiff
+[push]
+	default = simple
+[color]
+	diff = false
+[difftool]
+    tool = vimdiff

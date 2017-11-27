@@ -1,0 +1,95 @@
+" Mapping
+
+let mapleader = "\<Space>"
+"Avoid escape
+inoremap ,, <Esc>
+vnoremap ,, <Esc>
+
+" NERDTree
+nnoremap <silent><Leader>n :NERDTreeTabsToggle<CR>
+
+" Mark executable and run in shell
+nnoremap <Leader>x :!chmod +x % && ./%<cr>
+
+" Compile into binary
+nnoremap <Leader>m :!compile.sh ./%<cr>
+
+" Paste Mode
+nnoremap <silent><Leader>p :set invpaste paste?<CR>
+
+"Taglist
+nnoremap <silent><F6> :TlistToggle<CR>
+"Tagbar
+nnoremap <F10> :TagbarToggle<CR>
+
+"Global Keyword Completion
+inoremap <S-tab> <C-x><C-o>
+"Control-Tab for Local Keyword Completion
+inoremap <C-tab> <C-x><C-n>
+
+
+" Viewport Controls, ie moving between split panes
+nnoremap <Leader>wj <C-w>j
+nnoremap <Leader>wk <C-w>k
+nnoremap <Leader>wh <C-w>h
+nnoremap <Leader>wl <C-w>l
+
+" Move windows
+nnoremap <Leader>wJ <C-w>J
+nnoremap <Leader>wK <C-w>K
+nnoremap <Leader>wH <C-w>H
+nnoremap <Leader>wL <C-w>L
+
+" terminal navigation
+tnoremap <Leader>wh <C-\><C-n><C-w>h
+tnoremap <Leader>wj  <C-\><C-n><C-w>j
+tnoremap <Leader>wk <C-\><C-n><C-w>k
+tnoremap <Leader>wl <C-\><C-n><C-w>l
+
+" Editing files
+
+"open file under cursor in vertical split
+nnoremap <silent><Leader>fev :vertical wincmd f<CR>
+
+"open file under cursor in horizotal split
+nnoremap <silent><Leader>feh :wincmd f<CR>
+
+"open file under cursor in new tab
+nnoremap <silent><Leader>fet :wincmd gf<CR>
+
+"Edit init.vim
+nnoremap <silent><Leader>fvv :vsplit ~/.config/nvim/init.vim<cr>
+
+"Edit keymaprc
+nnoremap <silent><Leader>fvk :vsplit ~/.config/nvim/keymaprc<cr>
+
+"Edit pluginrc
+nnoremap <silent><Leader>fvp :vsplit ~/.config/nvim/pluginrc<cr>
+
+"Source init.vim
+nnoremap <silent><Leader>vs :source ~/.config/nvim/init.vim<cr>
+
+
+"invert listing listchars
+nnoremap <silent><Leader>il :set invlist<CR>
+
+"Space-o toggles folds
+nnoremap <Leader>o za
+vnoremap <Leader>o za
+
+""Tab movement
+nnoremap <silent><Tab> :tabnext<CR>
+nnoremap <silent><S-tab> :tabprev<CR>
+
+" Window resize
+nnoremap <right> <C-w><
+nnoremap <left> <C-w>>
+nnoremap <up> <C-w>+
+nnoremap <down> <C-w>-
+  
+""Copy current buffer into tmux's buffer and paste it to the adjacent buffer
+" Reload
+nnoremap <silent> tu :call GHC_BrowseAll()<CR>
+nnoremap <silent> tw :call GHC_BrowseAll(1)<CR>
+" vim: ft=vim
+"

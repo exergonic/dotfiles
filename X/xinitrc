@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+
+if [[ -d /etc/X11/xinit/xinitrc.d ]]
+then
+	for f in /etc/X11/xinit/xinitrc.d/*
+	do
+		[[ -x "$f" ]] && source "$f"
+	done
+	unset f
+fi
+
+# get them resources
+xrdb -merge $HOME/.Xresources
+
+# get dat modmap
+# xmodmap $HOME/.Xmodmap     
+
+# set modmap manually
+xmodmap -e 'keycode 107 = Multi_key'
+
+# i'm just not ready
+#setxkbmap -option ctrl:swapcaps
+ 
+# disable xset and prevent screen blanking
+# xset -dpms
+# xset s off
+# disable beeping
+xset b off
+
+# linux clipboard went full retard
+# sync primary, clipboard, etc.
+autocutsel -fork &
+autocutsel -selection PRIMARY -fork &
+
+# set a pimpin' background
+feh --bg-scale ~/.background &
+
+# start pulseaudio
+pulseaudio --start
+
+# save my eyes
+redshift -v -b 1.0:0.7 -l 35.9728:-83.9422 -t 6500K:3500K & &> /dev/null
+ 
+# launch
+exec i3

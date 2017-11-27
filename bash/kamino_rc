@@ -1,0 +1,55 @@
+#!/bin/bash
+
+export PATH=$PATH:~/scripts:~/scripts/boss:~/usr/bin:~/utilities:/usr/bsd:/bin:/usr/bin:.:/etc:/usr/etc:/usr/bin/dn:/usr/demos:/usr/local/bin:/usr/sbin:/usr/bin/X11
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/billy/usr/lib
+# Perl path for Mok
+export PERL5LIB=~orlando/Mok/lib/perl5/site_perl/5.8.0
+# BOSS source
+export BOSSdir=$HOME/boss4702
+export BS=$HOME/boss4702/scripts
+# MCPRO source
+export MCPROdir=$HOME/mcpro200
+# BOMB source
+export BOMBdir=/usr/local/bomb250
+# Qikprop source
+export QPdir=/usr/local/QikProp
+# Mopac 7 source
+alias mopac=/opt/mopac/MOPAC2007.out
+
+
+alias qg='qstat billy'
+
+qo(){
+	# see all jobs
+	running="$( qstat billy | grep "running" | cut -d' ' -f4 | tr [:alpha:] '0' )"
+	pending="$( qstat billy | grep "pending" | cut -d' ' -f4 | tr [:alpha:] '0' )"
+	total="$(( $running + $pending ))"
+	echo "running:  $running"
+	echo "pending:  $pending"
+	echo "total:    $total"
+}
+
+qsum(){
+	# see everyone's jobs
+	for user in orlando samba caley kira billy ; do
+		qk $user
+		printf "\n"
+	done
+}
+
+qcheck(){
+	# see if a particular job is still in the queue
+	local jobname="$1"
+	qg | grep "$1"
+}
+
+qtotal(){
+	# show total number of all jobs
+	running="$( qstat | grep "running" | cut -d' ' -f5 | tr [:alpha:] '0' )"
+	pending="$( qstat | grep "pending" | cut -d' ' -f5 | tr [:alpha:] '0' )"
+	total="$(( $running + $pending ))"
+
+	echo "running:  $running"
+	echo "pending:  $pending"
+	echo "total:    $total"
+}

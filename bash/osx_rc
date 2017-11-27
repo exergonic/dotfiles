@@ -1,0 +1,24 @@
+export PATH=/usr/local/bin:/usr/bin:${PATH}:/Applications:/gamess:${HOME}/usr/boss4702/miscexec:${HOME}/usr/boss4702/scripts
+
+if [[ -e /usr/local/etc/bash_completion ]]
+then
+	source /usr/local/etc/bash_completion
+fi
+
+MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:${HOME}/usr/share/man:$MANPATH"
+export HD_DIR="$HOME/usr/lib/hostd"
+export ENGINE_DIR="$HOME/usr/lib/engine"
+
+alias mopac='/opt/mopac/MOPAC2012.exe'
+alias sed='gsed'
+alias clipboard='pbcopy'
+
+rungms() {
+	# run the gamess script
+	/gamess/rungms $1 | tee -a ${1%%.*}.log 2>&1
+}
+
+[[ -f $(brew --prefix)/etc/bash_completion ]] &&
+	. $(brew --prefix)/etc/bash_completion
+
+# vim: ft=sh

@@ -1,0 +1,89 @@
+" Mapping
+
+let mapleader = "\<Space>"
+"Avoid escape
+inoremap ,, <Esc>
+vnoremap ,, <Esc>
+
+" NerdTree
+nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+
+" Mark current buffer executable and run in shell
+nnoremap <Leader>x :!chmod +x ./% && ./%<cr>
+" Compile current buffer into binary
+nnoremap <Leader>m :!compile.sh %<cr>
+
+" Strip trailing whitespace
+nnoremap <silent><Leader>cw :call StripTrailingWhitespaces()<CR>
+
+" Grab output from last fireplace call
+nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
+
+" Paste Mode
+nnoremap <silent><Leader>p :set invpaste paste?<CR>
+
+"Global Keyword Completion
+" inoremap <S-tab> <C-x><C-o>
+"Control-Tab for Local Keyword Completion
+" inoremap <C-tab> <C-x><C-n>
+
+
+" Viewport Controls, ie moving between split panes
+nnoremap <Leader>wj <C-w>j
+nnoremap <Leader>wk <C-w>k
+nnoremap <Leader>wh <C-w>h
+nnoremap <Leader>wl <C-w>l
+
+" Move windows
+nnoremap <Leader>wJ <C-w>J
+nnoremap <Leader>wK <C-w>K
+nnoremap <Leader>wH <C-w>H
+nnoremap <Leader>wL <C-w>L
+
+nnoremap <Leader>w<Left> 5<C-w><
+nnoremap <Leader>w<Right> 5<C-w>>
+
+" Editing files
+
+"open file under cursor in vertical split
+nnoremap <silent><Leader>fv :vertical wincmd f<CR>
+
+"open file under cursor in horizotal split
+nnoremap <silent><Leader>fh :wincmd f<CR>
+
+"open file under cursor in new tab
+nnoremap <silent><Leader>ft :wincmd gf<CR>
+
+"Edit vimrc
+nnoremap <silent><Leader>fvv :tabnew ~/.vim/vimrc<cr>
+
+"Edit keymaprc
+nnoremap <silent><Leader>fvk :tabnew ~/.vim/keymaprc<cr>
+
+"Edit pluginrc
+nnoremap <silent><Leader>fvp :tabnew ~/.vim/pluginrc<cr>
+
+"Source vimrc
+nnoremap <Leader>vs :source ~/.vim/vimrc<cr>
+
+
+"invert listing lisptchars
+nnoremap <silent><Leader>il :set invlist<CR>
+
+"Space-o toggles folds
+nnoremap <Leader>o za
+vnoremap <Leader>o za
+
+""Tab movement
+nnoremap <silent><Leader>tn :tabnext<CR>
+nnoremap <silent><Leader>tp :tabprev<CR>
+nnoremap <silent><Leader>tt :tabnew<CR>
+
+nmap <C-j> 3j3<C-e>
+nmap <C-k> 3k3<C-y>
+
+nnoremap <silent>tu :call GHC_BrowseAll()<CR>
+nnoremap <silent>tw :call GHC_BrowseAll(1)<CR>
+
+" vim: ft=vim
+"
