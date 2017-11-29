@@ -66,9 +66,8 @@ bindkey -v
 bindkey ",," vi-cmd-mode
 
 # `v' in vi-cmd-mode will edit current line in Vim
-autoload edit-command-line
-zle -N edit-command-line
-bindkey -M vicmd v edit-command-line
+autoload edit-command-line; zle -N edit-command-line
+bindkey -M vicmd V edit-command-line
 
 bindkey '^R' history-incremental-search-backward
 bindkey '^N' history-incremental-search-forward

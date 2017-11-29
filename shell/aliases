@@ -43,6 +43,9 @@ alias untbz='tar -xjvf'
 alias untgz='tar -xzvf'
 alias untxz='tar -xJvf'
 
+# CPU management
+alias performance="sudo cpupower --cpu all frequency-set --governer performance"
+
 # VIM
 alias vi='vim'
 alias vibash="vim ${configdir}/bash/bashrc"
