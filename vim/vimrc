@@ -247,6 +247,10 @@ Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
 Plug 'MicahElliott/vrod', {'for': 'racket'}
 Plug 'wlangstroth/vim-racket', {'for': 'racket'}
 Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -259,11 +263,13 @@ colorscheme solarized
 
 if has("gui_running")
     colorscheme solarized
+    set columns=100
+    set lines=30
     " When in gui, remove menubar (m), toolbar (T), right scroll-bar (r)
-    " set guioptions=-m
-    set guioptions=-T
-    set guioptions=-r
-    set guifont=Inconsolata\ for\ Powerline\ Medium
+    set guioptions+=m
+    set guioptions-=T
+    set guioptions-=r
+    set guifont=Inconsolata\ for\ Powerline\ Medium\ 12
     autocmd GUIEnter * set vb t_vb=
 endif
 

@@ -10,7 +10,7 @@ let g:syntastic_auto_loc_list = 1
 " the err list is too damn high
 function! SyntasticCheckHook(errors)
     if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors), 10])
+        let g:syntastic_loc_list_height = min([len(a:errors), 5])
     endif
 endfunction
 
@@ -75,9 +75,10 @@ let g:clojure_align_multiline_strings = 1
 " let Tlist_File_Fold_Auto_Close      = 1
 
 "NERD_tree
-let NERDTreeShowLineNumbers = 1
-" more colors = 1
-let NERDChristmasTree = 0
+" don't show line numbers in nerdtree
+let NERDTreeShowLineNumbers = 0
+" more colors
+let NERDChristmasTree = 1
 
 "Rainbow Parenthesis
 au VimEnter * RainbowParenthesesToggle
