@@ -50,6 +50,7 @@ let g:syntastic_style_warning_symbol='†'
 let g:syntastic_warning_symbol='⚠'
 
 
+
 " Omnicompletion
 set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone,preview
@@ -57,6 +58,11 @@ set completeopt=longest,menuone,preview
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close preview window
+
+" Disable haskell-vim omnifunc
+let g:haskellmode_completion_ghc = 0
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:necoghc_enable_detailed_browse = 1
 
 "Python
 let python_highlight_all = 1

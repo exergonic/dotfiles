@@ -3,17 +3,17 @@
 #   host: shift+ctrl+u
 # Import default rules from the system Compose file:
 
- include "/usr/share/X11/locale/en_US.UTF-8/Compose"
+# include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 <Multi_key> <i> <n> <f> : "∞" U221E
 <Multi_key> <t> <m> : "™"
 <Multi_key> <c> <h> <e> <c> <k> : "✓" U2713
-#<Multi_key> <colon> <parenright> "☺" U263A   
+<Multi_key> <colon> <parenright> "☺" U263A
 <Multi_key> <s> <k> <u> <l> <l> : "☠" U2620         # SKULL AND CROSSBONES#
 <Multi_key> <f> <a> <c> <e> : "( ͡° ͜ʖ ͡°)"            # mmmhmmm
 <Multi_key> <c> <h> <i> <n> <a> : "( ≖‿≖)"          # chinaman
 <Multi_key> <g> <r> <u> <m> <p> : " ᶘ ᵒᴥᵒᶅ"         # grumpy cat
 <Multi_key> <f> <l> <i> <p> : "(ノಠ益ಠ)ノ彡┻━┻"     # fuuuuuuu
-<Multi_key> <o> <r> <l> <y> : "ಠ_ಠ"                 # 
+<Multi_key> <o> <r> <l> <y> : "ಠ_ಠ"                 #
 <Multi_key> <f> <i> <g> <h> <t> : "(ง ͠° ͟ل͜ ͡°)ง"
 <Multi_key> <a> <r> <c> <h> : "⛺"
 <Multi_key> <i> <d> <k>: "¯\_(ツ)_/¯"               # I DUNNO LOL
@@ -25,7 +25,7 @@
 <Multi_key> <Right> <Right>     : "→"   rightarrow  # RIGHTWARDS ARROW
 <Multi_key> <Down> <Down>       : "↓"   downarrow   # DOWNWARDS ARROW
 <Multi_key> <Left> <Right>      : "↔"   U2194       # LEFT RIGHT ARROW
-<Multi_key> <Right> <Left>      : "↔"   U2194       # LEFT RIGHT ARROW 
+<Multi_key> <Right> <Left>      : "↔"   U2194       # LEFT RIGHT ARROW
 <Multi_key> <Up> <Down>         : "↕"   U2195        # UP DOWN ARROW
 <Multi_key> <Up> <ampersand> <Down>     : "⇵"   U21F5   # DOWNWARDS ARROW LEFTWARDS OF UPWARDS ARROW
 <Multi_key> <Down> <Left>       : "↵"   U21B5       # DOWNWARDS ARROW WITH CORNER LEFTWARDS

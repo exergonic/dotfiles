@@ -1,4 +1,3 @@
-# vim: ft=sh
 
 alias	ls='ls -F'
 [[ "$OSTYPE" == "linux-gnu" ]] &&
@@ -10,7 +9,9 @@ alias l='ls -1'
 alias l.='ls -d .??*'
 alias ll='ls -l'
 alias la='ls -A'
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias du='du -sh'
+alias emacs2="emacs -q -l ~/.emacs.d.vanilla/init.el"
 alias f='find . -name'
 alias mv='mv -vi'
 alias grep='grep --color=auto'
@@ -34,7 +35,7 @@ alias srczsh="source ~/.zshrc"
 alias vizsh="vi ~/.zshrc"
 alias srcfxns="source ${configdir}/shell/functions"
 alias srcaliases="source ${configdir}/shell/aliases"
-alias trash='trash-put'
+alias trash='trash-put --verbose'
 alias tbz='tar -cjvf'
 alias tgz='tar -czvf'
 alias txz='tar -cJvf'
@@ -71,7 +72,7 @@ alias pacupgrade='sudo pacman -Syu'
 alias pacremove='sudo pacman -Rsnu'
 alias pacsearch='pacman -Ss'
 alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
-alias paccleane'sudo paccache -r -k 1 -v'
+alias paccleane='sudo paccache -r -k 1 -v'
 # yaourt
 alias ya='yaourt'
 alias yainstall='ya -S'
