@@ -1,6 +1,5 @@
 
 
-nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
 function! GrabLastFromFireplace()
     :Last
     normal y$
@@ -8,9 +7,10 @@ function! GrabLastFromFireplace()
     normal o;; =>
     normal p
 endfunction
+nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
 
-nnoremap <silent>cw :call <SID>StripTrailingWhitespaces()<CR>
-function! <SID>StripTrailingWhitespaces()
+" Strip trailing whitespace
+function! StripTrailingWhitespaces()
     "Preparation: save last search, and cursor position.
     let _s=@/
     let l = line(".")
@@ -23,6 +23,7 @@ function! <SID>StripTrailingWhitespaces()
     :w
     :echo "Whitespace stripped!"
 endfunction
+nnoremap <Leader>cw :call StripTrailingWhitespaces()<CR>
 
 " gpg sign
 function! Sign()
@@ -35,7 +36,7 @@ endfunction
 let g:clarity = "off"
 function! Clarity()
    let g:clarity = "on"
-   set foldcolumn=8
+   set foldcolumn=20
    highlight! link FoldColumn Normal
    set nonumber
    set norelativenumber

@@ -151,7 +151,7 @@ set novisualbell
 set tabstop=4
 set shiftwidth=4
 " Round indent to multiple of 'shiftwidth'
-set shiftround
+"set shiftround
 
 " tabs are expanded to spaces
 set expandtab
@@ -182,7 +182,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Display indentation with thin, vertical line
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 
 " Status line
 Plug 'bling/vim-airline'
@@ -245,8 +245,8 @@ Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme', 'racket', 'clojure']}
 Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
 Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
 Plug 'Shougo/vimproc', {
-      \ 'for': 'haskell', 
-      \ 'do' : 'make', 
+      \ 'for': 'haskell',
+      \ 'do' : 'make',
       \}
 Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
 Plug 'MicahElliott/vrod', {'for': 'racket'}
@@ -262,8 +262,8 @@ call plug#end()
 
 "GUI
 
-set bg=dark
-colorscheme solarized
+set bg=light
+colorscheme default
 " highlight Comment cterm=italic
 
 if has("gui_running")

@@ -11,16 +11,11 @@ export TERM=xterm-256color
 export PATH=${HOME}/usr/bin:${HOME}/usr/scripts:${PATH}
 
 # Shell options
-setopt appendhistory
-setopt autocd
-setopt extendedglob
-setopt nomatch
-setopt hist_ignore_all_dups
-setopt share_history
-setopt auto_menu
-setopt null_glob
-setopt notify
-setopt interactivecomments
+setopt EXTENDEDGLOB
+setopt NOMATCH
+setopt NULL_GLOB
+setopt NOTIFY
+setopt INTERACTIVECOMMENTS
 unsetopt beep
 
 # Autoloads
@@ -35,27 +30,86 @@ zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ":completion:*:commands" rehash 1
-# zstyle ':completion:*:cd:*' menu yes select
+
+# completion using a menu and vi keys
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
 zstyle :compinstall filename '~/.zshrc'
 
 
 export COMPLETION_WAITING_DOTS="true"
 export DISABLE_AUTO_TITLE="true"
-# setopt CORRECTALL # both commands and arguments
-
 # History Settings
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_SPACE
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_VERIFY
-setopt HIST_IGNORE_SPACE
-setopt SHARE_HISTORY
+
+# SETOPTS {{{1
+
+## Changing Directories {{{2
+
+# if command is name of directory, cd into that directory
+setopt AUTO_CD
+
+# make `cd' push the old directory onto the directory stack
+setopt AUTO_PUSHD
+
+# don't push multiple copies of the same directory onto the dir stack
+setopt PUSHD_IGNORE_DUPS
+
+# `pushd' with no arguments will pushd to $HOME
+setopt PUSHD_TO_HOME
+
+# }}}
+## Completions {{{2
+
+# automatically list choices on an ambiguous completion
+setopt AUTO_LIST
+
+# auto-list even if nothing could be inserted
+setopt LIST_AMBIGUOUS
+
+# }}}
+
+## HISTORY {{{2
+
+# zsh session append history to histfile, rather than replace it.
 setopt APPEND_HISTORY
+
+# don't display duplicates when searching history in the line editor
+setopt HIST_FIND_NO_DUPS
+
+# rm from history commands when first char is a space
+setopt HIST_IGNORE_SPACE
+
+# when writing history file, older commands that are dups are omitted
+setopt HIST_SAVE_NO_DUPS
+
+# perform history expansion and then load into buffer before running
+setopt HIST_VERIFY
+
+# new command bumps duplicates from hist list
+setopt HIST_IGNORE_DUPS
+
+# don't enter commands into hist list if duplicates of previous event
+setopt HIST_IGNORE_ALL_DUPS
+
+# lock histfile using fcntl call
+setopt HIST_FCNTL_LOCK
+
+# history lines added to histfile incrementally, rather then waiting until exit
+setopt INC_APPEND_HISTORY
+
+# imports new commands from histfile and causes typed commands to be appended
+setopt SHARE_HISTORY
+
 export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000000
+# }}}
 
 # no need to nice backgrounded processes
 setopt NO_BG_NICE
@@ -74,7 +128,7 @@ bindkey '^N' history-incremental-search-forward
 # Prompt
 # PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
 # %{$fg[white]%}λ%{$reset_color%} "
-PROMPT="%(1j.[%j] .)%{$fg[green]%}%3~ "$'\n'"%{$fg[white]%}λ%{$reset_color%} "
+PROMPT="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 
 # RPrompt
 precmd() { RPROMPT="" }
@@ -120,10 +174,23 @@ fi
 
 source ${configdir}/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
 source ${configdir}/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval $(dircolors ${configdir}/zsh/zsh-dircolors-solarized/dircolors-solarized/dircolors.ansi-dark)
+eval $(dircolors ${configdir}/zsh/zsh-dircolors-solarized/dircolors-solarized/dircolors.ansi-light)
 
 # auto-autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 bindkey '^ ' autosuggest-accept
+
+
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] ) )
+}
+compctl -K _pip_completion pip
+# pip zsh completion end
 

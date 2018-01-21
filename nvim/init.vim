@@ -1,4 +1,4 @@
-" MISC
+" MISC {{{1
 
 " Vim = Vi iMproved
 set nocompatible
@@ -54,8 +54,9 @@ set laststatus=2
 set shortmess+=I
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
 
-" Folding
+" Folding {{{1
 " the fold column is `n` columns wide
 set foldcolumn=2
 
@@ -64,8 +65,9 @@ set foldmethod=marker
 
 " Folds can be nested twice
 set foldnestmax=2
+" }}}
 
-" Backups and Undo
+" Backups and Undo {{{1
 " keep backups
 set backup
 
@@ -86,8 +88,9 @@ if has('persistent_undo')
     set undofile
     set undoreload=10000
 endif
+" }}}
 
-" Searching
+" Searching {{{1
 " incremental searching
 set incsearch
 
@@ -100,7 +103,9 @@ set smartcase
 " don't highlight the search term
 set nohlsearch
 
+" }}}
 
+" Misc settings {{{1
 " Highlight the line where the cursor is.
 set cursorline
 
@@ -167,69 +172,123 @@ set pumheight=10
 " Help window hight max
 set helpheight=20
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" Vim-Plug
+" Vim-Plug {{{1
 call plug#begin('~/.config/nvim/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
+
+" Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
+
+" Fuzzy finder
 Plug 'kien/ctrlp.vim'
-Plug 'Yggdroot/indentLine'
+
+" Display indentation with thin, vertical line
+" Plug 'Yggdroot/indentLine'
+
+" Status line
 Plug 'bling/vim-airline'
-" Colorscheme
+
+" Colorschemes {{{2
+Plug 'plan9-for-vimspace/acme-colors'
 Plug 'altercation/vim-colors-solarized'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'morhetz/gruvbox'
 Plug 'stephenmckinney/vim-solarized-powerline'
+" }}}
+
+" Seemless movement between vim and tmux (cntrl+h|j|k|l movemnt)
 Plug 'christoomey/vim-tmux-navigator'
+
+" Filesystem explorer
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeTabsToggle'}
-Plug 'jistr/vim-nerdtree-tabs', {'on': 'NERDTreeTabsToggle'}
+
+" Visualize undo levels
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
+
+" Pretty parentheses to highlight matching pair
 Plug 'kien/rainbow_parentheses.vim'
-Plug 'terryma/vim-expand-region'
+
+" Filesystem explorer
 Plug 'vim-scripts/Ranger.vim'
+
+" Manipulate columns of ordered data
 Plug 'vim-scripts/VisIncr'
+
+" Efficient toggling of commented code
 Plug 'tpope/vim-commentary'
+
+" Calculate mathematical visual selections
 Plug 'vim-scripts/HowMuch'
+
+" Launches a calculator in a buffer
 Plug 'gregsexton/VimCalc'
-" Programming
-Plug 'wlangstroth/vim-racket'
-Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-Plug 'clojure-emacs/cider', {'for': 'clojure'}
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-Plug 'fs111/pydoc.vim', {'for': 'python'}
+
+" Distraction free writing
+Plug 'junegunn/goyo.vim'
+
+" Align columns to tokens
+Plug 'godlygeek/tabular'
+
+" Syntax highlighting for i3 config file
+Plug 'PotatoesMaster/i3-vim-syntax'
+
+" Programming {{{2
+Plug 'scrooloose/syntastic'
+
+Plug 'Shougo/deoplete.nvim', {'do': function('DoRemote')}
+let g:deoplete#enable_at_startup = 1
+
 Plug 'zchee/deoplete-jedi', {'for': 'python'}
 let g:deoplete#sources#jedi#show_docstring = 1
 
+Plug 'fs111/pydoc.vim', {'for': 'python'}
 Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme']}
-Plug 'scrooloose/syntastic'
+
+Plug 'wlangstroth/vim-racket' , {'for': 'racket'}
+Plug 'MicahElliott/vrod', {'for': 'racket'}
+
+Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
+
+Plug 'guns/vim-clojure-static', {'for': 'clojure'}
+Plug 'clojure-emacs/cider', {'for': 'clojure'}
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+
 Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
 Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
-Plug 'Shougo/vimproc', {'for': 'haskell'}
+Plug 'Shougo/vimproc', {'for': 'haskell','do' : 'make'}
 Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
-Plug 'Shougo/deoplete.nvim', {'do': function('DoRemote')}
-let g:deoplete#enable_at_startup = 1
+
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
+" }}}
+
 call plug#end()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-"GUI
+"GUI {{{1
 
-set bg=dark
-colorscheme space-vim-dark
+set bg=light
+colorscheme default
 highlight Comment cterm=italic
+
 if has("gui_running")
     " When in gui, remove menubar (m), toolbar (T), right scroll-bar (r)
     set guioptions=-m
-    set guioptions=-T
+    " set guioptions=-T   KEEP TOOLBAR FOR NOW
     set guioptions=-r
     set guifont=Inconsolata\ for\ Powerline\ Medium
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" SYNTAX
+" SYNTAX {{{1
 
 " Enable file type detection
 filetype plugin on
@@ -238,12 +297,12 @@ filetype plugin on
 filetype plugin indent on
 
 " Use global sytax highlighting color settings
-syntax on
+syntax off
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" AUTOCOMMANDS
+" AUTOCOMMANDS {{{1
 
 " Restore cursor to position it was when last in particular file
 autocmd BufReadPost *
@@ -267,9 +326,9 @@ autocmd BufWritePost *.sh,*py,*.csh,*.scm silent !chmod +x %
 " Ensure that markdown files are correctly recognized
 autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-"CODE COMPLETION
+"CODE COMPLETION {{{1
 
 " Use Vim builtin syntax knowledge for (minimal) completions
 set omnifunc=syntaxcomplete#Complete
@@ -286,9 +345,9 @@ autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 " Close preview window if I leave insert mode
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close preview window
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" Python
+" Python {{{1
 
 " Ditto above, but for Python
 autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -296,15 +355,16 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 " Turn off smartindent for Python
 au FileType python setlocal nosmartindent
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" HASKELL
+" HASKELL {{{1
 
 let g:haskellmode_completion_ghc = 1
 autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FORTRAN
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
+
+" FORTRAN {{{1
 
 " Fortran77 has strict column rules for some compilers
 " Distinguish between the two based upon file extension
@@ -321,18 +381,16 @@ if (&ft=='fortran')
         unlet! fortran_free_source
         autocmd FileType fortran set colorcolumn=6,73
     endif
-endif
+endif " }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"SHELL
+" SHELL {{{1
 
 " indent CASE statement appropriately
 let g:sh_indent_case_labels=1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" }}}
 
-" EXTERNAL CONFIGS
+" EXTERNAL CONFIGS {{{1
 
 " Key Mappings
 source ~/.config/nvim/keymaprc
@@ -343,4 +401,4 @@ source ~/.config/nvim/pluginrc
 " For functions
 source ~/.config/nvim/functions
 
-
+" }}}
