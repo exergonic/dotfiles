@@ -186,6 +186,9 @@ Plug 'tpope/vim-eunuch'
 " Fuzzy finder
 Plug 'kien/ctrlp.vim'
 
+" List of buffers
+Plug 'bling/vim-bufferline'
+
 " Display indentation with thin, vertical line
 " Plug 'Yggdroot/indentLine'
 
