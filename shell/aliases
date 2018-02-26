@@ -1,5 +1,5 @@
 
-alias	ls='ls -F'
+alias ls='ls -F'
 [[ "$OSTYPE" == "linux-gnu" ]] &&
 		alias	ls='ls --color -h --group-directories-first'
 
@@ -11,8 +11,6 @@ alias ll='ls -l'
 alias la='ls -A'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias du='du -sh'
-alias emacs2="emacs -q -l ~/.emacs.d.vanilla/init.el"
-alias f='find . -name'
 alias mv='mv -vi'
 alias grep='grep --color=auto'
 alias gdrive='gdfs -o allow_other default /home/bwayne/GDrive'
@@ -33,7 +31,8 @@ alias rsync='rsync --progress'
 alias sicp="racket -i -p neil/sicp -l xrepl"
 alias srcbash="source ~/.bashrc"
 alias srczsh="source ~/.zshrc"
-alias vizsh="vi ~/.zshrc"
+alias vizsh="nvim ~/.zshrc"
+alias rm='trash'
 alias srcfxns="source ${configdir}/shell/functions"
 alias srcaliases="source ${configdir}/shell/aliases"
 alias tbz='tar -cjvf'
@@ -49,12 +48,13 @@ alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
 # VIM
 alias vi='vim'
-alias vibash="vim ${configdir}/bash/bashrc"
-alias vialiases="vim ${configdir}/shell/aliases"
-alias vifunctions="vim ${configdir}/shell/functions"
-alias vims="vim -O"	#vim: open in verticle split
-alias vimt="vim -p"	#vim: open in tabs
-alias vivi="vim ${configdir}/vim/vimrc"
+alias nvi='nvim'
+alias vibash="nvim ${configdir}/bash/bashrc"
+alias vialiases="nvim ${configdir}/shell/aliases"
+alias vifunctions="nvim ${configdir}/shell/functions"
+alias vims="nvim -O"	#vim: open in verticle split
+alias vimt="nvim -p"	#vim: open in tabs
+alias vivi="nvim ${configdir}/vim/vimrc"
 alias nvivi="nvim ${configdir}/nvim/init.vim"
 
 # Arch Package Management
@@ -65,21 +65,23 @@ alias pacsearch='pacman -Ss'
 alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
 alias pacclean='sudo paccache -r -k 1 -v'
 
-# yaourt
-alias ya='yaourt'
-alias yainstall='ya -S'
-alias yasearch='ya -Ss'
-alias yaupgrade="ya -Syua"
+# Powerpill
+alias pp='sudo powerpill'
 
-alias packages="pacman -Qqen" # Display packages explicitly installed
-alias orphans="pacman -Qtdq" # Display unused packages
+# Bauerbill
+alias bb='sudo bb-wrapper --aur'
 
+# Display packages explicitly installed
+alias packages="pacman -Qqen"
+
+# Display unused packages
+alias orphans="pacman -Qtdq"
 
 # Pasta from command line
 alias sprunge="curl -F'sprunge=<-' sprunge.us"
 
 # Tmux complains
-alias tmux="TERM=tmux-256color tmux"
+# alias tmux="TERM=tmux-256color tmux"
 
 # Decent initial clock
 alias xclock='xclock -fg white -bg black -chime'

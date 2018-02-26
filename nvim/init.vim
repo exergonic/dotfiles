@@ -30,7 +30,7 @@ set history=200
 set encoding=utf-8
 
 " Maximum amount of text that can be inserted
-set textwidth=100
+" set textwidth=100
 
 " Number of colors
 set t_Co=256
@@ -45,7 +45,7 @@ set showmode
 set showmatch
 
 " Number of lines to use for the command-line
-set cmdheight=2
+set cmdheight=1
 
 " When will the last window have a status line: 2 = always
 set laststatus=2
@@ -187,7 +187,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'kien/ctrlp.vim'
 
 " List of buffers
-Plug 'bling/vim-bufferline'
+" 	Plug 'bling/vim-bufferline'
 
 " Display indentation with thin, vertical line
 " Plug 'Yggdroot/indentLine'
@@ -207,7 +207,7 @@ Plug 'stephenmckinney/vim-solarized-powerline'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Filesystem explorer
-Plug 'scrooloose/nerdtree', {'on': 'NERDTreeTabsToggle'}
+Plug 'scrooloose/nerdtree' ", {'on': 'NERDTreeTabsToggle'}
 
 " Visualize undo levels
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
@@ -238,6 +238,14 @@ Plug 'godlygeek/tabular'
 
 " Syntax highlighting for i3 config file
 Plug 'PotatoesMaster/i3-vim-syntax'
+
+" Markdown
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
+let vim_markdown_preview_toggle=1
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_browser='Firefox'
+let vim_markdown_preview_use_xdg_open=1
 
 " Programming {{{2
 Plug 'scrooloose/syntastic'
@@ -277,8 +285,11 @@ call plug#end()
 
 "GUI {{{1
 
-set bg=light
-colorscheme default
+set bg=dark
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_italicize_comments = '1'
+
 highlight Comment cterm=italic
 
 if has("gui_running")
@@ -300,7 +311,7 @@ filetype plugin on
 filetype plugin indent on
 
 " Use global sytax highlighting color settings
-syntax off
+syntax on
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
