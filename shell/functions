@@ -18,6 +18,10 @@ cdm() {
 	done
 } #// cmd
 
+vanemacs() {
+	# Vanilla Emacs
+	EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs
+}
 get_X_key() {
 	# Find the X key code for a given key press"
 	xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
@@ -62,7 +66,7 @@ readmd() {
 
 	if [[ -n "$md" ]]
 	then
-		"$md $mfile" | lynx --stdin
+		"$md" "$mfile" | w3m -T text/html
 	fi
 } #// readmd
 
@@ -83,10 +87,6 @@ rename() {
 	fi
 } #// rename
 
-rm() {
-	# use trash-put --verbose instead of rm, but filter output
-	trash-put --verbose $@ | grep "trashed"
-} # // rm
 
 mkcp() {
 	# make a newdir, cp files into newdir, specified as last argument

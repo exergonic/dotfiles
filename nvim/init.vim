@@ -194,6 +194,7 @@ Plug 'kien/ctrlp.vim'
 
 " Status line
 Plug 'bling/vim-airline'
+  let g:airline#extensions#wordcount#enabled = 1
 
 " Colorschemes {{{2
 Plug 'plan9-for-vimspace/acme-colors'
@@ -242,10 +243,13 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 " Markdown
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
-let vim_markdown_preview_toggle=1
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_browser='Firefox'
-let vim_markdown_preview_use_xdg_open=1
+    let vim_markdown_preview_toggle=1
+    let vim_markdown_preview_hotkey='<C-m>'
+    let vim_markdown_preview_browser='Firefox'
+    let vim_markdown_preview_use_xdg_open=1
+
+" Readline while in insert mode
+Plug 'tpope/vim-rsi'
 
 " Programming {{{2
 Plug 'scrooloose/syntastic'
@@ -339,6 +343,10 @@ autocmd BufWritePost *.sh,*py,*.csh,*.scm silent !chmod +x %
 
 " Ensure that markdown files are correctly recognized
 autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
+
+
+" Auto remove all trailing whitespace on :w
+autocmd BufWritePre * :%s/\s\+$//e
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
