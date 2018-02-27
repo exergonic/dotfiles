@@ -126,6 +126,9 @@ set relativenumber
 " but still show the absolute number of the current line
 set number
 
+" Use the clipboard for yank and delete
+set clipboard+=unnamedplus
+
 " A vim specific code may appear within a file
 set modeline
 set modelines=2
