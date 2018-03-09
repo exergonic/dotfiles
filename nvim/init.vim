@@ -131,7 +131,6 @@ set clipboard+=unnamedplus
 
 " A vim specific code may appear within a file
 set modeline
-set modelines=2
 
 " Enhanced ex command-line completion
 set wildmenu
@@ -239,6 +238,9 @@ Plug 'junegunn/goyo.vim'
 
 " Align columns to tokens
 Plug 'godlygeek/tabular'
+
+" Insert pairs of certain characters, e.g. parens.
+Plug 'Raimondi/delimitMate'
 
 " Syntax highlighting for i3 config file
 Plug 'PotatoesMaster/i3-vim-syntax'
@@ -378,7 +380,7 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close preview window
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 
 " Turn off smartindent for Python
-au FileType python setlocal nosmartindent
+autocmd FileType python setlocal nosmartindent
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
