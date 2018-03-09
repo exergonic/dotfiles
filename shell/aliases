@@ -26,7 +26,9 @@ alias du='du -sh'
 
 # Git
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias gst='git status'
+alias gs='git status'
+alias gc='git commit'
+
 
 alias gdrive='gdfs -o allow_other default /home/bwayne/GDrive'
 alias hddtemp='hddtemp --unit=F'
@@ -37,7 +39,6 @@ alias netstat="netstat -nputwc"
 alias nethogs='sudo nethogs enp2s0'
 alias pepall="pep8 --show-source --show-pep8 --statistics --count"
 alias pg='ping -c 3 www.google.com'
-alias restartconn='sudo systemctl restart connman.service'
 alias open="mimeopen"
 alias startcups="start org.cups.cupsd.service"
 alias restart='reboot'
@@ -83,20 +84,17 @@ alias pacinstall='sudo pacman -S'
 alias pacupgrade='sudo pacman -Syu'
 alias pacremove='sudo pacman -Rsnu'
 alias pacsearch='pacman -Ss'
-alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
+alias pacinfo='pacman -Qi'
 alias pacclean='sudo paccache -r -k 1 -v'
+alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
+alias packages="pacman -Qqen" # Display packages explicitly installed
+alias orphans="pacman -Qtdq" # Display unused packages
 
 # Powerpill
 alias pp='sudo powerpill'
 
 # Bauerbill
 alias bb='sudo bb-wrapper --aur'
-
-# Display packages explicitly installed
-alias packages="pacman -Qqen"
-
-# Display unused packages
-alias orphans="pacman -Qtdq"
 
 # Pasta from command line
 alias sprunge="curl -F'sprunge=<-' sprunge.us"
