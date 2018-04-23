@@ -1,30 +1,28 @@
 " Mapping
 
 let mapleader = "\<Space>"
+
 "Avoid escape
 inoremap ,, <Esc>
 vnoremap ,, <Esc>
 
-" NerdTree
-nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+"Easy quit / save and quit etc
+nnoremap <silent><Leader>q :q<CR>
+nnoremap <silent><Leader>qa :qa<CR>
+nnoremap <silent><Leader>x :x<CR>
+nnoremap <silent><Leader>xa :xa<CR>
 
-" Mark current buffer executable and run in shell
-nnoremap <Leader>x :!chmod +x ./% && ./%<cr>
-" Compile current buffer into binary
-nnoremap <Leader>m :!compile.sh %<cr>
+"Write
+nnoremap <silent><Leader>w :w<CR>
+""Buffers
+nnoremap <silent><Leader>bb :b #<CR>
+nnoremap <silent><Leader>bl :ls<CR>
 
 
-
-" Grab output from last fireplace call
-nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
-
-" Paste Mode
-nnoremap <silent><Leader>p :set invpaste paste?<CR>
-
-"Global Keyword Completion
-" inoremap <S-tab> <C-x><C-o>
-"Control-Tab for Local Keyword Completion
-" inoremap <C-tab> <C-x><C-n>
+""Tab movement
+nnoremap <silent><Leader>tl :tabnext<CR>
+nnoremap <silent><Leader>th :tabprev<CR>
+nnoremap <silent><Leader>tn :tabnew<CR>
 
 
 " Viewport Controls, ie moving between split panes
@@ -53,6 +51,19 @@ nnoremap <silent><Leader>fh :wincmd f<CR>
 "open file under cursor in new tab
 nnoremap <silent><Leader>ft :wincmd gf<CR>
 
+
+" NerdTree
+nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+
+" Compile current buffer into binary
+nnoremap <Leader>m :!compile.sh %<cr>
+
+" Grab output from last fireplace call
+nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
+
+" Paste Mode
+nnoremap <silent><Leader>p :set invpaste paste?<CR>
+
 "Edit vimrc
 nnoremap <silent><Leader>fvv :tabnew ~/.config/nvim/init.vim<cr>
 
@@ -72,11 +83,6 @@ nnoremap <silent><Leader>il :set invlist<CR>
 "Space-o toggles folds
 nnoremap <Leader>o za
 vnoremap <Leader>o za
-
-""Tab movement
-nnoremap <silent><Leader>tl :tabnext<CR>
-nnoremap <silent><Leader>th :tabprev<CR>
-nnoremap <silent><Leader>tn :tabnew<CR>
 
 nmap <C-j> 3j3<C-e>
 nmap <C-k> 3k3<C-y>

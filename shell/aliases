@@ -14,9 +14,9 @@ alias ll='ls -l'        # Show 'long' file information
 alias la='ls -A'        # Show all files
 alias ld='ls -ld'       # Show info about cwd
 alias lx='ls -lXB'      # Sort by extension
+alias lt='ls -ltr'      # Sort by date, most recent last
 alias lc='ls -ltcr'     # Sort by and show change time, most recent last
 alias lu='ls -ltur'     # Sort by and show access time, most recent last
-alias lt='ls -ltr'      # Sort by date, most recent last
 
 # core utilities
 alias grep='grep --color=auto'
@@ -44,7 +44,6 @@ alias startcups="start org.cups.cupsd.service"
 alias restart='reboot'
 alias rsync='rsync --progress'
 alias sicp="racket -i -p neil/sicp -l xrepl"
-alias srcbash="source ~/.bashrc"
 
 
 # Compression
@@ -78,6 +77,7 @@ alias vizsh="nvim ~/.zshrc"
 alias srcfxns="source ${configdir}/shell/functions"
 alias srcaliases="source ${configdir}/shell/aliases"
 alias srczsh="source ~/.zshrc"
+alias srcbash="source ~/.bashrc"
 
 # Arch Package Management
 alias pacinstall='sudo pacman -S'

@@ -6,7 +6,7 @@ export LESS=-XR
 export EDITOR='nvim'
 export TERM=xterm-256color
 
-path=(${HOME}/usr/bin ${HOME}/usr/scripts $path)
+path=(${HOME}/.local/bin ${HOME}/usr/bin ${HOME}/usr/scripts $path)
 
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"

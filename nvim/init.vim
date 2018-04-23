@@ -45,7 +45,7 @@ set showmode
 set showmatch
 
 " Number of lines to use for the command-line
-set cmdheight=1
+set cmdheight=2
 
 " When will the last window have a status line: 2 = always
 set laststatus=2
@@ -182,6 +182,9 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 
+" vim-over: preview substitute commands
+Plug 'osyo-manga/vim-over'
+
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
 
@@ -189,7 +192,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'kien/ctrlp.vim'
 
 " List of buffers
-" 	Plug 'bling/vim-bufferline'
+Plug 'bling/vim-bufferline'
+let g:bufferline_echo = 0
 
 " Display indentation with thin, vertical line
 " Plug 'Yggdroot/indentLine'
@@ -197,6 +201,7 @@ Plug 'kien/ctrlp.vim'
 " Status line
 Plug 'bling/vim-airline'
   let g:airline#extensions#wordcount#enabled = 1
+  let g:airline#extensions#bufferline#enabled = 1
 
 " Colorschemes {{{2
 Plug 'plan9-for-vimspace/acme-colors'
@@ -257,11 +262,15 @@ Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
 Plug 'tpope/vim-rsi'
 
 " Programming {{{2
+
+" Code linting
 Plug 'scrooloose/syntastic'
 
+" Code completion
 Plug 'Shougo/deoplete.nvim', {'do': function('DoRemote')}
 let g:deoplete#enable_at_startup = 1
 
+" Completion for python
 Plug 'zchee/deoplete-jedi', {'for': 'python'}
 let g:deoplete#sources#jedi#show_docstring = 1
 
@@ -348,7 +357,6 @@ autocmd BufWritePost *.sh,*py,*.csh,*.scm silent !chmod +x %
 
 " Ensure that markdown files are correctly recognized
 autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
-
 
 " Auto remove all trailing whitespace on :w
 autocmd BufWritePre * :%s/\s\+$//e

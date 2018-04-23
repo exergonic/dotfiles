@@ -18,9 +18,9 @@ cdm() {
 	done
 } #// cmd
 
-vanemacs() {
+vemacs() {
 	# Vanilla Emacs
-	EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs
+	EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs $@
 }
 get_X_key() {
 	# Find the X key code for a given key press"
