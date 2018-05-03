@@ -28,7 +28,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 # Autoloads
-autoload -Uz compinit
+autoload -Uz +X compinit && compinit
+autoload -U +X bashcompinit && compinit
 autoload -U promptinit
 autoload -U run-help
 alias help=run-help
@@ -227,11 +228,9 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end
 
+
 # ZPLUG
 source ${HOME}/.zplug/init.zsh
-zplug "plugins/git", from:oh-my-zsh
-zplug "plugins/wd", from:oh-my-zsh
-zplug "plugins/hacker-quotes", from:oh-my-zsh
 zplug "zsh-users/zsh-autosuggestions"
     # auto-autosuggestions
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
@@ -253,3 +252,5 @@ zplug load ## --verbose
 
 source ${configdir}/shell/aliases
 source ${configdir}/shell/functions
+
+export PATH=${PATH/:\/bin/}:/bin
