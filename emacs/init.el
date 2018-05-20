@@ -43,11 +43,12 @@
 ;; highlight the current line
 (global-hl-line-mode 1)
 
-;; hide the tool bar
-(tool-bar-mode -1)
-
-;; hide the scroll bar
-(scroll-bar-mode -1)
+(when (display-graphic-p)
+  (progn
+    ;; hide the tool bar
+    (tool-bar-mode -1)
+    ;; hide the scroll bar
+    (scroll-bar-mode -1)))
 
 ;; highlight other paired paren
 (show-paren-mode 1)
