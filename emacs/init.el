@@ -196,12 +196,6 @@
   :defer 5
   :after neotree)
 
-;; Keep a space between point and edge of window
-(use-package smooth-scrolling
-  :defer 2
-  :config
-  (smooth-scrolling-mode))
-
 ;; Evil Mode
 (use-package evil
   :init
@@ -257,34 +251,40 @@
     "sC" '(avy-goto-char2 :which-key "search-char2")
     "sw" '(avy-goto-word-or-subword-1 :which-key "search-word")))
 
-;; Helm is love. Helm is life.
-(use-package helm
-  :defer 1
-  :diminish ""
-  :general
-    (general-define-key
-      :states '(normal emacs visual)
-      "SPC SPC" 'helm-M-x
-      "M-x" 'helm-M-x)
-  :init
-  (setq helm-M-x-fuzzy-match t
-        helm-adaptive-sort-by-frequent-recent-usage t
-        helm-split-window-inside-p t)
-  :config
-  (helm-mode 1))
-
-(use-package helm-descbinds
-  :defer 5
-  :bind ("C-h b" . helm-descbinds)
-  :config
-  (helm-descbinds-mode))
-
-(use-package swiper-helm
-  :defer 5
+(use-package swiper
   :general
   (general-nmap
     :prefix "SPC"
-    "ss" '(swiper-helm :which-key "swiper")))
+    "ss" '(swiper :which-key "swiper")))
+
+;; Helm is love. Helm is life.
+;; (use-package helm
+;;   :defer 1
+;;   :diminish ""
+;;   :general
+;;     (general-define-key
+;;       :states '(normal emacs visual)
+;;       "SPC SPC" 'helm-M-x
+;;       "M-x" 'helm-M-x)
+;;   :init
+;;   (setq helm-M-x-fuzzy-match t
+;;         helm-adaptive-sort-by-frequent-recent-usage t
+;;         helm-split-window-inside-p t)
+;;   :config
+;;   (helm-mode 1))
+
+;; (use-package helm-descbinds
+;;   :defer 5
+;;   :bind ("C-h b" . helm-descbinds)
+;;   :config
+;;   (helm-descbinds-mode))
+
+;; (use-package swiper-helm
+;;   :defer 5
+;;   :general
+;;   (general-nmap
+;;     :prefix "SPC"
+;;     "ss" '(swiper-helm :which-key "swiper")))
 
 ;; Make delimiters color-paired
 (use-package rainbow-delimiters
@@ -301,15 +301,12 @@
   :config
   (require 'solarized))
 
-(straight-use-package 'spacemacs-theme)
-
-
 ;;;; use $PATH established in shell to check for binaries
-(use-package exec-path-from-shell
-  :init
-  (setq exec-path-from-shell-check-startup-files nil)
-  :config
-  (exec-path-from-shell-initialize))
+;; (use-package exec-path-from-shell
+;;   :init
+;;   (setq exec-path-from-shell-check-startup-files nil)
+;;   :config
+;;   (exec-path-from-shell-initialize))
 
 ;; superior to docview
 (use-package pdf-tools
@@ -317,10 +314,6 @@
   :magic ("%PDF" . pdf-view-mode)
   :config
   (pdf-tools-install))
-
-;; fuzzy file searcher
-(use-package fzf
-  :commands fzf)
 
 ;; Put special windows in a popup instead of a buffer [https://github.com/m2ym/popwin-el]
 (use-package popwin
@@ -331,21 +324,8 @@
 ;  :straight t
 ;  :config
 ;  (aggressive-indent-mode 1))
-;
-(use-package grizzl
-  :defer t
-  :diminish grizzle ""
-  :config
-  (grizzl-mode 1))
-
-(use-package fasd
-  :commands fasd
-  :after grizzl
-  :init
-  (setq fasd-enable-initial-prompt nil)
-  (setq fasd-completing-read-function 'grizzl-completing-read))
-
 ;; 'Geiser' - scheme interaction
+
 (use-package geiser
   :defer t)
 
@@ -391,30 +371,30 @@
   ;;:config
   ;;(add-hook 'after-init-hook #'global-flycheck-mode)
 
-(use-package haskell-mode
-  :mode "\\.hs\\'"
-  :init
-  (setq haskell-process-type 'stack-ghci))
+;; (use-package haskell-mode
+;;   :mode "\\.hs\\'"
+;;   :init
+;;   (setq haskell-process-type 'stack-ghci))
 
-(use-package intero
-  :disabled)
+;; (use-package intero
+;;   :disabled)
 ;;  :config
 ;;  (add-hook 'haskell-mode-hook 'intero-mode)
 
-(use-package ghc
-  :after haskell-mode
-  :init
-  (add-hook 'haskell-mode-hook (lambda ()
-                                 (ghc-init))))
+;; (use-package ghc
+;;   :after haskell-mode
+;;   :init
+;;   (add-hook 'haskell-mode-hook (lambda ()
+;;                                  (ghc-init))))
 
-(use-package company-ghc
-  :after (company ghc)
-  :config
-  (add-to-list 'company-backends 'company-ghc))
+;; (use-package company-ghc
+;;   :after (company ghc)
+;;   :config
+;;   (add-to-list 'company-backends 'company-ghc))
 
-(use-package hindent
-  :mode "\\.hs\\'"
-  :hook (haskell-mode-hook . hindent-mode))
+;; (use-package hindent
+;;   :mode "\\.hs\\'"
+;;   :hook (haskell-mode-hook . hindent-mode))
 
 ;; Relative numbers
 (use-package linum-relative
@@ -475,7 +455,6 @@
 
 ;; `Paredit' : Maybe ...eventually I'll learn paredit
 (use-package paredit
-  :disabled
   :general
     (general-nmap
       :prefix "SPC"
@@ -499,21 +478,21 @@
           scheme-mode
           racket-mode) . paredit-mode))
 
-;;; Feed Reader https://github.com/skeeto/elfeed
-(use-package elfeed
-  :commands elfeed)
+;; ;;; Feed Reader https://github.com/skeeto/elfeed
+;; (use-package elfeed
+;;   :commands elfeed)
 
-;; https://github.com/remyhonig/elfeed-org
-(use-package elfeed-org
-  :after elfeed
-  :config
-  (elfeed-org))
+;; ;; https://github.com/remyhonig/elfeed-org
+;; (use-package elfeed-org
+;;   :after elfeed
+;;   :config
+;;   (elfeed-org))
 
-;;; https://github.com/algernon/elfeed-goodies
-(use-package elfeed-goodies
-  :after elfeed
-  :config
-  (elfeed-goodies/setup))
+;; ;;; https://github.com/algernon/elfeed-goodies
+;; (use-package elfeed-goodies
+;;   :after elfeed
+;;   :config
+;;   (elfeed-goodies/setup))
 
 (require 'org-version)
 (use-package org
@@ -656,3 +635,9 @@
 
 ;;; load settings set by custom in custom-file
 (load custom-file 'noerror 'nomessage)
+
+(add-hook 'after-init-hook (lambda ()
+                             (load-theme 'gruvbox-dark-hard)))
+
+(add-hook 'after-init-hook (lambda ()
+                             (message (emacs-init-time))))

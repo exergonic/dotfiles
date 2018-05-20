@@ -182,9 +182,6 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 
-" vim-over: preview substitute commands
-Plug 'osyo-manga/vim-over'
-
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
 
