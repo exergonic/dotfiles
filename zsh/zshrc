@@ -1,30 +1,35 @@
 # Source outer files
 [[ -e ${HOME}/.zshrc.$HOST ]] && source ${HOME}/.zshrc.$HOST
-source ${configdir}/shell/aliases
-source ${configdir}/shell/functions
 
 export LANG=en_US.UTF-8
 export LESS=-XR
-export EDITOR='vim'
+export EDITOR='nvim'
 export TERM=xterm-256color
 
-export PATH=${HOME}/usr/bin:${HOME}/usr/scripts:${PATH}
+path=(${HOME}/.local/bin ${HOME}/usr/bin ${HOME}/usr/scripts $path)
 
-# Shell options
-setopt appendhistory
-setopt autocd
-setopt extendedglob
-setopt nomatch
-setopt hist_ignore_all_dups
-setopt share_history
-setopt auto_menu
-setopt null_glob
-setopt notify
-setopt interactivecomments
-unsetopt beep
+# Hyphen-insensitive completion.
+HYPHEN_INSENSITIVE="true"
+
+# Disable auto-setting terminal title.
+DISABLE_AUTO_TITLE="true"
+
+# Enable command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Display red dots whilst waiting for completion.
+COMPLETION_WAITING_DOTS="true"
+
+# Disable marking untracked files under VCS as dirty.
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Change the command execution time
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="yyyy-mm-dd"
 
 # Autoloads
-autoload -Uz compinit && compinit
+autoload -Uz +X compinit && compinit
+autoload -U +X bashcompinit && compinit
 autoload -U promptinit
 autoload -U run-help
 alias help=run-help
@@ -35,24 +40,89 @@ zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ":completion:*:commands" rehash 1
-# zstyle ':completion:*:cd:*' menu yes select
+
+# completion using a menu and vi keys
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
+
 zstyle :compinstall filename '~/.zshrc'
 
 
-export COMPLETION_WAITING_DOTS="true"
-export DISABLE_AUTO_TITLE="true"
-# setopt CORRECTALL # both commands and arguments
+# SETOPTS
+
+# Shell options
+
+setopt EXTENDEDGLOB
+setopt NOMATCH
+setopt NULL_GLOB
+setopt NOTIFY
+setopt INTERACTIVE_COMMENTS
+unsetopt BEEP
+
+## Changing Directories
+
+# if command is name of directory, cd into that directory
+setopt AUTO_CD
+
+# make `cd' push the old directory onto the directory stack
+setopt AUTO_PUSHD
+
+# don't push multiple copies of the same directory onto the dir stack
+setopt PUSHD_IGNORE_DUPS
+
+# `pushd' with no arguments will pushd to $HOME
+setopt PUSHD_TO_HOME
+
+
+## Completions
+
+# automatically list choices on an ambiguous completion
+setopt AUTO_LIST
+
+# auto-list even if nothing could be inserted
+setopt LIST_AMBIGUOUS
+
+
+## HISTORY
 
 # History Settings
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
-setopt INC_APPEND_HISTORY
-setopt HIST_IGNORE_SPACE
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_VERIFY
-setopt HIST_IGNORE_SPACE
-setopt SHARE_HISTORY
+
+# zsh session append history to histfile, rather than replace it.
 setopt APPEND_HISTORY
+
+# don't display duplicates when searching history in the line editor
+setopt HIST_FIND_NO_DUPS
+
+# rm from history commands when first char is a space
+setopt HIST_IGNORE_SPACE
+
+# when writing history file, older commands that are dups are omitted
+setopt HIST_SAVE_NO_DUPS
+
+# perform history expansion and then load into buffer before running
+setopt HIST_VERIFY
+
+# new command bumps duplicates from hist list
+setopt HIST_IGNORE_DUPS
+
+# don't enter commands into hist list if duplicates of previous event
+setopt HIST_IGNORE_ALL_DUPS
+
+# lock histfile using fcntl call
+setopt HIST_FCNTL_LOCK
+
+# history lines added to histfile incrementally, rather then waiting until exit
+setopt INC_APPEND_HISTORY
+
+# imports new commands from histfile and causes typed commands to be appended
+setopt SHARE_HISTORY
+
 export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000000
@@ -60,29 +130,56 @@ export SAVEHIST=10000000
 # no need to nice backgrounded processes
 setopt NO_BG_NICE
 
+# KEYMAP
+function zle-keymap-select() {
+    zle reset-prompt
+    zle -R
+}
+
+zle -N zle-keymap-select
+zle -N edit-command-line
+
 # Vim mode
 bindkey -v
 bindkey ",," vi-cmd-mode
 
-# `v' in vi-cmd-mode will edit current line in Vim
-autoload edit-command-line; zle -N edit-command-line
-bindkey -M vicmd V edit-command-line
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
 
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+
+bindkey '^b' backward-word
+bindkey '^f' forward-word
+
+# V' in vi-cmd-mode will edit current line in Vim
+
+autoload edit-command-line
+bindkey -M vicmd 'V' edit-command-line
+
+# Search through history forward and backward using ^R, ^N
 bindkey '^R' history-incremental-search-backward
 bindkey '^N' history-incremental-search-forward
+
+# Scroll up and down through history
+bindkey '^k' up-history
+bindkey '^j' down-history
+
 
 # Prompt
 # PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
 # %{$fg[white]%}λ%{$reset_color%} "
-PROMPT="%(1j.[%j] .)%{$fg[green]%}%3~ "$'\n'"%{$fg[white]%}λ%{$reset_color%} "
+PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 
-# RPrompt
-precmd() { RPROMPT="" }
-function zle-line-init zle-keymap-select {
-    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
-    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
-    zle reset-prompt
+# Right Promopt
+MODE_INDICATOR="%{$fg_bold[red]%}<%{$fg[red]%}<<%{$reset_color%}"
+
+function vi_mode_prompt_info() {
+  echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
 }
+
+RPS1=$(vi_mode_prompt_info)
+
 
 # XDG
 export XDG_CONFIG_HOME=${HOME}/.config
@@ -97,7 +194,7 @@ export QT_IM_MODULE=xum
 export GTK_IM_MODULE=uim
 unset XMODIFIERS
 
-
+# FASD https://github.com/clvv/fasd {{{
 if which fasd &> /dev/null
 then
     eval "$(fasd --init auto)"
@@ -110,20 +207,50 @@ then
     source "$fasd_cache"
     unset fasd_cache
     # -- completions
-    # C-x C-a to do fasd-complete (files and directories)
-    bindkey '^X^A' 'fasd-complete'
+    # C-p to do fasd-complete (files and directories)
+    bindkey '^P' 'fasd-complete'
     # C-x C-f to do fasd-complete-f (only files)
     bindkey '^X^F' 'fasd-complete-f'
     # C-x C-d to do fasd-complete-d (only directories)
     bindkey '^X^D' 'fasd-complete-d'
 fi
+# }}}
 
-source ${configdir}/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh
-source ${configdir}/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval $(dircolors ${configdir}/zsh/zsh-dircolors-solarized/dircolors-solarized/dircolors.ansi-dark)
+# pip zsh completion start
+function _pip_completion {
+  local words cword
+  read -Ac words
+  read -cn cword
+  reply=( $( COMP_WORDS="$words[*]" \
+             COMP_CWORD=$(( cword-1 )) \
+             PIP_AUTO_COMPLETE=1 $words[1] ) )
+}
+compctl -K _pip_completion pip
+# pip zsh completion end
 
-# auto-autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-bindkey '^ ' autosuggest-accept
 
+# ZPLUG
+source ${HOME}/.zplug/init.zsh
+zplug "zsh-users/zsh-autosuggestions"
+    # auto-autosuggestions
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    bindkey '^ ' autosuggest-accept
+
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "hlissner/zsh-autopair", defer:2
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+if ! zplug check --verbose; then
+    printf "Install? [y|N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+zplug load ## --verbose
+
+source ${configdir}/shell/aliases
+source ${configdir}/shell/functions
+
+export PATH=${PATH/:\/bin/}:/bin

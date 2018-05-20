@@ -1,31 +1,28 @@
 " Mapping
 
 let mapleader = "\<Space>"
+
 "Avoid escape
 inoremap ,, <Esc>
 vnoremap ,, <Esc>
 
-" NERDTree
-nnoremap <silent><Leader>n :NERDTreeTabsToggle<CR>
+"Easy quit / save and quit etc
+nnoremap <silent><Leader>q :q<CR>
+nnoremap <silent><Leader>qa :qa<CR>
+nnoremap <silent><Leader>x :x<CR>
+nnoremap <silent><Leader>xa :xa<CR>
 
-" Mark executable and run in shell
-nnoremap <Leader>x :!chmod +x % && ./%<cr>
+"Write
+nnoremap <silent><Leader>w :w<CR>
+""Buffers
+nnoremap <silent><Leader>bb :b #<CR>
+nnoremap <silent><Leader>bl :ls<CR>
 
-" Compile into binary
-nnoremap <Leader>m :!compile.sh ./%<cr>
 
-" Paste Mode
-nnoremap <silent><Leader>p :set invpaste paste?<CR>
-
-"Taglist
-nnoremap <silent><F6> :TlistToggle<CR>
-"Tagbar
-nnoremap <F10> :TagbarToggle<CR>
-
-"Global Keyword Completion
-inoremap <S-tab> <C-x><C-o>
-"Control-Tab for Local Keyword Completion
-inoremap <C-tab> <C-x><C-n>
+""Tab movement
+nnoremap <silent><Leader>tl :tabnext<CR>
+nnoremap <silent><Leader>th :tabprev<CR>
+nnoremap <silent><Leader>tn :tabnew<CR>
 
 
 " Viewport Controls, ie moving between split panes
@@ -40,56 +37,57 @@ nnoremap <Leader>wK <C-w>K
 nnoremap <Leader>wH <C-w>H
 nnoremap <Leader>wL <C-w>L
 
-" terminal navigation
-tnoremap <Leader>wh <C-\><C-n><C-w>h
-tnoremap <Leader>wj  <C-\><C-n><C-w>j
-tnoremap <Leader>wk <C-\><C-n><C-w>k
-tnoremap <Leader>wl <C-\><C-n><C-w>l
+nnoremap <Leader>w<Left> 5<C-w><
+nnoremap <Leader>w<Right> 5<C-w>>
 
 " Editing files
 
 "open file under cursor in vertical split
-nnoremap <silent><Leader>fev :vertical wincmd f<CR>
+nnoremap <silent><Leader>fv :vertical wincmd f<CR>
 
 "open file under cursor in horizotal split
-nnoremap <silent><Leader>feh :wincmd f<CR>
+nnoremap <silent><Leader>fh :wincmd f<CR>
 
 "open file under cursor in new tab
-nnoremap <silent><Leader>fet :wincmd gf<CR>
+nnoremap <silent><Leader>ft :wincmd gf<CR>
 
-"Edit init.vim
-nnoremap <silent><Leader>fvv :vsplit ~/.config/nvim/init.vim<cr>
+
+" NerdTree
+nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+
+" Compile current buffer into binary
+nnoremap <Leader>m :!compile.sh %<cr>
+
+" Grab output from last fireplace call
+nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
+
+" Paste Mode
+nnoremap <silent><Leader>p :set invpaste paste?<CR>
+
+"Edit vimrc
+nnoremap <silent><Leader>fvv :tabnew ~/.config/nvim/init.vim<cr>
 
 "Edit keymaprc
-nnoremap <silent><Leader>fvk :vsplit ~/.config/nvim/keymaprc<cr>
+nnoremap <silent><Leader>fvk :tabnew ~/.config/nvim/keymaprc<cr>
 
 "Edit pluginrc
-nnoremap <silent><Leader>fvp :vsplit ~/.config/nvim/pluginrc<cr>
+nnoremap <silent><Leader>fvp :tabnew ~/.config/nvim/pluginrc<cr>
 
-"Source init.vim
-nnoremap <silent><Leader>vs :source ~/.config/nvim/init.vim<cr>
+"Source vimrc
+nnoremap <Leader>vs :source ~/.config/nvim/init.vim<cr>
 
 
-"invert listing listchars
+"invert listing lisptchars
 nnoremap <silent><Leader>il :set invlist<CR>
 
 "Space-o toggles folds
 nnoremap <Leader>o za
 vnoremap <Leader>o za
 
-""Tab movement
-nnoremap <silent><Tab> :tabnext<CR>
-nnoremap <silent><S-tab> :tabprev<CR>
+nmap <C-j> 3j3<C-e>
+nmap <C-k> 3k3<C-y>
 
-" Window resize
-nnoremap <right> <C-w><
-nnoremap <left> <C-w>>
-nnoremap <up> <C-w>+
-nnoremap <down> <C-w>-
-  
-""Copy current buffer into tmux's buffer and paste it to the adjacent buffer
-" Reload
-nnoremap <silent> tu :call GHC_BrowseAll()<CR>
-nnoremap <silent> tw :call GHC_BrowseAll(1)<CR>
+nnoremap <silent>tu :call GHC_BrowseAll()<CR>
+nnoremap <silent>tw :call GHC_BrowseAll(1)<CR>
+
 " vim: ft=vim
-"

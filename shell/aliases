@@ -1,20 +1,36 @@
+# vim: ft=zsh
 
-alias	ls='ls -F'
-[[ "$OSTYPE" == "linux-gnu" ]] &&
-		alias	ls='ls --color -h --group-directories-first'
+# cd aliases
+alias \.\.="cd .."              # cd up one dir
+alias \.\.\.="cd ../.."         # cd up two dirs
+alias \.\.\.\="cd ../../.."     # ...   three dirs
 
-alias \.\.="cd .."
-alias \.\.\.="cd ../.."
-alias l='ls -1'
-alias l.='ls -d .??*'
-alias ll='ls -l'
-alias la='ls -A'
-alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias du='du -sh'
-alias emacs2="emacs -q -l ~/.emacs.d.vanilla/init.el"
-alias f='find . -name'
-alias mv='mv -vi'
+# ls aliases
+alias ls='ls -F'
+[[ "$OSTYPE" == "linux-gnu" ]] && alias ls='ls --color -h --group-directories-first'
+alias l='ls -1'         # Show files in a single column
+alias l.='ls -d .??*'   # Show hidden files
+alias ll='ls -l'        # Show 'long' file information
+alias la='ls -A'        # Show all files
+alias ld='ls -ld'       # Show info about cwd
+alias lx='ls -lXB'      # Sort by extension
+alias lt='ls -ltr'      # Sort by date, most recent last
+alias lc='ls -ltcr'     # Sort by and show change time, most recent last
+alias lu='ls -ltur'     # Sort by and show access time, most recent last
+
+# core utilities
 alias grep='grep --color=auto'
+alias mv='mv -vi'
+alias rm='trash'
+alias du='du -sh'
+
+# Git
+alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias gs='git status'
+alias gc='git commit'
+
+
+alias gdrive='gdfs -o allow_other default /home/bwayne/GDrive'
 alias hddtemp='hddtemp --unit=F'
 alias i3help='less ~/.config/i3/config'
 alias info='info --vi-keys'
@@ -23,71 +39,68 @@ alias netstat="netstat -nputwc"
 alias nethogs='sudo nethogs enp2s0'
 alias pepall="pep8 --show-source --show-pep8 --statistics --count"
 alias pg='ping -c 3 www.google.com'
-alias restartconn='sudo systemctl restart connman.service'
-alias sys="sudo systemctl"
+alias open="mimeopen"
 alias startcups="start org.cups.cupsd.service"
 alias restart='reboot'
-alias rm='trash-put'
 alias rsync='rsync --progress'
 alias sicp="racket -i -p neil/sicp -l xrepl"
-alias srcbash="source ~/.bashrc"
-alias srczsh="source ~/.zshrc"
-alias vizsh="vi ~/.zshrc"
-alias srcfxns="source ${configdir}/shell/functions"
-alias srcaliases="source ${configdir}/shell/aliases"
-alias trash='trash-put --verbose'
+
+
+# Compression
 alias tbz='tar -cjvf'
 alias tgz='tar -czvf'
 alias txz='tar -cJvf'
-alias trashsize='du -sh ~/.local/usr/share/Trash'
 alias untbz='tar -xjvf'
 alias untgz='tar -xzvf'
 alias untxz='tar -xJvf'
 
+# trash-cli Trash size
+alias trashsize='du -sh ~/.local/usr/share/Trash'
+
 # CPU management
-alias performance="sudo cpupower --cpu all frequency-set --governer performance"
+alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
 # VIM
 alias vi='vim'
-alias vibash="vim ${configdir}/bash/bashrc"
-alias vialiases="vim ${configdir}/shell/aliases"
-alias vifunctions="vim ${configdir}/shell/functions"
-alias vims="vim -O"	#vim: open in verticle split
-alias vimt="vim -p"	#vim: open in tabs
-alias vivi="vim ${configdir}/vim/vimrc"
+alias nvi='nvim'
+alias nv='nvim'
+alias vibash="nvim ${configdir}/bash/bashrc"
+alias vialiases="nvim ${configdir}/shell/aliases"
+alias vifunctions="nvim ${configdir}/shell/functions"
+alias vims="nvim -O"    #vim: open in verticle split
+alias vimt="nvim -p"    #vim: open in tabs
 
-# command-not-found
-[[ -r /etc/profile.d/cnf.sh ]] && . /etc/profile.d/cnf.sh
-
-# some shitty workround
-export PULS_LATENCY_MSEC=60
-
-# from when I used hostdesigner at ORNL.
-export HD_DIR="$HOME/usr/lib/hostd"
-export ENGINE_DIR="$HOME/usr/lib/engine"
+# recipe's, functions, and aliases
+alias vivi="nvim ${configdir}/vim/vimrc"
+alias nvivi="nvim ${configdir}/nvim/init.vim"
+alias vizsh="nvim ~/.zshrc"
+alias srcfxns="source ${configdir}/shell/functions"
+alias srcaliases="source ${configdir}/shell/aliases"
+alias srczsh="source ~/.zshrc"
+alias srcbash="source ~/.bashrc"
 
 # Arch Package Management
 alias pacinstall='sudo pacman -S'
 alias pacupgrade='sudo pacman -Syu'
 alias pacremove='sudo pacman -Rsnu'
 alias pacsearch='pacman -Ss'
+alias pacinfo='pacman -Qi'
+alias pacclean='sudo paccache -r -k 1 -v'
 alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
-alias paccleane='sudo paccache -r -k 1 -v'
-# yaourt
-alias ya='yaourt'
-alias yainstall='ya -S'
-alias yasearch='ya -Ss'
-alias yaupgrade="ya -Syua"
-
 alias packages="pacman -Qqen" # Display packages explicitly installed
 alias orphans="pacman -Qtdq" # Display unused packages
 
+# Powerpill
+alias pp='sudo powerpill'
+
+# Bauerbill
+alias bb='sudo bb-wrapper --aur'
 
 # Pasta from command line
 alias sprunge="curl -F'sprunge=<-' sprunge.us"
 
 # Tmux complains
-alias tmux="TERM=tmux-256color tmux"
+# alias tmux="TERM=tmux-256color tmux"
 
 # Decent initial clock
 alias xclock='xclock -fg white -bg black -chime'
@@ -100,11 +113,3 @@ alias xflux='xflux -z 37921'
 
 # MOPAC chemistry set
 alias mopac='/opt/mopac/MOPAC2012.exe'
-
-
-# I just want to type `open' on the command line and have it open
-[[ "$OSTYPE" == "cygwin" ]] 	&& alias open="cygstart"
-[[ "$OSTYPE" == "linux-gnu" ]]  && alias open="mimeopen"
-
-
-# vim: ft=zsh

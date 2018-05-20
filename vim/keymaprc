@@ -1,17 +1,17 @@
 " Mapping
 
 let mapleader = "\<Space>"
-"Avoid escape
+
+" Avoid escape
 inoremap ,, <Esc>
 vnoremap ,, <Esc>
 
+" Easier Ex Commands
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>x :x<CR>
+
 " NerdTree
 nnoremap <silent><Leader>n :NERDTreeToggle<CR>
-
-" Mark current buffer executable and run in shell
-nnoremap <Leader>x :!chmod +x ./% && ./%<cr>
-" Compile current buffer into binary
-nnoremap <Leader>m :!compile.sh %<cr>
 
 " Strip trailing whitespace
 nnoremap <silent><Leader>cw :call StripTrailingWhitespaces()<CR>
@@ -21,12 +21,6 @@ nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
 
 " Paste Mode
 nnoremap <silent><Leader>p :set invpaste paste?<CR>
-
-"Global Keyword Completion
-" inoremap <S-tab> <C-x><C-o>
-"Control-Tab for Local Keyword Completion
-" inoremap <C-tab> <C-x><C-n>
-
 
 " Viewport Controls, ie moving between split panes
 nnoremap <Leader>wj <C-w>j
@@ -75,9 +69,9 @@ nnoremap <Leader>o za
 vnoremap <Leader>o za
 
 ""Tab movement
-nnoremap <silent><Leader>tn :tabnext<CR>
-nnoremap <silent><Leader>tp :tabprev<CR>
-nnoremap <silent><Leader>tt :tabnew<CR>
+nnoremap <silent><Leader>tl :tabnext<CR>
+nnoremap <silent><Leader>th :tabprev<CR>
+nnoremap <silent><Leader>tn :tabnew<CR>
 
 nmap <C-j> 3j3<C-e>
 nmap <C-k> 3k3<C-y>
