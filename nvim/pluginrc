@@ -69,7 +69,7 @@ let Tlist_File_Fold_Auto_Close      = 1
 "NERD_tree
 let NERDTreeShowLineNumbers = 1
 " more colors = 1
-let NERDChristmasTree = 0
+let NERDChristmasTree = 1
 "
 
 

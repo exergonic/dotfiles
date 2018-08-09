@@ -197,8 +197,8 @@ let g:bufferline_echo = 0
 
 " Status line
 Plug 'bling/vim-airline'
-  let g:airline#extensions#wordcount#enabled = 1
-  let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#wordcount#enabled = 1
+let g:airline#extensions#bufferline#enabled = 1
 
 " Colorschemes {{{2
 Plug 'plan9-for-vimspace/acme-colors'
@@ -249,11 +249,12 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 
 " Markdown
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+
 Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
-    let vim_markdown_preview_toggle=1
-    let vim_markdown_preview_hotkey='<C-m>'
-    let vim_markdown_preview_browser='Firefox'
-    let vim_markdown_preview_use_xdg_open=1
+let vim_markdown_preview_toggle=1
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_browser='Firefox'
+let vim_markdown_preview_use_xdg_open=1
 
 " Readline while in insert mode
 Plug 'tpope/vim-rsi'
@@ -283,15 +284,15 @@ Plug 'guns/vim-clojure-static', {'for': 'clojure'}
 Plug 'clojure-emacs/cider', {'for': 'clojure'}
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
-Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
-Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
-Plug 'Shougo/vimproc', {'for': 'haskell','do' : 'make'}
-Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
+" Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
+" Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
+" Plug 'Shougo/vimproc', {'for': 'haskell','do' : 'make'}
+" Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
 
-Plug 'fsharp/vim-fsharp', {
-      \ 'for': 'fsharp',
-      \ 'do':  'make fsautocomplete',
-      \}
+" Plug 'fsharp/vim-fsharp', {
+"       \ 'for': 'fsharp',
+"       \ 'do':  'make fsautocomplete',
+"       \}
 " }}}
 
 call plug#end()
