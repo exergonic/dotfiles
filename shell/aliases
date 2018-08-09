@@ -21,6 +21,7 @@ alias lu='ls -ltur'     # Sort by and show access time, most recent last
 # core utilities
 alias grep='grep --color=auto'
 alias mv='mv -vi'
+alias cp='cp -v'
 alias rm='trash'
 alias du='du -sh'
 
@@ -60,6 +61,9 @@ alias trashsize='du -sh ~/.local/usr/share/Trash'
 # CPU management
 alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
+# Emacs
+alias e='emacsclient -c'
+alias e='emacsclient -t'
 # VIM
 alias vi='vim'
 alias nvi='nvim'
