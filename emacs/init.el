@@ -184,17 +184,17 @@
   :init
   (setq restart-emacs-restore-frames t))
 
-(use-package neotree
-  :disabled
-  :defer 5
-  :commands neotree-toggle
-  :config
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+;; (use-package neotree
+;;   :disabled
+;;   :defer 5
+;;   :commands neotree-toggle
+;;   :config
+;;   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
-(use-package all-the-icons
-  :disabled
-  :defer 5
-  :after neotree)
+;; (use-package all-the-icons
+;;   :disabled
+;;   :defer 5
+;;   :after neotree)
 
 ;; Evil Mode
 (use-package evil
@@ -219,6 +219,7 @@
   (global-evil-surround-mode 1))
 
 (use-package evil-collection
+  :disabled
   :after evil
   :config
   (evil-collection-init))
@@ -251,40 +252,33 @@
     "sC" '(avy-goto-char2 :which-key "search-char2")
     "sw" '(avy-goto-word-or-subword-1 :which-key "search-word")))
 
-(use-package swiper
+
+;; Helm is love. Helm is life.
+(use-package helm
+  :diminish ""
+  :general
+    (general-define-key
+      :states '(normal emacs visual)
+      "SPC SPC" 'helm-M-x)
+  :init
+  (setq helm-M-x-fuzzy-match t
+        helm-adaptive-sort-by-frequent-recent-usage t
+        helm-split-window-inside-p t)
+  :config
+  (helm-mode 1))
+
+(use-package helm-descbinds
+  :defer 5
+  :bind ("C-h b" . helm-descbinds)
+  :config
+  (helm-descbinds-mode))
+
+(use-package swiper-helm
+  :defer 5
   :general
   (general-nmap
     :prefix "SPC"
-    "ss" '(swiper :which-key "swiper")))
-
-;; Helm is love. Helm is life.
-;; (use-package helm
-;;   :defer 1
-;;   :diminish ""
-;;   :general
-;;     (general-define-key
-;;       :states '(normal emacs visual)
-;;       "SPC SPC" 'helm-M-x
-;;       "M-x" 'helm-M-x)
-;;   :init
-;;   (setq helm-M-x-fuzzy-match t
-;;         helm-adaptive-sort-by-frequent-recent-usage t
-;;         helm-split-window-inside-p t)
-;;   :config
-;;   (helm-mode 1))
-
-;; (use-package helm-descbinds
-;;   :defer 5
-;;   :bind ("C-h b" . helm-descbinds)
-;;   :config
-;;   (helm-descbinds-mode))
-
-;; (use-package swiper-helm
-;;   :defer 5
-;;   :general
-;;   (general-nmap
-;;     :prefix "SPC"
-;;     "ss" '(swiper-helm :which-key "swiper")))
+    "ss" '(swiper-helm :which-key "swiper")))
 
 ;; Make delimiters color-paired
 (use-package rainbow-delimiters
@@ -324,8 +318,8 @@
 ;  :straight t
 ;  :config
 ;  (aggressive-indent-mode 1))
-;; 'Geiser' - scheme interaction
 
+;; 'Geiser' - scheme interaction
 (use-package geiser
   :defer t)
 
@@ -400,7 +394,8 @@
 (use-package linum-relative
   :diminish linum-relative-mode
   :init
-  (setq linum-relative-current-symbol "")
+  (setq linum-relative-current-symbol ""
+        linum-relative-backend 'display-line-numbers-mode)
   :config
   (helm-linum-relative-mode 1)
   (add-hook 'prog-mode-hook 'linum-relative-mode))
@@ -508,7 +503,7 @@
   (org-babel-do-load-languages 'org-babel-load-languages
     '((python . t)
       (scheme . t)
-      (sh     . t)
+      ;;(sh     . t)
       (emacs-lisp  . t)
       (haskell .t)))
   ;; In a recent update, 'org-babel-get-header' was removed from org-mode, which
@@ -624,10 +619,6 @@
   "xe" '(eval-last-sexp                          :which-key "eval-last-sexp")
   "xb" '(eval-buffer                             :which-key "eval-buffer"))
 
-
-(run-with-idle-timer 5 nil (lambda ()
-                             (server-mode 1)))
-
 ;; reset garbage collection threshold to original value
 (run-with-idle-timer 5 nil (lambda ()
                              (setq gc-cons-threshold gc-cons-threshold--orig
@@ -637,7 +628,6 @@
 (load custom-file 'noerror 'nomessage)
 
 (add-hook 'after-init-hook (lambda ()
-                             (load-theme 'gruvbox-dark-hard)))
-
-(add-hook 'after-init-hook (lambda ()
                              (message (emacs-init-time))))
+(add-hook 'after-init-hook (lambda ()
+                             (load-theme 'solarized-dark)))
