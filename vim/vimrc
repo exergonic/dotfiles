@@ -245,28 +245,29 @@ Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme', 'racket', 'clojure']}
 Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
 Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
 Plug 'Shougo/vimproc', {
-      \ 'for': 'haskell',
-      \ 'do' : 'make',
-      \}
+            \ 'for': 'haskell',
+            \ 'do' : 'make',
+            \}
 Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
 Plug 'MicahElliott/vrod', {'for': 'racket'}
 Plug 'wlangstroth/vim-racket', {'for': 'racket'}
 Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
 Plug 'fsharp/vim-fsharp', {
-      \ 'for': 'fsharp',
-      \ 'do':  'make fsautocomplete',
-      \}
+            \ 'for': 'fsharp',
+            \ 'do':  'make fsautocomplete',
+            \}
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "GUI
 
-set bg=light
+set bg=dark
 colorscheme default
 " highlight Comment cterm=italic
 
 if has("gui_running")
+    set bg=dark
     colorscheme solarized
     set columns=100
     set lines=30
@@ -298,9 +299,9 @@ syntax on
 
 " Restore cursor to position it was when last in particular file
 autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+            \ if line("'\"") > 1 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
 
 " Don't prepend a comment if Enter or (O|o) is pressed on a commented line
 " fo == formatoptions
