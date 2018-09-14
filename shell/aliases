@@ -3,7 +3,7 @@
 # cd aliases
 alias \.\.="cd .."              # cd up one dir
 alias \.\.\.="cd ../.."         # cd up two dirs
-alias \.\.\.\="cd ../../.."     # ...   three dirs
+alias \.\.\.\.="cd ../../.."     # ...   three dirs
 
 # ls aliases
 alias ls='ls -F'
@@ -63,7 +63,7 @@ alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
 # Emacs
 alias e='emacsclient -c'
-alias e='emacsclient -t'
+alias et='emacsclient -t'
 # VIM
 alias vi='vim'
 alias nvi='nvim'
@@ -90,9 +90,10 @@ alias pacremove='sudo pacman -Rsnu'
 alias pacsearch='pacman -Ss'
 alias pacinfo='pacman -Qi'
 alias pacclean='sudo paccache -r -k 1 -v'
-alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist"
+alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist && cat /etc/pacman.d/mirrorlist"
 alias packages="pacman -Qqen" # Display packages explicitly installed
 alias orphans="pacman -Qtdq" # Display unused packages
+alias update="newmirrors && yay -Syu"
 
 # Powerpill
 alias pp='sudo powerpill'
