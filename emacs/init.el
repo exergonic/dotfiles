@@ -293,7 +293,9 @@
   :init
   (setq solarized-high-contrast-mode-line nil)
   :config
-  (require 'solarized))
+  (require 'solarized)
+  (add-hook 'emacs-startup-hook (lambda ()
+                             (load-theme 'solarized-dark))))
 
 ;;;; use $PATH established in shell to check for binaries
 ;; (use-package exec-path-from-shell
@@ -629,5 +631,3 @@
 
 (add-hook 'after-init-hook (lambda ()
                              (message (emacs-init-time))))
-(add-hook 'after-init-hook (lambda ()
-                             (load-theme 'solarized-dark)))

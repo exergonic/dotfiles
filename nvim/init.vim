@@ -53,6 +53,8 @@ set laststatus=2
 " Don't give intro message
 set shortmess+=I
 
+" Set global leader
+let mapleader = "\<Space>"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " }}}
 
@@ -72,16 +74,16 @@ set foldnestmax=2
 set backup
 
 " Because I don't usually keep backups for long, set them in the Trash
-set backupdir=~/.Trash
+set backupdir=~/.temp
 
 " I don't normally keep undo's either
-set undodir=~/.Trash
+set undodir=~/.temp
 
 " Maximum number of changes that can be undone
 set undolevels=10000
 
 " Directory for swap file
-set directory=~/.Trash
+set directory=~/.temp
 
 " Persistent undo's keep the tree of undo's created for a buffer in an undo file
 if has('persistent_undo')
@@ -181,6 +183,10 @@ call plug#begin('~/.config/nvim/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
+
+" Which key https://github.com/liuchengxu/vim-which-key
+Plug 'liuchengxu/vim-which-key'
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'

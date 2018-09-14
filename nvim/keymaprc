@@ -1,6 +1,6 @@
 " Mapping
 
-let mapleader = "\<Space>"
+let g:which_key_map = {}
 
 "Avoid escape
 inoremap ,, <Esc>
@@ -12,33 +12,59 @@ nnoremap <silent><Leader>qa :qa<CR>
 nnoremap <silent><Leader>x :x<CR>
 nnoremap <silent><Leader>xa :xa<CR>
 
-"Write
-nnoremap <silent><Leader>w :w<CR>
+
 ""Buffers
-nnoremap <silent><Leader>bb :b #<CR>
-nnoremap <silent><Leader>bl :ls<CR>
+"nnoremap <silent><Leader>bb :b #<CR>
+"nnoremap <silent><Leader>bl :ls<CR>
+
+let g:which_key_map['b'] = {
+            \ 'name' : '+buffers' ,
+            \ 'b' : [':b #', 'last-buffer'] ,
+            \ 'd' : [':bdelete', 'delete-buffer'] ,
+            \ 'l' : [':ls', 'list-buffers'] ,
+            \ 'w' : [':w', 'write-buffer']
+            \ }
 
 
 ""Tab movement
-nnoremap <silent><Leader>tl :tabnext<CR>
-nnoremap <silent><Leader>th :tabprev<CR>
-nnoremap <silent><Leader>tn :tabnew<CR>
+"nnoremap <silent><Leader>tl :tabnext<CR>
+"nnoremap <silent><Leader>th :tabprev<CR>
+"nnoremap <silent><Leader>tn :tabnew<CR>
+let g:which_key_map['t'] = {
+            \ 'name' : '+tabs' ,
+            \ 'l' : [':tabnext' , 'next-tab'] ,
+            \ 'h' : [':tabprev', 'previous-tab'],
+            \ 'n' : [':tabnew' , 'new-tab']
+            \}
 
 
 " Viewport Controls, ie moving between split panes
-nnoremap <Leader>wj <C-w>j
-nnoremap <Leader>wk <C-w>k
-nnoremap <Leader>wh <C-w>h
-nnoremap <Leader>wl <C-w>l
-
+"nnoremap <Leader>wj <C-w>j
+"nnoremap <Leader>wk <C-w>k
+"nnoremap <Leader>wh <C-w>h
+"nnoremap <Leader>wl <C-w>l
 " Move windows
-nnoremap <Leader>wJ <C-w>J
-nnoremap <Leader>wK <C-w>K
-nnoremap <Leader>wH <C-w>H
-nnoremap <Leader>wL <C-w>L
+"nnoremap <Leader>wJ <C-w>J
+"nnoremap <Leader>wK <C-w>K
+"nnoremap <Leader>wH <C-w>H
+"nnoremap <Leader>wL <C-w>L
 
-nnoremap <Leader>w<Left> 5<C-w><
-nnoremap <Leader>w<Right> 5<C-w>>
+let g:which_key_map['w'] = {
+            \ 'name' : '+windows' ,
+            \ 'j' : ['<C-w>j' , 'pane-down'] ,
+            \ 'k' : ['<C-w>k', 'pane-up'] ,
+            \ 'h' : ['<C-w>h' , 'pane-left'] ,
+            \ 'l' : ['<C-w>l' , 'pane-right'] ,
+            \ 'J' : ['<C-w>J' , 'move-pane-down'] ,
+            \ 'K' : ['<C-w>K' , 'move-pane-up'] ,
+            \ 'H' : ['<C-w>H' , 'move-pane-left'] ,
+            \ 'L' : ['<C-w>L' , 'move-pane-right'] ,
+            \ '<' : ['<C-w>5<' , 'decrease-panel-width'] ,
+            \ '>' : ['<C-w>5>' , 'increase-panel-width'] ,
+            \}
+
+"nnoremap <Leader>w<Left> 5<C-w><
+"nnoremap <Leader>w<Right> 5<C-w>>
 
 " Editing files
 
@@ -53,16 +79,19 @@ nnoremap <silent><Leader>ft :wincmd gf<CR>
 
 
 " NerdTree
-nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+let g:which_key_map['n'] = [':NERDTreeToggle', 'NerdTree']
+"nnoremap <silent><Leader>n :NERDTreeToggle<CR>
 
 " Compile current buffer into binary
-nnoremap <Leader>m :!compile.sh %<cr>
+let g:which_key_map['m'] = [':!compile.sh %<cr>', 'compile-binary']
+"nnoremap <Leader>m :!compile.sh %<cr>
 
 " Grab output from last fireplace call
 nnoremap <Leader>gf :call GrabLastFromFireplace()<CR>
 
 " Paste Mode
-nnoremap <silent><Leader>p :set invpaste paste?<CR>
+let g:which_key_map['p'] = [':set invpaste paste?', 'invert-paste']
+"nnoremap <silent><Leader>p :set invpaste paste?<CR>
 
 "Edit vimrc
 nnoremap <silent><Leader>fvv :tabnew ~/.config/nvim/init.vim<cr>
@@ -89,5 +118,7 @@ nmap <C-k> 3k3<C-y>
 
 nnoremap <silent>tu :call GHC_BrowseAll()<CR>
 nnoremap <silent>tw :call GHC_BrowseAll(1)<CR>
+
+call which_key#register('<Space>', "g:which_key_map")
 
 " vim: ft=vim
