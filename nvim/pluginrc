@@ -66,11 +66,11 @@ let Tlist_Close_On_Select           = 0        "don't close on select
 let Tlist_Use_Right_Window          = 1
 let Tlist_File_Fold_Auto_Close      = 1
 
-"NERD_tree
-let NERDTreeShowLineNumbers = 1
-" more colors = 1
-let NERDChristmasTree = 1
-"
+""NERD_tree
+"let NERDTreeShowLineNumbers = 1
+"" more colors = 1
+"let NERDChristmasTree = 1
+""
 
 
 "Rainbow Parenthesis
