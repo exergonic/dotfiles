@@ -349,6 +349,10 @@ syntax on
 " Fast terminal connection
 set ttyfast
 
+" Move vim to dir of current buffer
+set autochdir
+" autocmd BufEnter * silent! lcd %:p:h
+
 " Set what backspace can move over in insert mode
 set backspace=indent,eol,start
 
@@ -527,6 +531,7 @@ set bg=dark
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_italicize_comments = '1'
+set guifont=Source\ Code\ Pro
 
 highlight Comment cterm=italic
 
@@ -607,6 +612,7 @@ let mapleader = "\<Space>"
 set pastetoggle=<Leader>p
 
 nnoremap Q <Nop>
+nnoremap q <Nop>
 nnoremap <Leader><Leader> :
 
 "Avoid escape
