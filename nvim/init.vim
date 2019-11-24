@@ -594,7 +594,7 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python setlocal nosmartindent
 
 if has('win32')
-    let g:python_host_prog = 'C:\Python27\python.exe'
+    let g:python_host_prog = 'C:\Program Files\Python27\python.exe'
     let g:python3_host_prog = 'C:\Program Files\Python36\python.EXE'
 endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
