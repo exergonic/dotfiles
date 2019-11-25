@@ -4,6 +4,9 @@ function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 
+" Nice start page
+Plug 'mhinz/vim-startify'
+
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
 
