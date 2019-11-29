@@ -1,3 +1,5 @@
+let mapleader = "\<Space>"
+
 " Vim-Plug {{{1
 call plug#begin(stdpath('config') . '/plugged')
 function! DoRemote(arg)
@@ -6,6 +8,8 @@ endfunction
 
 " Nice start page
 Plug 'mhinz/vim-startify'
+
+Plug 'sheerun/vim-polyglot'
 
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
@@ -50,7 +54,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " Pretty parentheses to highlight matching pair
-Plug 'kien/rainbow_parentheses.vim' "{{{
+Plug 'kien/rainbow_parentheses.vim'
+"{{{ RainbowParenthesis Options
     au VimEnter * RainbowParenthesesToggle
     au Syntax * RainbowParenthesesLoadRound
     au Syntax * RainbowParenthesesLoadSquare
@@ -99,8 +104,6 @@ Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
 " Readline while in insert mode
 Plug 'tpope/vim-rsi'
 
-" Programming {{{2
-
 " Code linting
 Plug 'scrooloose/syntastic' "{{{
     "stick any detected errors into loc_list
@@ -138,9 +141,9 @@ Plug 'scrooloose/syntastic' "{{{
     let g:syntastic_style_warning_symbol='†'
     let g:syntastic_warning_symbol='⚠' "}}}
 
-" Code completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    if has('win32') "{{{
+" Language Server
+Plug 'neoclide/coc.nvim', {'branch': 'release'} "{{{
+    if has('win32')
         let g:coc_node_path = 'C:/Users/arach/scoop/apps/nodejs/current/node.exe'
     endif
 
@@ -264,81 +267,16 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     nnoremap <silent> <space>r  :<C-u>CocListResume<CR>
 "}}}
 
-"Plug 'Shougo/deoplete.nvim', {'do': function('DoRemote')} "{{{
-"    let g:deoplete#enable_at_startup = 1
-"    let g:deoplete#num_processes = 1
-"    let g:deoplete#complete_method = 'complete'
-"    " Use smartcase.
-"    let g:deoplete#enable_smart_case = 1
-"    " Control the nubmer of the input completion at the time
-"    " of the key input automatically
-"    let g:deoplete#autocomplete_start_length = 0
-"
-"      "" Set minimum syntax keyword length.
-"    let g:deoplete#sources#syntax#min_keyword_length = 1
-"    let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
-"
-"     " Define dictionary.
-"    let g:deoplete#sources#dictionary#dictionaries = {
-"         \ 'default' : '',
-"         \ 'vimshell' : $HOME.'/.vimshell_hist',
-"         \ 'scheme' : $HOME.'/.gosh_completions'
-"         \ }
-"    " Define keyword.
-"    if !exists('g:deoplete#keyword_patterns')
-"        let g:deoplete#keyword_patterns = {}
-"    endif
-"
-"    let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-"    let g:deoplete#keyword_patterns['default'] = '\h\w*'
-"
-"    " <C-h>, <BS>: close popup and delete backword char.
-"    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-"    inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-"
-"    " <CR>: close popup and save indent.
-"    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"    function! s:my_cr_function() abort
-"      return deoplete#mappings#close_popup() . "\<CR>"
-"    endfunction
-"
-"     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"     function! s:my_cr_function()
-"         return deoplete#close_popup() . "\<CR>"
-"         "For no inserting <CR> key.
-"         return pumvisible() ? deoplete#close_popup() : "\<CR>"
-"     endfunction
-"
-"    " <TAB>: completion.
-"    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"
-"    " Enable heavy omni completion.
-"    if !exists('g:deoplete#sources#omni#input_patterns')
-"      let g:deoplete#sources#omni#input_patterns = {}
-"    endif
-" }}}
-
-
 " Completion for python
 Plug 'zchee/deoplete-jedi', {'for': 'python'}
     let g:deoplete#sources#jedi#show_docstring = 1
 
 Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme']}
 
-" Plug 'fs111/pydoc.vim', {'for': 'python'}
-" Plug 'wlangstroth/vim-racket' , {'for': 'racket'}
-" Plug 'MicahElliott/vrod', {'for': 'racket'}
-" Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
-" Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-" Plug 'clojure-emacs/cider', {'for': 'clojure'}
-" Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-
-" }}}
 
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
-
 
 " MISC {{{1
 
@@ -610,7 +548,6 @@ let g:sh_indent_case_labels=1
 
 "let g:which_key_map = {}
 
-let mapleader = "\<Space>"
 
 set pastetoggle=<Leader>p
 
@@ -624,10 +561,10 @@ vnoremap ,, <Esc>
 tnoremap ,, <C-\><C-N>
 
 "Easy quit / save and quit etc
-nnoremap <silent><Leader>q :q<CR>
-nnoremap <silent><Leader>qa :qa<CR>
-nnoremap <silent><Leader>x :x<CR>
-nnoremap <silent><Leader>xa :xa<CR>
+" nnoremap <silent><Leader>q :q<CR>
+" nnoremap <silent><Leader>qa :qa<CR>
+" nnoremap <silent><Leader>x :x<CR>
+" nnoremap <silent><Leader>xa :xa<CR>
 
 
 ""Buffers
