@@ -53,8 +53,6 @@ set laststatus=2
 " Don't give intro message
 set shortmess+=I
 
-" Set global leader
-let mapleader = "\<Space>"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " }}}
 
@@ -185,8 +183,8 @@ function! DoRemote(arg)
 endfunction
 
 " Which key https://github.com/liuchengxu/vim-which-key
-Plug 'liuchengxu/vim-which-key'
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+" Plug 'liuchengxu/vim-which-key'
+"nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
@@ -199,7 +197,7 @@ Plug 'bling/vim-bufferline'
 let g:bufferline_echo = 0
 
 " Display indentation with thin, vertical line
-" Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 
 " Status line
 Plug 'bling/vim-airline'
@@ -239,7 +237,7 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/HowMuch'
 
 " Launches a calculator in a buffer
-Plug 'gregsexton/VimCalc'
+" Plug 'gregsexton/VimCalc'
 
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
@@ -271,18 +269,75 @@ Plug 'tpope/vim-rsi'
 Plug 'scrooloose/syntastic'
 
 " Code completion
-Plug 'Shougo/deoplete.nvim', {'do': function('DoRemote')}
-let g:deoplete#enable_at_startup = 1
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#num_processes = 1
+
+"   let g:deoplete#enable_at_startup = 1
+"   let g:deoplete#complete_method = 'complete'
+"
+"    " Use smartcase.
+"   let g:deoplete#enable_smart_case = 1
+"
+"   " Control the nubmer of the input completion at the time
+"   " of the key input automatically
+"   let g:deoplete#autocomplete_start_length = 0
+"
+"     "" Set minimum syntax keyword length.
+"   let g:deoplete#sources#syntax#min_keyword_length = 1
+"   let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
+"
+"    " Define dictionary.
+"   let g:deoplete#sources#dictionary#dictionaries = {
+"        \ 'default' : '',
+"        \ 'vimshell' : $HOME.'/.vimshell_hist',
+"        \ 'scheme' : $HOME.'/.gosh_completions'
+"        \ }
+"   "
+"   " Define keyword.
+"   if !exists('g:deoplete#keyword_patterns')
+"       let g:deoplete#keyword_patterns = {}
+"   endif
+"
+"   let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
+"   let g:deoplete#keyword_patterns['default'] = '\h\w*'
+
+
+" <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+"  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+"
+" <CR>: close popup and save indent.
+"   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"   function! s:my_cr_function() abort
+"     return deoplete#close_popup() . "\<CR>"
+"   endfunction
+"
+"   " <TAB>: completion.
+"   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"
+"   " Enable heavy omni completion.
+"   if !exists('g:deoplete#sources#omni#input_patterns')
+"     let g:deoplete#sources#omni#input_patterns = {}
+"   endif
+
 
 " Completion for python
 Plug 'zchee/deoplete-jedi', {'for': 'python'}
 let g:deoplete#sources#jedi#show_docstring = 1
 
+" Scala
+Plug 'derekwyatt/vim-scala', {'for': 'scala'}
+au Bufread,BufNewFile *.sbt set filetype=scala
+
+"Python
 Plug 'fs111/pydoc.vim', {'for': 'python'}
 Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme']}
 
-Plug 'wlangstroth/vim-racket' , {'for': 'racket'}
-Plug 'MicahElliott/vrod', {'for': 'racket'}
+"  Plug 'wlangstroth/vim-racket' , {'for': 'racket'}
+"  Plug 'MicahElliott/vrod', {'for': 'racket'}
 
 Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
 
@@ -294,12 +349,6 @@ Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 " Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
 " Plug 'Shougo/vimproc', {'for': 'haskell','do' : 'make'}
 " Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
-
-" Plug 'fsharp/vim-fsharp', {
-"       \ 'for': 'fsharp',
-"       \ 'do':  'make fsautocomplete',
-"       \}
-" }}}
 
 call plug#end()
 
@@ -316,9 +365,9 @@ highlight Comment cterm=italic
 
 if has("gui_running")
     " When in gui, remove menubar (m), toolbar (T), right scroll-bar (r)
-    set guioptions=-m
+    " set guioptions=-m
     " set guioptions=-T   KEEP TOOLBAR FOR NOW
-    set guioptions=-r
+    "set guioptions=-r
     set guifont=Inconsolata\ for\ Powerline\ Medium
 endif
 

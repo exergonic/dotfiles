@@ -184,12 +184,12 @@
   :init
   (setq restart-emacs-restore-frames t))
 
-;; (use-package neotree
-;;   :disabled
-;;   :defer 5
-;;   :commands neotree-toggle
-;;   :config
-;;   (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
+(use-package neotree
+  :disabled
+  :defer 5
+  :commands neotree-toggle
+  :config
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)))
 
 ;; (use-package all-the-icons
 ;;   :disabled

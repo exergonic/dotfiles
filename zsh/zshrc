@@ -4,6 +4,7 @@
 export LANG=en_US.UTF-8
 export LESS=-XR
 export EDITOR='nvim'
+export VISUAl=$EDITOR
 export TERM=xterm-256color
 
 path=(${HOME}/.local/bin ${HOME}/usr/bin ${HOME}/usr/scripts $path)
@@ -169,14 +170,15 @@ bindkey '^j' down-history
 # Prompt
 # PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
 # %{$fg[white]%}λ%{$reset_color%} "
-PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
+# PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
+PS1="%(1j.[%j] .)%{$fg[blue]%}%~
+%{$fg[magenta]%}λ%{$reset_color%} "
 
 # Right Promopt
-MODE_INDICATOR="%{$fg_bold[red]%}<%{$fg[red]%}<<%{$reset_color%}"
-
 function vi_mode_prompt_info() {
   echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
 }
+MODE_INDICATOR="%{$fg_bold[red]%}<%{$fg[red]%}<<%{$reset_color%}"
 
 RPS1=$(vi_mode_prompt_info)
 
@@ -186,8 +188,8 @@ export XDG_CONFIG_HOME=${HOME}/.config
 export XDG_DATA_HOME=${HOME}/.local/share
 export XDG_CACHE_HOME=${HOME}/.cache
 export XDG_RUNTIME_DIR=${HOME}/.local/runtime
-export XDG_CONFIGDIRS=/etc/xdg
-export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
+# export XDG_CONFIGDIRS=/etc/xdg
+export XDG_DATA_DIRS=${XDG_DATA_DIRS}:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
 
 # XCompose
 export QT_IM_MODULE=xum
@@ -216,7 +218,7 @@ then
 fi
 # }}}
 
-# pip zsh completion start
+# pip zsh completion start {{{
 function _pip_completion {
   local words cword
   read -Ac words
@@ -226,19 +228,21 @@ function _pip_completion {
              PIP_AUTO_COMPLETE=1 $words[1] ) )
 }
 compctl -K _pip_completion pip
-# pip zsh completion end
-
+# pip zsh completion end }}}
 
 # ZPLUG
 source ${HOME}/.zplug/init.zsh
+
+# auto-autosuggestions
 zplug "zsh-users/zsh-autosuggestions"
-    # auto-autosuggestions
-    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-    bindkey '^ ' autosuggest-accept
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+bindkey '^ ' autosuggest-accept
 
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
 zplug "hlissner/zsh-autopair", defer:2
+
 zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 if ! zplug check --verbose; then
@@ -248,7 +252,7 @@ if ! zplug check --verbose; then
     fi
 fi
 
-zplug load ## --verbose
+zplug load # --verbose
 
 source ${configdir}/shell/aliases
 source ${configdir}/shell/functions

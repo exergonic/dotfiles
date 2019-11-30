@@ -1,0 +1,7 @@
+export configdir=${HOME}/.dotfiles
+# alias vim='vim.nox-py2'
+alias update='sudo aptitude update'
+alias upgrade='sudo aptitude update && sudo aptitude upgrade'
+alias install='sudo aptitude install'
+source /etc/zsh_command_not_found
+export DISPLAY=0:0

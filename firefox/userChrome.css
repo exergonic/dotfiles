@@ -2,11 +2,11 @@
 
 /* Sidebar styling */
 #TabsToolbar {
-    visibility: collapse !important;
+    visibility: collapse;
 }
 
 #sidebar-header {
-  display: none;
+    visibility: collapse !important;
 }
 
 /* Correct input fields when using dark themes */
