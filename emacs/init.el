@@ -287,15 +287,14 @@
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode))
 
 ;;; Themes
-(straight-use-package 'gruvbox-theme)
+(use-package gruvbox-theme
+  :config
+  (add-hook 'emacs-startup-hook (lambda ()
+                            (load-theme 'gruvbox-dark-soft))))
 
 (use-package solarized-theme
   :init
-  (setq solarized-high-contrast-mode-line nil)
-  :config
-  (require 'solarized)
-  (add-hook 'emacs-startup-hook (lambda ()
-                             (load-theme 'solarized-dark))))
+  (setq solarized-high-contrast-mode-line nil))
 
 ;;;; use $PATH established in shell to check for binaries
 ;; (use-package exec-path-from-shell
@@ -320,10 +319,6 @@
 ;  :straight t
 ;  :config
 ;  (aggressive-indent-mode 1))
-
-;; 'Geiser' - scheme interaction
-(use-package geiser
-  :defer t)
 
 ;; 'Company' - "Complete Anything"
 (use-package company
@@ -363,35 +358,6 @@
 
 (use-package flycheck
   :defer t)
-  ;;:hook (prog-mode . flycheck-mode)
-  ;;:config
-  ;;(add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; (use-package haskell-mode
-;;   :mode "\\.hs\\'"
-;;   :init
-;;   (setq haskell-process-type 'stack-ghci))
-
-;; (use-package intero
-;;   :disabled)
-;;  :config
-;;  (add-hook 'haskell-mode-hook 'intero-mode)
-
-;; (use-package ghc
-;;   :after haskell-mode
-;;   :init
-;;   (add-hook 'haskell-mode-hook (lambda ()
-;;                                  (ghc-init))))
-
-;; (use-package company-ghc
-;;   :after (company ghc)
-;;   :config
-;;   (add-to-list 'company-backends 'company-ghc))
-
-;; (use-package hindent
-;;   :mode "\\.hs\\'"
-;;   :hook (haskell-mode-hook . hindent-mode))
-
 ;; Relative numbers
 (use-package linum-relative
   :diminish linum-relative-mode
@@ -475,21 +441,6 @@
           scheme-mode
           racket-mode) . paredit-mode))
 
-;; ;;; Feed Reader https://github.com/skeeto/elfeed
-;; (use-package elfeed
-;;   :commands elfeed)
-
-;; ;; https://github.com/remyhonig/elfeed-org
-;; (use-package elfeed-org
-;;   :after elfeed
-;;   :config
-;;   (elfeed-org))
-
-;; ;;; https://github.com/algernon/elfeed-goodies
-;; (use-package elfeed-goodies
-;;   :after elfeed
-;;   :config
-;;   (elfeed-goodies/setup))
 
 (require 'org-version)
 (use-package org

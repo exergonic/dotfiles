@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
 
 # Shell options
-set	-o vi
+set -o vi
 
-shellopts=(autocd	checkhash checkjobs histappend \
+shellopts=(autocd checkhash checkjobs histappend \
            checkwinsize cmdhist cdspell globstar \
            extglob  lithist nocaseglob no_empty_cmd_completion \
-			 		 shift_verbose)
+           shift_verbose)
 
 for opt in "${shellopts[@]}"
 do
-	shopt -s $opt
+    shopt -s $opt
 done
 
 shopt -u mailwarn
 shopt -u hostcomplete
-
-export PATH=/usr/local/bin:/usr/local/sbin:${HOME}/usr/bin:${HOME}/usr/scripts::${HOME}/usr/scripts/chemistry:${HOME}/scripts/chemistry/boss:${HOME}/scripts/chemistry/gaussian:$PATH
 
 # Terminal options
 export TERM=xterm-256color
@@ -49,25 +47,18 @@ WHITE='\[\e[1;37m\]'
 NC='\[\e[0m\]' # No Color
 
 # PS1
-PS1="[\j] ${yellow}\u${NC}@${green}\h:${NC}\w\n${blue}λ${NC} "
+# PS1="[\j] ${yellow}\u${NC}@${green}\h:${NC}\w\n${blue}λ${NC} "
+PS1="${blue}\w${NC} ${magenta}λ${NC} "
 PROMPT_DIRTRIM=4
 
 config_dir=${HOME}/Dropbox/dotfiles
-bash_lib_dir=${HOME}/usr/lib/bash
 source ${config_dir}/shell/aliases
-source ${config_dir}/bash/functions
+source ${config_dir}/shell/functions
 source ${config_dir}/bash/dircolors.sh
 source ${config_dir}/shell/dirstack.sh
 
 [[ -f ${HOME}/.bcrc ]] &&  export BC_ENV_ARGS="$HOME/.bcrc"
 [[ -f ${HOME}/.dirstack ]] && dir_stack="$( cat ${HOME}/.dirstack )"
-
-case "$OSTYPE" in
-	*Darwin*|*darwin*)
-		source ${config_dir}/bash/osx_rc ;;
-	*Linux*|*linux*)
-		source ${config_dir}/bash/linux_rc ;;
-esac
 
 export GPG_TTY=$(tty)¬
 export XDG_CONFIG_HOME=${HOME}/.config
@@ -81,10 +72,10 @@ export GTK_IM_MODULE=uim
 unset XMODIFIERS
 
 colors=(red RED blue BLUE cyan CYAN black BLACK \
-				green GREEN yellow YELLOW magenta MAGENTA white WHITE NC )
+        green GREEN yellow YELLOW magenta MAGENTA white WHITE NC )
 
 for color in ${colors[@]}
 do
-	unset $color
+    unset $color
 done
 

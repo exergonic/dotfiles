@@ -17,7 +17,7 @@ dirstack() {
 
 	_echo_DS() {
 		# print dirstack to screen
-		printf "%s" "${dir_stack}" | tr "[:blank:]" "\n"
+		printf "%s\n" "${dir_stack}" | tr "[:blank:]" "\n"
 	}
 
 	_export_DS() {

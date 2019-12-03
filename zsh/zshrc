@@ -171,8 +171,7 @@ bindkey '^j' down-history
 # PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
 # %{$fg[white]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
-PS1="%(1j.[%j] .)%{$fg[blue]%}%~
-%{$fg[magenta]%}λ%{$reset_color%} "
+PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
 
 # Right Promopt
 function vi_mode_prompt_info() {
