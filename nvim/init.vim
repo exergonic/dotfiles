@@ -1,183 +1,7 @@
-" MISC {{{1
-
-" Vim = Vi iMproved
-set nocompatible
-
-" Fast terminal connection
-set ttyfast
-
-" Set what backspace can move over in insert mode
-set backspace=indent,eol,start
-
-" Show line and column number of cursor position
-set ruler
-
-" Show command in last line of screen
-set showcmd
-
-" Confirm certain actions, such as quit
-set confirm
-
-" Allow virtual editing in Visual block mode.
-" Virtual editing means that the cursor can be positioned
-" where there is no actual character.
-set virtualedit=block
-
-" Keep this many command-lines in history table.
-set history=200
-
-" Set character encoding in buffers, registers, etc.
-set encoding=utf-8
-
-" Maximum amount of text that can be inserted
-" set textwidth=100
-
-" Number of colors
-set t_Co=256
-
-" Strings to use in `list` mode and :list command
-set listchars=eol:¬,tab:»·,trail:·
-
-" If in Insert, Replace or Visual mode put a message on the last line.
-set showmode
-
-" When a backet is inserted, briefly jump to the matching one
-set showmatch
-
-" Number of lines to use for the command-line
-set cmdheight=2
-
-" When will the last window have a status line: 2 = always
-set laststatus=2
-
-" Don't give intro message
-set shortmess+=I
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" }}}
-
-" Folding {{{1
-" the fold column is `n` columns wide
-set foldcolumn=2
-
-" Fold points by using the marker method, as in this file
-set foldmethod=marker
-
-" Folds can be nested twice
-set foldnestmax=2
-" }}}
-
-" Backups and Undo {{{1
-" keep backups
-set backup
-
-" Because I don't usually keep backups for long, set them in the Trash
-set backupdir=~/.temp
-
-" I don't normally keep undo's either
-set undodir=~/.temp
-
-" Maximum number of changes that can be undone
-set undolevels=10000
-
-" Directory for swap file
-set directory=~/.temp
-
-" Persistent undo's keep the tree of undo's created for a buffer in an undo file
-if has('persistent_undo')
-    set undofile
-    set undoreload=10000
-endif
-" }}}
-
-" Searching {{{1
-" incremental searching
-set incsearch
-
-" ignore letter case
-set ignorecase
-
-" ignore case unless I include a capital letter by default
-set smartcase
-
-" don't highlight the search term
-set nohlsearch
-
-" }}}
-
-" Misc settings {{{1
-" Highlight the line where the cursor is.
-set cursorline
-
-" Scroll when I get to within `n` lines of buffer
-set scrolloff=10
-
-" Horizontally, as well
-set sidescroll=15
-set sidescrolloff=15
-
-" Line numbers
-" give the numberline 4 spaces wide
-set numberwidth=4
-
-" show numbers relative to the current line
-set relativenumber
-
-" but still show the absolute number of the current line
-set number
-
-" Use the clipboard for yank and delete
-set clipboard+=unnamedplus
-
-" A vim specific code may appear within a file
-set modeline
-
-" Enhanced ex command-line completion
-set wildmenu
-set wildmode=list:longest,full
-
-" Save buffer when moving away from it
-set autowrite
-
-" Automatically read buffer when it's been changed from outside
-set autoread
-
-" Unload a buffer when it's hidden
-set hidden
-
-" No title at the top of window
-set notitle
-
-" Use visual bell instead of beeping. No terminal code disables visual bell
-set visualbell t_vb=
-set novisualbell
-
-" In insert mode, TAB inserts appropriate number of spaces.
-" stop a tab at `n` characters
-set tabstop=4
-set shiftwidth=4
-
-" tabs are expanded to spaces
-set expandtab
-
-" Better indent
-set smartindent
-set autoindent
-
-" When splitting the window, the buffer splits to right or below
-set splitbelow
-set splitright
-
-" Set max number of items in pop-up for autocompletion
-set pumheight=10
-
-" Help window hight max
-set helpheight=20
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
+let mapleader = "\<Space>"
 
 " Vim-Plug {{{1
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin(stdpath('config') . '/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
@@ -186,25 +10,35 @@ endfunction
 " Plug 'liuchengxu/vim-which-key'
 "nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
+" Nice start page
+Plug 'mhinz/vim-startify'
+
+" Lots o' languages
+Plug 'sheerun/vim-polyglot'
+
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
 
 " Fuzzy finder
 Plug 'kien/ctrlp.vim'
+    let g:ctrlp_cmd = 'CtrlPMixed'
 
 " List of buffers
 Plug 'bling/vim-bufferline'
-let g:bufferline_echo = 0
+    let g:bufferline_echo = 0
 
 " Display indentation with thin, vertical line
 Plug 'Yggdroot/indentLine'
 
 " Status line
 Plug 'bling/vim-airline'
-let g:airline#extensions#wordcount#enabled = 1
-let g:airline#extensions#bufferline#enabled = 1
+    let g:airline#extensions#wordcount#enabled = 1
+    let g:airline#extensions#bufferline#enabled = 1
 
-" Colorschemes {{{2
+Plug 'vim-airline/vim-airline-themes'
+    let g:airline_theme = 'minimalist'
+
+" Colorschemes {{{1
 Plug 'plan9-for-vimspace/acme-colors'
 Plug 'altercation/vim-colors-solarized'
 Plug 'liuchengxu/space-vim-dark'
@@ -216,31 +50,43 @@ Plug 'stephenmckinney/vim-solarized-powerline'
 Plug 'christoomey/vim-tmux-navigator'
 
 " Filesystem explorer
-Plug 'scrooloose/nerdtree' ", {'on': 'NERDTreeTabsToggle'}
+Plug 'scrooloose/nerdtree'
+    let NERDTreeShowLineNumbers = 1
+    let NERDChristmasTree = 1
+    nnoremap <silent><Leader>n :NERDTreeToggle<CR>
 
 " Visualize undo levels
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 
 " Pretty parentheses to highlight matching pair
 Plug 'kien/rainbow_parentheses.vim'
-
-" Filesystem explorer
-Plug 'vim-scripts/Ranger.vim'
-
-" Manipulate columns of ordered data
-Plug 'vim-scripts/VisIncr'
+"{{{ RainbowParenthesis Options
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+    let g:rbpt_colorpairs = [
+        \ ['brown',       'RoyalBlue3'],
+        \ ['Darkblue',    'SeaGreen3'],
+        \ ['darkgray',    'DarkOrchid3'],
+        \ ['darkgreen',   'firebrick3'],
+        \ ['darkcyan',    'RoyalBlue3'],
+        \ ['darkred',     'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['brown',       'firebrick3'],
+        \ ['gray',        'RoyalBlue3'],
+        \ ['black',       'SeaGreen3'],
+        \ ['darkmagenta', 'DarkOrchid3'],
+        \ ['Darkblue',    'firebrick3'],
+        \ ['darkgreen',   'RoyalBlue3'],
+        \ ['darkcyan',    'SeaGreen3'],
+        \ ['darkred',     'DarkOrchid3'],
+        \ ['red',         'firebrick3'],
+        \ ]
+" }}}
 
 " Efficient toggling of commented code
 Plug 'tpope/vim-commentary'
-
-" Calculate mathematical visual selections
-Plug 'vim-scripts/HowMuch'
-
-" Launches a calculator in a buffer
-" Plug 'gregsexton/VimCalc'
-
-" Distraction free writing
-Plug 'junegunn/goyo.vim'
 
 " Align columns to tokens
 Plug 'godlygeek/tabular'
@@ -255,137 +101,249 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 
 Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
-let vim_markdown_preview_toggle=1
-let vim_markdown_preview_hotkey='<C-m>'
-let vim_markdown_preview_browser='Firefox'
-let vim_markdown_preview_use_xdg_open=1
+""   let vim_markdown_preview_toggle=1
+""   let vim_markdown_preview_hotkey='<C-m>'
+""   let vim_markdown_preview_browser='Firefox'
+""   let vim_markdown_preview_use_xdg_open=1
 
 " Readline while in insert mode
 Plug 'tpope/vim-rsi'
 
-" Programming {{{2
-
-" Code linting
-Plug 'scrooloose/syntastic'
-
-" Code completion
+" Language Server
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"{{{
+    if has('win32')
+        let g:coc_node_path = 'C:/Users/arach/scoop/apps/nodejs/current/node.exe'
+    endif
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#num_processes = 1
+    " You will have bad experience for diagnostic messages when it's default 4000.
+    set updatetime=300
 
-"   let g:deoplete#enable_at_startup = 1
-"   let g:deoplete#complete_method = 'complete'
-"
-"    " Use smartcase.
-"   let g:deoplete#enable_smart_case = 1
-"
-"   " Control the nubmer of the input completion at the time
-"   " of the key input automatically
-"   let g:deoplete#autocomplete_start_length = 0
-"
-"     "" Set minimum syntax keyword length.
-"   let g:deoplete#sources#syntax#min_keyword_length = 1
-"   let g:deoplete#lock_buffer_name_pattern = '\*ku\*'
-"
-"    " Define dictionary.
-"   let g:deoplete#sources#dictionary#dictionaries = {
-"        \ 'default' : '',
-"        \ 'vimshell' : $HOME.'/.vimshell_hist',
-"        \ 'scheme' : $HOME.'/.gosh_completions'
-"        \ }
-"   "
-"   " Define keyword.
-"   if !exists('g:deoplete#keyword_patterns')
-"       let g:deoplete#keyword_patterns = {}
-"   endif
-"
-"   let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
-"   let g:deoplete#keyword_patterns['default'] = '\h\w*'
+    " don't give |ins-completion-menu| messages.
+    set shortmess+=c
 
+    " always show signcolumns
+    set signcolumn=yes
 
-" <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-"  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-"
-" <CR>: close popup and save indent.
-"   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"   function! s:my_cr_function() abort
-"     return deoplete#close_popup() . "\<CR>"
-"   endfunction
-"
-"   " <TAB>: completion.
-"   inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-"
-"   " Enable heavy omni completion.
-"   if !exists('g:deoplete#sources#omni#input_patterns')
-"     let g:deoplete#sources#omni#input_patterns = {}
-"   endif
+    " Use tab for trigger completion with characters ahead and navigate.
+    " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ coc#refresh()
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+    function! s:check_back_space() abort
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~# '\s'
+    endfunction
+
+    " Use <c-space> to trigger completion.
+    inoremap <silent><expr> <c-space> coc#refresh()
+
+    " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+    " Coc only does snippet and additional edit on confirm.
+    inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+    " Or use `complete_info` if your vim support it, like:
+    " inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+    " Use `[g` and `]g` to navigate diagnostics
+    nmap <silent> [g <Plug>(coc-diagnostic-prev)
+    nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+    " Remap keys for gotos
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+
+    " Use K to show documentation in preview window
+    nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+    function! s:show_documentation()
+      if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+      else
+        call CocAction('doHover')
+      endif
+    endfunction
+
+    " Highlight symbol under cursor on CursorHold
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+
+    " Remap for rename current word
+    nmap <leader>rn <Plug>(coc-rename)
+
+    " Remap for format selected region
+    xmap <leader>f  <Plug>(coc-format-selected)
+    nmap <leader>f  <Plug>(coc-format-selected)
+
+    augroup mygroup
+      autocmd!
+      " Setup formatexpr specified filetype(s).
+      autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+      " Update signature help on jump placeholder
+      autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    augroup end
+
+    " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+    xmap <leader>a  <Plug>(coc-codeaction-selected)
+    nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+    " Remap for do codeAction of current line
+    nmap <leader>ac  <Plug>(coc-codeaction)
+    " Fix autofix problem of current line
+    nmap <leader>qf  <Plug>(coc-fix-current)
+
+    " Create mappings for function text object, requires document symbols feature of languageserver.
+    xmap if <Plug>(coc-funcobj-i)
+    xmap af <Plug>(coc-funcobj-a)
+    omap if <Plug>(coc-funcobj-i)
+    omap af <Plug>(coc-funcobj-a)
+
+    " Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+    nmap <silent> <C-d> <Plug>(coc-range-select)
+    xmap <silent> <C-d> <Plug>(coc-range-select)
+
+    " Use `:Format` to format current buffer
+    command! -nargs=0 Format :call CocAction('format')
+
+    " Use `:Fold` to fold current buffer
+    command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+    " use `:OR` for organize import of current buffer
+    command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+    " Add status line support, for integration with other plugin, checkout `:h coc-status`
+    set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+    " Using CocList
+    " Show all diagnostics
+    nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+    " Manage extensions
+    nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+    " Show commands
+    nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+    " Find symbol of current document
+    nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+    " Search workspace symbols
+    nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+    " Do default action for next item.
+    nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+    " Do default action for previous item.
+    nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+    " Resume latest coc list
+    nnoremap <silent> <space>r  :<C-u>CocListResume<CR>
+"}}}
 
 " Completion for python
 Plug 'zchee/deoplete-jedi', {'for': 'python'}
-let g:deoplete#sources#jedi#show_docstring = 1
+    let g:deoplete#sources#jedi#show_docstring = 1
 
-" Scala
-Plug 'derekwyatt/vim-scala', {'for': 'scala'}
-au Bufread,BufNewFile *.sbt set filetype=scala
-
-"Python
-Plug 'fs111/pydoc.vim', {'for': 'python'}
 Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme']}
 
-"  Plug 'wlangstroth/vim-racket' , {'for': 'racket'}
-"  Plug 'MicahElliott/vrod', {'for': 'racket'}
-
-Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
-
-Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-Plug 'clojure-emacs/cider', {'for': 'clojure'}
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-
-" Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
-" Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
-" Plug 'Shougo/vimproc', {'for': 'haskell','do' : 'make'}
-" Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
 
 call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-"GUI {{{1
+" MISC {{{1
+set nocompatible
+filetype plugin on
+filetype plugin indent on
+syntax on
+set ttyfast
+set autochdir
+" autocmd BufEnter * silent! lcd %:p:h
+set backspace=indent,eol,start
+set ruler
+set showcmd
+set confirm
+set virtualedit=block
+set history=200
+set encoding=utf-8
+set t_Co=256
+set listchars=eol:¬,tab:»·,trail:·
+set showmode
+set showmatch
+set cmdheight=2
+set laststatus=2
+set shortmess+=I
+" }}}
 
+" Folding {{{1
+set foldcolumn=2
+set foldmethod=marker
+set foldnestmax=2
+" }}}
+
+" Backups and Undo {{{1
+set backup
+set directory=~/.temp
+set backupdir=~/.temp
+set undodir=~/.temp
+set undolevels=10000
+if has('persistent_undo')
+    set undofile
+    set undoreload=10000
+endif
+" }}}
+
+set updatetime=300
+set signcolumn=yes
+set cursorline
+set scrolloff=10
+set sidescroll=15
+set sidescrolloff=15
+set numberwidth=4
+set relativenumber
+set number
+set clipboard+=unnamedplus
+set modeline
+set wildmenu
+set wildmode=list:longest,full
+set autowrite
+set autoread
+set hidden
+set notitle
+set visualbell t_vb=
+set novisualbell
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set autoindent
+set splitbelow
+set splitright
+set pumheight=10
+set helpheight=20
+
+
+
+
+
+" Searching {{{1
+set incsearch
+set ignorecase
+set smartcase
+set nohlsearch
+
+"GUI {{{1
+set termguicolors
 set bg=dark
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_italicize_comments = '1'
-
+set guifont=Source\ Code\ Pro
 highlight Comment cterm=italic
+" }}}
 
-if has("gui_running")
-    " When in gui, remove menubar (m), toolbar (T), right scroll-bar (r)
-    " set guioptions=-m
-    " set guioptions=-T   KEEP TOOLBAR FOR NOW
-    "set guioptions=-r
-    set guifont=Inconsolata\ for\ Powerline\ Medium
-endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
 " SYNTAX {{{1
-
-" Enable file type detection
 filetype plugin on
-
-" Load file type specific indentation file
 filetype plugin indent on
-
-" Use global sytax highlighting color settings
 syntax on
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
+" }}}
 
 " AUTOCOMMANDS {{{1
 
@@ -414,7 +372,7 @@ autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
 " Auto remove all trailing whitespace on :w
 autocmd BufWritePre * :%s/\s\+$//e
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
+" }}}
 
 "CODE COMPLETION {{{1
 
@@ -443,50 +401,105 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 " Turn off smartindent for Python
 autocmd FileType python setlocal nosmartindent
 
+if has('win32')
+    let g:python_host_prog = 'C:\Program Files\Python27\python.exe'
+    let g:python3_host_prog = 'C:\Program Files\Python36\python.EXE'
+endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" HASKELL {{{1
-
-let g:haskellmode_completion_ghc = 1
-autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
-
-" FORTRAN {{{1
-
-" Fortran77 has strict column rules for some compilers
-" Distinguish between the two based upon file extension
-if (&ft=='fortran')
-    let s:extfname = expand("%:e")
-    let fortran_do_enddo=1
-    let fortran_more_precise=1
-    let fortran_have_tabs=1
-    if s:extfname ==? "f90"
-        let fortran_free_source=1
-        unlet! fortran_fixed_source
-    else
-        let fortran_fixed_source=1
-        unlet! fortran_free_source
-        autocmd FileType fortran set colorcolumn=6,73
-    endif
-endif " }}}
-
-" SHELL {{{1
-
-" indent CASE statement appropriately
+" Shell {{{1
 let g:sh_indent_case_labels=1
+" }}}
+
+" KEY MAPPINGS {{{1
+
+"let g:which_key_map = {}
+
+
+set pastetoggle=<Leader>p
+
+nnoremap Q <Nop>
+nnoremap q <Nop>
+nnoremap <Leader><Leader> :
+
+"Avoid escape
+inoremap ,, <Esc>
+vnoremap ,, <Esc>
+tnoremap ,, <C-\><C-N>
+
+"Easy quit / save and quit etc
+" nnoremap <silent><Leader>q :q<CR>
+" nnoremap <silent><Leader>qa :qa<CR>
+" nnoremap <silent><Leader>x :x<CR>
+" nnoremap <silent><Leader>xa :xa<CR>
+
+
+""Buffers
+nnoremap <silent><Leader>bb :b #<CR>
+nnoremap <silent><Leader>bl :ls<CR>
+
+""Tab movement
+nnoremap <silent><Leader>tl :tabnext<CR>
+nnoremap <silent><Leader>th :tabprev<CR>
+nnoremap <silent><Leader>tn :tabnew<CR>
+
+" Viewport Controls, ie moving between split panes
+nnoremap <Leader>wj <C-w>j
+nnoremap <Leader>wk <C-w>k
+nnoremap <Leader>wh <C-w>h
+nnoremap <Leader>wl <C-w>l
+nnoremap <Leader>wo <C-w>o
+
+" Move windows
+nnoremap <Leader>wJ <C-w>J
+nnoremap <Leader>wK <C-w>K
+nnoremap <Leader>wH <C-w>H
+nnoremap <Leader>wL <C-w>L
+
+"let g:which_key_map['w'] = {
+"            \ 'name' : '+windows' ,
+"            \ 'j' : ['<C-w>j' , 'pane-down'] ,
+"            \ 'k' : ['<C-w>k', 'pane-up'] ,
+"            \ 'h' : ['<C-w>h' , 'pane-left'] ,
+"            \ 'l' : ['<C-w>l' , 'pane-right'] ,
+"            \ 'J' : ['<C-w>J' , 'move-pane-down'] ,
+"            \ 'K' : ['<C-w>K' , 'move-pane-up'] ,
+"            \ 'H' : ['<C-w>H' , 'move-pane-left'] ,
+"            \ 'L' : ['<C-w>L' , 'move-pane-right'] ,
+"            \ '<' : ['<C-w>5<' , 'decrease-panel-width'] ,
+"            \ '>' : ['<C-w>5>' , 'increase-panel-width'] ,
+"            \}
+
+nnoremap <Leader>w<Left> 5<C-w><
+nnoremap <Leader>w<Right> 5<C-w>>
+
+" Editing files
+
+"open file under cursor in vertical split
+nnoremap <silent><Leader>fv :vertical wincmd f<CR>
+
+"open file under cursor in horizotal split
+nnoremap <silent><Leader>fh :wincmd f<CR>
+
+"open file under cursor in new tab
+nnoremap <silent><Leader>ft :wincmd gf<CR>
+
+"Edit vimrc
+nnoremap <silent><Leader>ve :tabnew $MYVIMRC<cr>
+
+"Source vimrc
+nnoremap <Leader>vs :source $MYVIMRC<cr>
+
+"invert listing lisptchars
+nnoremap <silent><Leader>il :set invlist<CR>
+
+"Space-o toggles folds
+nnoremap <Leader>o za
+vnoremap <Leader>o za
+
+nmap <C-j> 3j3<C-e>
+nmap <C-k> 3k3<C-y>
 
 " }}}
 
-" EXTERNAL CONFIGS {{{1
-
-" Key Mappings
-source ~/.config/nvim/keymaprc
-
-" Configs for plugins
-source ~/.config/nvim/pluginrc
-
-" For functions
-source ~/.config/nvim/functions
-
-" }}}
+" vim: ft=vim

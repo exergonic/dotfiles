@@ -6,7 +6,7 @@ set -o vi
 shellopts=(autocd checkhash checkjobs histappend \
            checkwinsize cmdhist cdspell globstar \
            extglob  lithist nocaseglob no_empty_cmd_completion \
-           shift_verbose)
+			 		 shift_verbose)
 
 for opt in "${shellopts[@]}"
 do
