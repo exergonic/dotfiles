@@ -1,14 +1,14 @@
 let mapleader = "\<Space>"
 
-" Vim-Plug {{{1
+" vim-plug {{{1
 call plug#begin(stdpath('config') . '/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
 
 " Which key https://github.com/liuchengxu/vim-which-key
-" Plug 'liuchengxu/vim-which-key'
-"nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+Plug 'liuchengxu/vim-which-key'
+nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
 " Nice start page
 Plug 'mhinz/vim-startify'
@@ -32,13 +32,13 @@ Plug 'Yggdroot/indentLine'
 
 " Status line
 Plug 'bling/vim-airline'
-    let g:airline#extensions#wordcount#enabled = 1
+    "let g:airline#extensions#wordcount#enabled = 1
     let g:airline#extensions#bufferline#enabled = 1
 
 Plug 'vim-airline/vim-airline-themes'
     let g:airline_theme = 'minimalist'
 
-" Colorschemes {{{1
+" Colorschemes {{{2
 Plug 'plan9-for-vimspace/acme-colors'
 Plug 'altercation/vim-colors-solarized'
 Plug 'liuchengxu/space-vim-dark'
@@ -236,25 +236,17 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
     nnoremap <silent> <space>r  :<C-u>CocListResume<CR>
 "}}}
 
-" Completion for python
-Plug 'zchee/deoplete-jedi', {'for': 'python'}
-    let g:deoplete#sources#jedi#show_docstring = 1
-
-Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme']}
-
-
 call plug#end()
+"}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
-
-" MISC {{{1
+" misc {{{1
 set nocompatible
 filetype plugin on
 filetype plugin indent on
 syntax on
 set ttyfast
 set autochdir
-" autocmd BufEnter * silent! lcd %:p:h
+" autocmd BufEnter * silent! lcd %:p:h  "! use only if autochdir doesn't work out
 set backspace=indent,eol,start
 set ruler
 set showcmd
@@ -269,26 +261,6 @@ set showmatch
 set cmdheight=2
 set laststatus=2
 set shortmess+=I
-" }}}
-
-" Folding {{{1
-set foldcolumn=2
-set foldmethod=marker
-set foldnestmax=2
-" }}}
-
-" Backups and Undo {{{1
-set backup
-set directory=~/.temp
-set backupdir=~/.temp
-set undodir=~/.temp
-set undolevels=10000
-if has('persistent_undo')
-    set undofile
-    set undoreload=10000
-endif
-" }}}
-
 set updatetime=300
 set signcolumn=yes
 set cursorline
@@ -317,18 +289,34 @@ set splitbelow
 set splitright
 set pumheight=10
 set helpheight=20
+" }}}
 
+" folding {{{1
+set foldcolumn=2
+set foldmethod=marker
+set foldnestmax=2
+" }}}
 
+" backups and undo {{{1
+set backup
+set directory=~/.temp
+set backupdir=~/.temp
+set undodir=~/.temp
+set undolevels=10000
+if has('persistent_undo')
+    set undofile
+    set undoreload=10000
+endif
+" }}}
 
-
-
-" Searching {{{1
+" searching {{{1
 set incsearch
 set ignorecase
 set smartcase
 set nohlsearch
+" }}}
 
-"GUI {{{1
+"gui {{{1
 set termguicolors
 set bg=dark
 colorscheme gruvbox
@@ -338,14 +326,13 @@ set guifont=Source\ Code\ Pro
 highlight Comment cterm=italic
 " }}}
 
-
-" SYNTAX {{{1
+" syntax {{{1
 filetype plugin on
 filetype plugin indent on
 syntax on
 " }}}
 
-" AUTOCOMMANDS {{{1
+" autocommands {{{1
 
 " Restore cursor to position it was when last in particular file
 autocmd BufReadPost *
@@ -374,7 +361,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 " }}}
 
-"CODE COMPLETION {{{1
+"code completion {{{1
 
 " Use Vim builtin syntax knowledge for (minimal) completions
 set omnifunc=syntaxcomplete#Complete
@@ -393,7 +380,7 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close preview window
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" Python {{{1
+" python {{{1
 
 " Ditto above, but for Python
 autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -407,19 +394,21 @@ if has('win32')
 endif
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" }}}
 
-" Shell {{{1
+" shell {{{1
 let g:sh_indent_case_labels=1
 " }}}
 
-" KEY MAPPINGS {{{1
+" key mappings {{{1
 
-"let g:which_key_map = {}
+call which_key#register('<Space>', "g:which_key_map")
+let g:which_key_map = {}
 
 
 set pastetoggle=<Leader>p
 
 nnoremap Q <Nop>
 nnoremap q <Nop>
+
 nnoremap <Leader><Leader> :
 
 "Avoid escape
@@ -435,60 +424,76 @@ tnoremap ,, <C-\><C-N>
 
 
 ""Buffers
-nnoremap <silent><Leader>bb :b #<CR>
-nnoremap <silent><Leader>bl :ls<CR>
+" nnoremap <silent><Leader>bb :b #<CR>
+" nnoremap <silent><Leader>bl :ls<CR>
+let g:which_key_map['b'] = {
+        \  'name' : 'buffer' ,
+        \  'b'    : [':b #<CR>' , 'prev-buffer'] ,
+        \  'l'    : [':ls<CR>'  , 'list-buffers'] ,
+        \ }
 
 ""Tab movement
+let g:which_key_map.t = {'name' : '+tab'}
 nnoremap <silent><Leader>tl :tabnext<CR>
+let g:which_key_map.t.l = 'next-tab'
 nnoremap <silent><Leader>th :tabprev<CR>
+let g:which_key_map.t.h = 'prev-tab'
 nnoremap <silent><Leader>tn :tabnew<CR>
+let g:which_key_map.t.n = 'new-tab'
 
-" Viewport Controls, ie moving between split panes
-nnoremap <Leader>wj <C-w>j
-nnoremap <Leader>wk <C-w>k
-nnoremap <Leader>wh <C-w>h
-nnoremap <Leader>wl <C-w>l
-nnoremap <Leader>wo <C-w>o
+" " Viewport Controls, ie moving between split panes
+" nnoremap <Leader>wj <C-w>j
+" nnoremap <Leader>wk <C-w>k
+" nnoremap <Leader>wh <C-w>h
+" nnoremap <Leader>wl <C-w>l
+" nnoremap <Leader>wo <C-w>o
+"
+" " Move windows
+" nnoremap <Leader>wJ <C-w>J
+" nnoremap <Leader>wK <C-w>K
+" nnoremap <Leader>wH <C-w>H
+" nnoremap <Leader>wL <C-w>L
 
-" Move windows
-nnoremap <Leader>wJ <C-w>J
-nnoremap <Leader>wK <C-w>K
-nnoremap <Leader>wH <C-w>H
-nnoremap <Leader>wL <C-w>L
+"nnoremap <Leader>w<Left> 5<C-w><
+"nnoremap <Leader>w<Right> 5<C-w>>
+let g:which_key_map['w'] = {
+            \ 'name' : '+windows' ,
+            \ 'j'    : ['<C-w>j' , 'pane-down'] ,
+            \ 'k'    : ['<C-w>k', 'pane-up'] ,
+            \ 'h'    : ['<C-w>h' , 'pane-left'] ,
+            \ 'l'    : ['<C-w>l' , 'pane-right'] ,
+            \ 'J'    : ['<C-w>J' , 'move-pane-down'] ,
+            \ 'K'    : ['<C-w>K' , 'move-pane-up'] ,
+            \ 'H'    : ['<C-w>H' , 'move-pane-left'] ,
+            \ 'L'    : ['<C-w>L' , 'move-pane-right'] ,
+            \ '<'    : ['<C-w>5<' , 'decrease-panel-width'] ,
+            \ '>'    : ['<C-w>5>' , 'increase-panel-width'] ,
+            \}
 
-"let g:which_key_map['w'] = {
-"            \ 'name' : '+windows' ,
-"            \ 'j' : ['<C-w>j' , 'pane-down'] ,
-"            \ 'k' : ['<C-w>k', 'pane-up'] ,
-"            \ 'h' : ['<C-w>h' , 'pane-left'] ,
-"            \ 'l' : ['<C-w>l' , 'pane-right'] ,
-"            \ 'J' : ['<C-w>J' , 'move-pane-down'] ,
-"            \ 'K' : ['<C-w>K' , 'move-pane-up'] ,
-"            \ 'H' : ['<C-w>H' , 'move-pane-left'] ,
-"            \ 'L' : ['<C-w>L' , 'move-pane-right'] ,
-"            \ '<' : ['<C-w>5<' , 'decrease-panel-width'] ,
-"            \ '>' : ['<C-w>5>' , 'increase-panel-width'] ,
-"            \}
-
-nnoremap <Leader>w<Left> 5<C-w><
-nnoremap <Leader>w<Right> 5<C-w>>
 
 " Editing files
 
+let g:which_key_map.f = { 'name' : '+files'}
 "open file under cursor in vertical split
 nnoremap <silent><Leader>fv :vertical wincmd f<CR>
+let g:which_key_map.f.v = 'file-in-vsplit'
 
 "open file under cursor in horizotal split
 nnoremap <silent><Leader>fh :wincmd f<CR>
+let g:which_key_map.f.h = 'file-in-hsplit'
 
 "open file under cursor in new tab
 nnoremap <silent><Leader>ft :wincmd gf<CR>
+let g:which_key_map.f.t = 'file-in-tab'
 
 "Edit vimrc
+let g:which_key_map.v = {'name': '+vim'}
 nnoremap <silent><Leader>ve :tabnew $MYVIMRC<cr>
+let g:which_key_map.v.e = 'edit-vimrc'
 
 "Source vimrc
 nnoremap <Leader>vs :source $MYVIMRC<cr>
+let g:which_key_map.v.s = 'source-vimrc'
 
 "invert listing lisptchars
 nnoremap <silent><Leader>il :set invlist<CR>
