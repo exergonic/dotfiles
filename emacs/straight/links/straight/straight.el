@@ -1,1 +1,0 @@
-c:/Users/arach/.emacs.d/straight/repos/straight.el/straight.el

@@ -14,14 +14,14 @@ fi
 xrdb -merge $HOME/.Xresources
 
 # get dat modmap
-# xmodmap $HOME/.Xmodmap     
+# xmodmap $HOME/.Xmodmap
 
 # set modmap manually
 xmodmap -e 'keycode 107 = Multi_key'
 
 # i'm just not ready
 #setxkbmap -option ctrl:swapcaps
- 
+
 # disable xset and prevent screen blanking
 # xset -dpms
 # xset s off
@@ -41,6 +41,6 @@ pulseaudio --start
 
 # save my eyes
 redshift -v -b 1.0:0.7 -l 35.9728:-83.9422 -t 6500K:3500K & &> /dev/null
- 
+
 # launch
 exec i3

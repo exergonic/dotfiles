@@ -168,21 +168,10 @@ bindkey '^j' down-history
 
 
 # Prompt
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs vi_mode history time)
 # PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
 # %{$fg[white]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
-
-# Right Promopt
-# function vi_mode_prompt_info() {
-#   echo "${${KEYMAP/vicmd/$MODE_INDICATOR}/(main|viins)/}"
-# }
-# MODE_INDICATOR="%{$fg_bold[red]%}<%{$fg[red]%}<<%{$reset_color%}"
-
-# RPS1='%D{%L:%M}'
-
 
 # XDG
 export XDG_CONFIG_HOME=${HOME}/.config
@@ -248,6 +237,8 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Powerlevel9k, https://github.com/Powerlevel9k/powerlevel9k
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs vi_mode history time)
 
 if ! zplug check --verbose; then
     printf "Install? [y|N]: "
