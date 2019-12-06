@@ -119,6 +119,9 @@ Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
 " Readline while in insert mode
 Plug 'tpope/vim-rsi'
 
+Plug 'davidhalter/jedi-vim'
+    let g:jedi#auto_initialization = 0
+
 " Language Server
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "{{{
