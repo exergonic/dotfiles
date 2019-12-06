@@ -7,7 +7,7 @@ export EDITOR='nvim'
 export VISUAl=$EDITOR
 export TERM=xterm-256color
 
-path=(${HOME}/.local/bin ${HOME}/usr/bin ${HOME}/usr/scripts $path)
+path=(${HOME}/.local/bin $path)
 
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
@@ -30,7 +30,7 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Autoloads
 autoload -Uz +X compinit && compinit
-autoload -U +X bashcompinit && compinit
+autoload -U +X bashcompinit && bashcompinit
 autoload -U promptinit
 autoload -U run-help
 alias help=run-help
@@ -54,84 +54,30 @@ bindkey -M menuselect 'j' vi-down-line-or-history
 zstyle :compinstall filename '~/.zshrc'
 
 
-# SETOPTS
-
 # Shell options
-
-setopt EXTENDEDGLOB
-setopt NOMATCH
-setopt NULL_GLOB
-setopt NOTIFY
-setopt INTERACTIVE_COMMENTS
-unsetopt BEEP
+setopt extendedglob nomatch null_glob notify interactive_comments no_bg_nice
+unsetopt beep
 
 ## Changing Directories
-
-# if command is name of directory, cd into that directory
-setopt AUTO_CD
-
-# make `cd' push the old directory onto the directory stack
-setopt AUTO_PUSHD
-
-# don't push multiple copies of the same directory onto the dir stack
-setopt PUSHD_IGNORE_DUPS
-
-# `pushd' with no arguments will pushd to $HOME
-setopt PUSHD_TO_HOME
-
+setopt auto_cd auto_pushd pushd_ignore_dups pushd_to_home
 
 ## Completions
+setopt auto_list list_ambiguous
 
-# automatically list choices on an ambiguous completion
-setopt AUTO_LIST
-
-# auto-list even if nothing could be inserted
-setopt LIST_AMBIGUOUS
-
-
-## HISTORY
-
-# History Settings
+# History Settings {{{
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
 
-# zsh session append history to histfile, rather than replace it.
-setopt APPEND_HISTORY
-
-# don't display duplicates when searching history in the line editor
-setopt HIST_FIND_NO_DUPS
-
-# rm from history commands when first char is a space
-setopt HIST_IGNORE_SPACE
-
-# when writing history file, older commands that are dups are omitted
-setopt HIST_SAVE_NO_DUPS
-
-# perform history expansion and then load into buffer before running
-setopt HIST_VERIFY
-
-# new command bumps duplicates from hist list
-setopt HIST_IGNORE_DUPS
-
-# don't enter commands into hist list if duplicates of previous event
-setopt HIST_IGNORE_ALL_DUPS
-
-# lock histfile using fcntl call
-setopt HIST_FCNTL_LOCK
-
-# history lines added to histfile incrementally, rather then waiting until exit
-setopt INC_APPEND_HISTORY
-
-# imports new commands from histfile and causes typed commands to be appended
-setopt SHARE_HISTORY
+setopt append_history hist_find_no_dups hist_ignore_space hist_save_no_dups \
+       hist_verify hist_ignore_dups hist_ignore_all_dups hist_fcntl_lock \
+       inc_append_history share_history
 
 export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000000
+#}}}
 
-# no need to nice backgrounded processes
-setopt NO_BG_NICE
 
-# KEYMAP
+# KEYMAP {{{
 function zle-keymap-select() {
     zle reset-prompt
     zle -R
@@ -165,6 +111,7 @@ bindkey '^N' history-incremental-search-forward
 # Scroll up and down through history
 bindkey '^k' up-history
 bindkey '^j' down-history
+# }}}
 
 
 # Prompt
@@ -173,13 +120,14 @@ bindkey '^j' down-history
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
 
-# XDG
+# XDG {{{
 export XDG_CONFIG_HOME=${HOME}/.config
 export XDG_DATA_HOME=${HOME}/.local/share
 export XDG_CACHE_HOME=${HOME}/.cache
 export XDG_RUNTIME_DIR=${HOME}/.local/runtime
 # export XDG_CONFIGDIRS=/etc/xdg
 export XDG_DATA_DIRS=${XDG_DATA_DIRS}:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
+#}}}
 
 # XCompose
 export QT_IM_MODULE=xum
@@ -220,7 +168,7 @@ function _pip_completion {
 compctl -K _pip_completion pip
 # pip zsh completion end }}}
 
-# ZPLUG
+# ZPLUG {{{
 source ${HOME}/.zplug/init.zsh
 
 # auto-autosuggestions
@@ -237,8 +185,8 @@ zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 
 # Powerlevel9k, https://github.com/Powerlevel9k/powerlevel9k
 zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs vi_mode history time)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs vi_mode dir)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs)
 
 if ! zplug check --verbose; then
     printf "Install? [y|N]: "
@@ -248,13 +196,8 @@ if ! zplug check --verbose; then
 fi
 
 zplug load # --verbose
+# }}}
 
 source ${configdir}/shell/aliases
 source ${configdir}/shell/functions
 
-export PATH=${PATH/:\/bin/}:/bin
-
-if which neofetch &> /dev/null
-then
-    neofetch
-fi
