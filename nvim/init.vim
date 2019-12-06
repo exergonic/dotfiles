@@ -1,10 +1,20 @@
 let mapleader = "\<Space>"
 
 " vim-plug {{{1
+
+" vim-plug setup "{{{2
+if ! filereadable(expand(stdpath('config') . '/autoload/plug.vim'))
+    echo "Downloading junegunn/vim-plug to manage plugins..."
+    silent !mkdir -p ~/.config/nvim/autoload/
+    silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
+    autocmd VimEnter * PlugInstall
+endif
+
 call plug#begin(stdpath('config') . '/plugged')
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
+" }}}2
 
 " Which key https://github.com/liuchengxu/vim-which-key
 Plug 'liuchengxu/vim-which-key'
