@@ -1,3 +1,6 @@
-nvim/autoload
-nvim/plugged
+*.zwc
+*plug*
+*.zwc
 emacs/straight
+*autoload*
+*plugged*

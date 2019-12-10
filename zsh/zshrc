@@ -29,8 +29,8 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 # Autoloads
-autoload -Uz +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
+autoload -Uz +X compinit
+autoload -U +X bashcompinit
 autoload -U promptinit
 autoload -U run-help
 alias help=run-help
@@ -39,7 +39,8 @@ autoload -U colors && colors
 # Zstyle
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
-zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+zstyle ':completion:*' list-colors ''
+#zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ":completion:*:commands" rehash 1
 
 # completion using a menu and vi keys
@@ -56,13 +57,14 @@ zstyle :compinstall filename '~/.zshrc'
 
 # Shell options
 setopt extendedglob nomatch null_glob notify interactive_comments no_bg_nice
-unsetopt beep
 
 ## Changing Directories
 setopt auto_cd auto_pushd pushd_ignore_dups pushd_to_home
 
 ## Completions
 setopt auto_list list_ambiguous
+
+unsetopt beep
 
 # History Settings {{{
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
@@ -75,7 +77,6 @@ export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000000
 #}}}
-
 
 # KEYMAP {{{
 function zle-keymap-select() {
@@ -135,69 +136,93 @@ export GTK_IM_MODULE=uim
 unset XMODIFIERS
 
 # FASD https://github.com/clvv/fasd {{{
-if which fasd &> /dev/null
-then
-    eval "$(fasd --init auto)"
-    # init cache
-    fasd_cache="$HOME/.fasd-init-cache"
-    if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-          fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install \
-              zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
-    fi
-    source "$fasd_cache"
-    unset fasd_cache
-    # -- completions
-    # C-p to do fasd-complete (files and directories)
-    bindkey '^P' 'fasd-complete'
-    # C-x C-f to do fasd-complete-f (only files)
-    bindkey '^X^F' 'fasd-complete-f'
-    # C-x C-d to do fasd-complete-d (only directories)
-    bindkey '^X^D' 'fasd-complete-d'
-fi
+# if which fasd &> /dev/null
+# then
+#     eval "$(fasd --init auto)"
+#     # init cache
+#     fasd_cache="$HOME/.fasd-init-cache"
+#     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+#           fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install \
+#               zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
+#     fi
+#     source "$fasd_cache"
+#     unset fasd_cache
+#     # -- completions
+#     # C-p to do fasd-complete (files and directories)
+#     bindkey '^P' 'fasd-complete'
+#     # C-x C-f to do fasd-complete-f (only files)
+#     bindkey '^X^F' 'fasd-complete-f'
+#     # C-x C-d to do fasd-complete-d (only directories)
+#     bindkey '^X^D' 'fasd-complete-d'
+# fi
 # }}}
-
-# pip zsh completion start {{{
+#
+ # pip zsh completion start {{{
 function _pip_completion {
-  local words cword
-  read -Ac words
-  read -cn cword
-  reply=( $( COMP_WORDS="$words[*]" \
-             COMP_CWORD=$(( cword-1 )) \
-             PIP_AUTO_COMPLETE=1 $words[1] ) )
+   local words cword
+   read -Ac words
+   read -cn cword
+   reply=( $( COMP_WORDS="$words[*]" \
+              COMP_CWORD=$(( cword-1 )) \
+              PIP_AUTO_COMPLETE=1 $words[1] ) )
 }
-compctl -K _pip_completion pip
+ compctl -K _pip_completion pip
 # pip zsh completion end }}}
 
-# ZPLUG {{{
-source ${HOME}/.zplug/init.zsh
+# zpm
+if [[ ! -f ~/.zpm/zpm.zsh ]]; then
+  git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
+fi
 
-# auto-autosuggestions
-zplug "zsh-users/zsh-autosuggestions"
+source ~/.zpm/zpm.zsh
+
+zpm load "zsh-users/zsh-autosuggestions"
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 bindkey '^ ' autosuggest-accept
 
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zpm "zsh-users/zsh-syntax-highlighting"
 
-zplug "hlissner/zsh-autopair", defer:2
+zpm "hlissner/zsh-autopair"
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-# Powerlevel9k, https://github.com/Powerlevel9k/powerlevel9k
-zplug "bhilburn/powerlevel9k", use:powerlevel9k.zsh-theme
+zpm "Powerlevel9k/powerlevel9k"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs vi_mode dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs)
 
-if ! zplug check --verbose; then
-    printf "Install? [y|N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-zplug load # --verbose
+# zplug {{{
+#source ~/.zplug/init.zsh
+#
+## auto-autosuggestions
+#zplug "zsh-users/zsh-autosuggestions"
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+#ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+#bindkey '^ ' autosuggest-accept
+#
+#zplug "zsh-users/zsh-syntax-highlighting", defer:2
+#zplug "hlissner/zsh-autopair"
+#
+#
+## Powerlevel9k, https://github.com/Powerlevel9k/powerlevel9k
+#
+#
+#
+## Install plugins if there are plugins that have not been installed
+#if ! zplug check --verbose; then
+#    printf "Install? [y/N]: "
+#    if read -q; then
+#        echo; zplug install
+#    fi
+#fi
+#
+## Then, source plugins and add commands to $PATH
+#zplug load
 # }}}
+
+# source /usr/share/powerlevel9k/powerlevel9k.zsh-theme
 
 source ${configdir}/shell/aliases
 source ${configdir}/shell/functions
+
+compinit
+bashcompinit
 
