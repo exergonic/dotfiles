@@ -31,17 +31,13 @@ alias gs='git status'
 alias gc='git commit'
 
 
-alias gdrive='gdfs -o allow_other default /home/bwayne/GDrive'
 alias hddtemp='hddtemp --unit=F'
 alias i3help='less ~/.config/i3/config'
 alias info='info --vi-keys'
 alias myip='curl v4.ifconfig.co'
 alias netstat="netstat -nputwc"
-alias nethogs='sudo nethogs enp2s0'
-alias pepall="pep8 --show-source --show-pep8 --statistics --count"
 alias pg='ping -c 3 www.google.com'
 alias open="mimeopen"
-alias startcups="start org.cups.cupsd.service"
 alias restart='reboot'
 alias rsync='rsync --progress'
 alias sicp="racket -i -p neil/sicp -l xrepl"
@@ -95,11 +91,7 @@ alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 
 alias packages="pacman -Qqen" # Display packages explicitly installed
 alias orphans="pacman -Qtdq" # Display unused packages
 #alias update="newmirrors && yay -Syu"
-
-# Powerpill
 alias pp='sudo powerpill'
-
-# Bauerbill
 alias bb='sudo bb-wrapper --aur'
 
 # Pasta from command line

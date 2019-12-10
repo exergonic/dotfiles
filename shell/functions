@@ -22,13 +22,14 @@ vemacs() {
     # Vanilla Emacs
     EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs $@
 }
+
 get_X_key() {
     # Find the X key code for a given key press"
     xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
 
 recent_pkgs() {
-    # show recently installed packages. show 20 by default
+    # show recently installed packages. show 20 by default (Arch Linux only)
     local number="${1:-20}"
     expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail "-$number"
 }
@@ -53,41 +54,9 @@ lmv() {
 
 readmd() {
     # read a Markdown file in terminal
-    readonly mfile="$1"
-
-    if which marked &> /dev/null
-    then
-        md=$(which marked)
-    elif which markdown &> /dev/null
-    then
-        md=$(which markdown)
-    else
-        printf "Markdown parser not installed\n"
-    fi
-
-    if [[ -n "$md" ]]
-    then
-        "$md" "$mfile" | w3m -T text/html
-    fi
+    local f
+    markdown $f | w3m -T text/html
 } #// readmd
-
-
-rename() {
-    # substitute substrings within filenames
-    if [[ "${#@}" == "0" ]]
-    then
-        echo "usage: rename old_string new_string files"
-    else
-        declare orig_string="$1"
-        declare new_string="$2"
-        shift 2
-        for name in "$@"
-        do
-            mv -v "${name}" "${name//${orig_string}/${new_string}}"
-        done
-    fi
-} #// rename
-
 
 mkcp() {
     # make a newdir, cp files into newdir, specified as last argument
@@ -137,7 +106,7 @@ dosubdir() {
     # perform an operation on all files in all subdirectories
     local cmd="$@"
     dirs="$( find . -mindepth 1 -maxdepth 1 -type d ! -wholename '.')"
-    for dir in "$dirs"
+    for dir in $dirs
     do
         builtin cd "$dir" && "$cmd" && builtin cd ..
     done
@@ -148,62 +117,11 @@ dosubdir() {
 #    builtin help $1 | less
 #} #// help
 
-kc() {
-    # start keychain
-    eval $( keychain --eval id_rsa 56146040)
-} #// kc
-
-map() {
-    # ape map function from functional languages
-    msg="Supply arguments in the form 'map command [args] : items."
-    local args="${@?$msg}"
-    local command="$( echo $args | cut -d: -f1 )"
-    local objects="$( echo $args | cut -d: -f2 )"
-    for i in "$objects"
-    do
-        "$command $i"
-    done
-} #// map
-
-virc() {
-    #edit an rc file
-    PS3="select file # to edit : "
-    files=( "${config_dir}/bash/*" )
-    files=($(    printf '%s\n' ${files[@]} |    sort) )
-    select rcfile in "${files[@]}"
-    do
-        vim "$rcfile"
-        read -p "would you like to source it now? (y|n) " response
-        [[ "${response}" == "y" ]] && source $rcfile && echo $rcfile sourced
-        break
-    done
-} #// virc
-
-srcrc() {
-    # source an rc file
-    local -a files
-    local file
-    ps3="select file # to source: "
-    files=( "${config_dir}/bash/*" )
-    files=( $( printf '%s\n' ${files[@]} | sort ) )
-    select file  in "${files[@]}"
-    do
-        source "$file"
-        break
-    done
-} #//srcrc
-
 symmetrize() {
     # molecular symmetrizer
     input=$1
     output=${1%.*}.sym.xyz
     java -jar ~/usr/bin/symmetrizer.jar -o "$output" "$input"
 } #// symmetrize
-
-
-#whoneeds() {
-#    comm -12 <(pactree -lru $1|sort) <(pacman -Qqe|sort) | grep -v $1
-#}
-
 
 # vim: ft=zsh
