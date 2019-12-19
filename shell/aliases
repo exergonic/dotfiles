@@ -1,4 +1,3 @@
-# vim: ft=zsh
 
 # cd aliases
 alias \.\.="cd .."              # cd up one dir
@@ -6,8 +5,8 @@ alias \.\.\.="cd ../.."         # cd up two dirs
 alias \.\.\.\.="cd ../../.."     # ...   three dirs
 
 # ls aliases
-alias ls='ls -F'
-[[ "$OSTYPE" == "linux-gnu" ]] && alias ls='ls --color -h --group-directories-first'
+alias ls='exa -h --group-directories-first'
+#[[ "$OSTYPE" == "linux-gnu" ]] && alias ls='ls --color -h --group-directories-first'
 alias l='ls -1'         # Show files in a single column
 alias l.='ls -d .??*'   # Show hidden files
 alias ll='ls -l'        # Show 'long' file information
@@ -24,12 +23,12 @@ alias mv='mv -vi'
 alias cp='cp -v'
 alias rm='trash'
 alias du='du -sh'
+alias cat='bat'
 
 # Git
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gs='git status'
 alias gc='git commit'
-
 
 alias hddtemp='hddtemp --unit=F'
 alias i3help='less ~/.config/i3/config'
@@ -64,19 +63,19 @@ alias et='emacsclient -t'
 alias vi='vim'
 alias nvi='nvim'
 alias nv='nvim'
-alias vibash="nvim ${configdir}/bash/bashrc"
-alias vialiases="nvim ${configdir}/shell/aliases"
-alias vifunctions="nvim ${configdir}/shell/functions"
+alias vibash="nvim ${CONFIGDIR}/bash/bashrc"
+alias vialiases="nvim ${CONFIGDIR}/shell/aliases"
+alias vifunctions="nvim ${CONFIGDIR}/shell/functions"
 alias vims="nvim -O"    #vim: open in verticle split
 alias vimt="nvim -p"    #vim: open in tabs
 
 # recipe's, functions, and aliases
 
-alias vivi="nvim ${configdir}/vim/vimrc"
-alias nvivi="nvim ${configdir}/nvim/init.vim"
-alias vizsh="nvim ~/.zshrc"
-alias srcfxns="source ${configdir}/shell/functions"
-alias srcaliases="source ${configdir}/shell/aliases"
+alias vivi="nvim ${CONFIGDIR}/vim/vimrc"
+alias nvivi="nvim ${CONFIGDIR}/nvim/init.vim"
+alias vizsh="nvim ${CONFIGDIR}/zsh/zshrc"
+alias srcfxns="source ${CONFIGDIR}/shell/functions"
+alias srcaliases="source ${CONFIGDIR}/shell/aliases"
 alias srczsh="source ~/.zshrc"
 alias srcbash="source ~/.bashrc"
 
@@ -111,3 +110,5 @@ alias xflux='xflux -z 37921'
 
 # MOPAC chemistry set
 alias mopac='/opt/mopac/MOPAC2012.exe'
+
+# vim: ft=sh

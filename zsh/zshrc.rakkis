@@ -1,7 +1,17 @@
-export configdir=${HOME}/.dotfiles
-# alias vim='vim.nox-py2'
+echo $(zsh --version)
+export CONFIGDIR=${HOME}/.dotfiles
+export path=(${HOME}/.node_modules_global/bin /home/linuxbrew/.linuxbrew/bin $path)
+export GOPATH=${HOME}/.go
+export BROWSER='firefox'
+#export PYTHONPATH=${PYTHONPATH}:/usr/lib/python3/dist-packages:/home/bwayne/.local/lib/python3.6/site-packages
+
 alias update='sudo aptitude update'
 alias upgrade='sudo aptitude update && sudo aptitude upgrade'
 alias install='sudo aptitude install'
+# alias vim='vim.nox-py2'
+
+#CNF
 source /etc/zsh_command_not_found
-export BROWSER='firefox'
+
+#LinuxBrew
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)

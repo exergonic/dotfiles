@@ -1,4 +1,6 @@
-# Source outer files
+#! /usr/bin/env zsh
+
+#Source outer files
 [[ -e ${HOME}/.zshrc.$HOST ]] && source ${HOME}/.zshrc.$HOST
 
 export LANG=en_US.UTF-8
@@ -51,9 +53,7 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
-
 zstyle :compinstall filename '~/.zshrc'
-
 
 # Shell options
 setopt extendedglob nomatch null_glob notify interactive_comments no_bg_nice
@@ -70,8 +70,8 @@ unsetopt beep
 export HISTIGNORE="&:ls:[bf]g:exit:reset:clear:cd:cd ..:cd.."
 
 setopt append_history hist_find_no_dups hist_ignore_space hist_save_no_dups \
-       hist_verify hist_ignore_dups hist_ignore_all_dups hist_fcntl_lock \
-       inc_append_history share_history
+	hist_verify hist_ignore_dups hist_ignore_all_dups hist_fcntl_lock \
+	inc_append_history share_history
 
 export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
@@ -80,8 +80,8 @@ export SAVEHIST=10000000
 
 # KEYMAP {{{
 function zle-keymap-select() {
-    zle reset-prompt
-    zle -R
+	zle reset-prompt
+	zle -R
 }
 
 zle -N zle-keymap-select
@@ -113,7 +113,6 @@ bindkey '^N' history-incremental-search-forward
 bindkey '^k' up-history
 bindkey '^j' down-history
 # }}}
-
 
 # Prompt
 # PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
@@ -157,21 +156,21 @@ unset XMODIFIERS
 # fi
 # }}}
 #
- # pip zsh completion start {{{
-function _pip_completion {
-   local words cword
-   read -Ac words
-   read -cn cword
-   reply=( $( COMP_WORDS="$words[*]" \
-              COMP_CWORD=$(( cword-1 )) \
-              PIP_AUTO_COMPLETE=1 $words[1] ) )
+# pip zsh completion start {{{
+function _pip_completion() {
+	local words cword
+	read -Ac words
+	read -cn cword
+	reply=($(COMP_WORDS="$words[*]" \
+		COMP_CWORD=$((cword - 1)) \
+		PIP_AUTO_COMPLETE=1 $words[1]))
 }
- compctl -K _pip_completion pip
+compctl -K _pip_completion pip
 # pip zsh completion end }}}
 
 # zpm
 if [[ ! -f ~/.zpm/zpm.zsh ]]; then
-  git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
+	git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
 fi
 
 source ~/.zpm/zpm.zsh
@@ -181,48 +180,18 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 bindkey '^ ' autosuggest-accept
 
-zpm "zsh-users/zsh-syntax-highlighting"
+zpm load "zsh-users/zsh-syntax-highlighting"
 
-zpm "hlissner/zsh-autopair"
+zpm load "hlissner/zsh-autopair"
 
-zpm "Powerlevel9k/powerlevel9k"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(status background_jobs vi_mode dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs)
+zpm load "Powerlevel9k/powerlevel9k"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv vi_mode dir newline)
+POWERLEVEL9K_DISABLE_RPROMPT=true
 
-# zplug {{{
-#source ~/.zplug/init.zsh
-#
-## auto-autosuggestions
-#zplug "zsh-users/zsh-autosuggestions"
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-#ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-#bindkey '^ ' autosuggest-accept
-#
-#zplug "zsh-users/zsh-syntax-highlighting", defer:2
-#zplug "hlissner/zsh-autopair"
-#
-#
-## Powerlevel9k, https://github.com/Powerlevel9k/powerlevel9k
-#
-#
-#
-## Install plugins if there are plugins that have not been installed
-#if ! zplug check --verbose; then
-#    printf "Install? [y/N]: "
-#    if read -q; then
-#        echo; zplug install
-#    fi
-#fi
-#
-## Then, source plugins and add commands to $PATH
-#zplug load
-# }}}
-
-# source /usr/share/powerlevel9k/powerlevel9k.zsh-theme
-
-source ${configdir}/shell/aliases
-source ${configdir}/shell/functions
+source ${CONFIGDIR}/shell/aliases
+source ${CONFIGDIR}/shell/functions
 
 compinit
 bashcompinit
 
+eval "$(register-python-argcomplete pipx)"

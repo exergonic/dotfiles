@@ -20,9 +20,6 @@ endfunction
 Plug 'liuchengxu/vim-which-key'
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
-" Nice start page
-Plug 'mhinz/vim-startify'
-
 " Lots o' languages
 Plug 'sheerun/vim-polyglot'
 
@@ -39,14 +36,32 @@ Plug 'bling/vim-bufferline'
 
 " Display indentation with thin, vertical line
 Plug 'Yggdroot/indentLine'
+    let g:indentLine_char = '┊'
 
 " Status line
 Plug 'bling/vim-airline'
-    "let g:airline#extensions#wordcount#enabled = 1
-    let g:airline#extensions#bufferline#enabled = 1
+    let g:airline#extensions#wordcount#enabled = 0 " {{{
+    let g:airline#extensions#bufferline#enabled = 0
+    " powerline symbols
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+    let g:airline_left_sep = ''
+    let g:airline_left_alt_sep = ''
+    let g:airline_right_sep = ''
+    let g:airline_right_alt_sep = ''
+    let g:airline_symbols.branch = ''
+    let g:airline_symbols.readonly = ''
+    let g:airline_symbols.linenr = '☰'
+    let g:airline_symbols.maxlinenr = ''
+    let g:airline_symbols.dirty='⚡'  " }}}
 
 Plug 'vim-airline/vim-airline-themes'
     let g:airline_theme = 'minimalist'
+        "biogoo
+        "monochrome
+        "badcat
+        "minimalist
 
 " Colorschemes {{{2
 Plug 'plan9-for-vimspace/acme-colors'
@@ -64,6 +79,8 @@ Plug 'scrooloose/nerdtree'
     let NERDTreeShowLineNumbers = 1
     let NERDChristmasTree = 1
     nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+
+Plug 'ryanoasis/vim-devicons'
 
 " Visualize undo levels
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
@@ -104,17 +121,8 @@ Plug 'godlygeek/tabular'
 " Insert pairs of certain characters, e.g. parens.
 Plug 'Raimondi/delimitMate'
 
-" Syntax highlighting for i3 config file
-Plug 'PotatoesMaster/i3-vim-syntax'
-
 " Markdown
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
-
-Plug 'JamshedVesuna/vim-markdown-preview', {'for': 'markdown'}
-""   let vim_markdown_preview_toggle=1
-""   let vim_markdown_preview_hotkey='<C-m>'
-""   let vim_markdown_preview_browser='Firefox'
-""   let vim_markdown_preview_use_xdg_open=1
+" Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 
 " Readline while in insert mode
 Plug 'tpope/vim-rsi'
@@ -335,9 +343,10 @@ set bg=dark
 colorscheme gruvbox
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_italicize_comments = '1'
-set guifont=Source\ Code\ Pro
+set guifont=FiraCode_Nerd_Font:h9
 highlight Comment cterm=italic
 " }}}
+
 
 " syntax {{{1
 filetype plugin on
@@ -367,7 +376,7 @@ autocmd FileType sh set shiftwidth=2 tabstop=2 noexpandtab
 autocmd BufWritePost *.sh,*py,*.csh,*.scm silent !chmod +x %
 
 " Ensure that markdown files are correctly recognized
-autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
+"autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
 
 " Auto remove all trailing whitespace on :w
 autocmd BufWritePre * :%s/\s\+$//e

@@ -1,7 +1,7 @@
 
 cd() {
     # ls the contents once cd'ed into a dir
-    builtin cd "${@:-$HOME}" && ls
+    builtin cd "${@:-$HOME}" && exa --group-directories-first
 } #// cd
 
 cdm() {
@@ -13,12 +13,12 @@ cdm() {
     #
     select dir in $dirs
     do
-        builtin cd "$dir" && builtin ls
+        builtin cd "$dir" && ls
         break
     done
 } #// cmd
 
-vemacs() {
+emacs_vanilla() {
     # Vanilla Emacs
     EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs $@
 }

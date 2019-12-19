@@ -14,7 +14,7 @@ ln -s ~/.dotfiles/tmux ~/.tmux
 touch ~/.zshrc.${HOST}
 
 # zshrc requires a $config_dir that points to the dotfiles
-echo 'config_dir=~/.dotfiles' >> ~/.zshrc.${HOST}
+echo 'export config_dir=~/.dotfiles' >> ~/.zshrc.${HOST}
 ```
 
 
