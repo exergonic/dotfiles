@@ -119,6 +119,8 @@ bindkey '^j' down-history
 # %{$fg[white]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
+PS1="%{$fg[magenta]%}λ %{$reset_color%}"
+RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
 
 # XDG {{{
 export XDG_CONFIG_HOME=${HOME}/.config
@@ -168,25 +170,30 @@ function _pip_completion() {
 compctl -K _pip_completion pip
 # pip zsh completion end }}}
 
-# zpm
-if [[ ! -f ~/.zpm/zpm.zsh ]]; then
-	git clone --recursive https://github.com/zpm-zsh/zpm ~/.zpm
+# zgen
+if [[ ! -f ~/.zgen/zgen.zsh ]]; then
+	git clone https://github.com/zpm-zsh/zpm $HOME/.zgen
 fi
 
-source ~/.zpm/zpm.zsh
+source ~/.zgen/zgen.zsh
 
-zpm load "zsh-users/zsh-autosuggestions"
+zgen load zsh-users/zsh-autosuggestions
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 bindkey '^ ' autosuggest-accept
 
-zpm load "zsh-users/zsh-syntax-highlighting"
+zgen load zsh-users/zsh-syntax-highlighting
+zgen load hlissner/zsh-autopair
 
-zpm load "hlissner/zsh-autopair"
-
-zpm load "Powerlevel9k/powerlevel9k"
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv vi_mode dir newline)
-POWERLEVEL9K_DISABLE_RPROMPT=true
+# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir newline virtualenv)
+# POWERLEVEL9K_VI_INSERT_MODE_STRING="🅸"
+# POWERLEVEL9K_VI_COMMAND_MODE_STRING="🅽"
+# POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+# POWERLEVEL9K_SHORTEN_DELIMITER=""
+# POWERLEVEL9K_DISABLE_RPROMPT=true
+# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+# zgen load Powerlevel9k/powerlevel9k powerlevel9k
 
 source ${CONFIGDIR}/shell/aliases
 source ${CONFIGDIR}/shell/functions
@@ -195,3 +202,7 @@ compinit
 bashcompinit
 
 eval "$(register-python-argcomplete pipx)"
+
+shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
+term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
+echo "NOW HACKING $shell IN $term"

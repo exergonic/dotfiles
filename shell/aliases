@@ -1,3 +1,12 @@
+#!/usr/bin/env zsh
+# vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
+
+       # _ _
+  # __ _| (_) __ _ ___  ___  ___
+ # / _` | | |/ _` / __|/ _ \/ __|
+# | (_| | | | (_| \__ \  __/\__ \
+ # \__,_|_|_|\__,_|___/\___||___/
+
 
 # cd aliases
 alias \.\.="cd .."              # cd up one dir
@@ -6,9 +15,8 @@ alias \.\.\.\.="cd ../../.."     # ...   three dirs
 
 # ls aliases
 alias ls='exa -h --group-directories-first'
-#[[ "$OSTYPE" == "linux-gnu" ]] && alias ls='ls --color -h --group-directories-first'
 alias l='ls -1'         # Show files in a single column
-alias l.='ls -d .??*'   # Show hidden files
+alias l.='\ls --color=always --group-directories-first -d .??*'   # Show hidden files
 alias ll='ls -l'        # Show 'long' file information
 alias la='ls -A'        # Show all files
 alias ld='ls -ld'       # Show info about cwd
@@ -30,18 +38,6 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gs='git status'
 alias gc='git commit'
 
-alias hddtemp='hddtemp --unit=F'
-alias i3help='less ~/.config/i3/config'
-alias info='info --vi-keys'
-alias myip='curl v4.ifconfig.co'
-alias netstat="netstat -nputwc"
-alias pg='ping -c 3 www.google.com'
-alias open="mimeopen"
-alias restart='reboot'
-alias rsync='rsync --progress'
-alias sicp="racket -i -p neil/sicp -l xrepl"
-
-
 # Compression
 alias tbz='tar -cjvf'
 alias tgz='tar -czvf'
@@ -49,6 +45,20 @@ alias txz='tar -cJvf'
 alias untbz='tar -xjvf'
 alias untgz='tar -xzvf'
 alias untxz='tar -xJvf'
+
+# Various {{{
+alias hddtemp='hddtemp --unit=F'
+alias i3help='less ~/.config/i3/config'
+alias info='info --vi-keys'
+alias myip='curl v4.ifconfig.co'
+alias netstat="netstat -nputwc"
+alias pg='ping -c 3 www.google.com'
+alias restart='reboot'
+alias rsync='rsync --progress'
+alias sicp="racket -i -p neil/sicp -l xrepl"
+#}}}
+
+
 
 # trash-cli Trash size
 alias trashsize='du -sh ~/.local/usr/share/Trash'
@@ -59,7 +69,8 @@ alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 # Emacs
 alias e='emacsclient -c'
 alias et='emacsclient -t'
-# VIM
+
+# VIM {{{
 alias vi='vim'
 alias nvi='nvim'
 alias nv='nvim'
@@ -68,9 +79,9 @@ alias vialiases="nvim ${CONFIGDIR}/shell/aliases"
 alias vifunctions="nvim ${CONFIGDIR}/shell/functions"
 alias vims="nvim -O"    #vim: open in verticle split
 alias vimt="nvim -p"    #vim: open in tabs
+#}}}
 
-# recipe's, functions, and aliases
-
+# recipe's, functions, and aliases {{{
 alias vivi="nvim ${CONFIGDIR}/vim/vimrc"
 alias nvivi="nvim ${CONFIGDIR}/nvim/init.vim"
 alias vizsh="nvim ${CONFIGDIR}/zsh/zshrc"
@@ -78,8 +89,9 @@ alias srcfxns="source ${CONFIGDIR}/shell/functions"
 alias srcaliases="source ${CONFIGDIR}/shell/aliases"
 alias srczsh="source ~/.zshrc"
 alias srcbash="source ~/.bashrc"
+#}}}
 
-# Arch Package Management
+# Arch Package Management {{{
 alias pacinstall='sudo pacman -S'
 alias pacupgrade='sudo pacman -Syu'
 alias pacremove='sudo pacman -Rsnu'
@@ -92,6 +104,7 @@ alias orphans="pacman -Qtdq" # Display unused packages
 #alias update="newmirrors && yay -Syu"
 alias pp='sudo powerpill'
 alias bb='sudo bb-wrapper --aur'
+# }}}
 
 # Pasta from command line
 alias sprunge="curl -F'sprunge=<-' sprunge.us"
@@ -111,4 +124,4 @@ alias xflux='xflux -z 37921'
 # MOPAC chemistry set
 alias mopac='/opt/mopac/MOPAC2012.exe'
 
-# vim: ft=sh
+# vim: ft=zsh

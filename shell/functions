@@ -1,127 +1,118 @@
+#!/usr/bin/env zsh
+# vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 
-cd() {
-    # ls the contents once cd'ed into a dir
-    builtin cd "${@:-$HOME}" && exa --group-directories-first
-} #// cd
+################################################################################
+### __                  _   _                  ____
+## / _|_   _ _ __   ___| |_(_) ___  _ __  ___ / /\ \
+##| |_| | | | '_ \ / __| __| |/ _ \| '_ \/ __| |  | |
+##|  _| |_| | | | | (__| |_| | (_) | | | \__ \ |  | |
+##|_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/ |  | |
+###                                           \_\/_/
+################################################################################
 
-cdm() {
-    # cd into a directory from a menu
-    local PS3
-    local dirs
-    PS3="Select a directory #: "
-    dirs=($( find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*" ))
-    #
-    select dir in $dirs
-    do
-        builtin cd "$dir" && ls
-        break
-    done
+cd(){
+	# ls the contents once cd'ed into a dir
+	builtin cd "${@:-$HOME}" && exa --group-directories-first
+}
+
+cdm(){
+	# cd into a directory from a menu
+	local PS3
+	local dirs
+	PS3="Select a directory #: "
+	dirs=($( find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*" ))
+	#
+	select dir in $dirs
+	do
+		builtin cd "$dir" && ls
+		break
+	done
 } #// cmd
 
 emacs_vanilla() {
-    # Vanilla Emacs
-    EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs $@
+	# Vanilla Emacs
+	EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs $@
 }
 
 get_X_key() {
-    # Find the X key code for a given key press"
-    xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+	# Find the X key code for a given key press"
+	xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
 
 recent_pkgs() {
-    # show recently installed packages. show 20 by default (Arch Linux only)
-    local number="${1:-20}"
-    expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail "-$number"
+	# show recently installed packages. show 20 by default (Arch Linux only)
+	local number="${1:-20}"
+	expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail "-$number"
 }
 
 mcd() {
-    # make a directory and cd into at the same time
-    [[ -n "$1" ]] &&    mkdir -p "$@" && cd "$1";
+	# make a directory and cd into at the same time
+	[[ -n "$1" ]] &&    mkdir -p "$@" && cd "$1";
 } #// mcd
 
 mntuser() {
-    # mount a dev as user
-    local dev="$1"
-    local mntpoint="$2"
-    sudo mount -ouser,umask=0000 "$dev $mntpoint"
+	# mount a dev as user
+	local dev="$1"
+	local mntpoint="$2"
+	sudo mount -ouser,umask=0000 "$dev $mntpoint"
 }
 
 lmv() {
-    # mv a file or directory and make a symbolic link to it
-    local file="$1" dir="$2"
-    [[ -e $file ]] && [[ -e $dir ]] &&    mv $file $dir && ln -s $dir/$(basename $file) $(dirname $file);
+	# mv a file or directory and make a symbolic link to it
+	local file="$1" dir="$2"
+	[[ -e $file ]] && [[ -e $dir ]] &&    mv $file $dir && ln -s $dir/$(basename $file) $(dirname $file);
 } #// lmv
 
-readmd() {
-    # read a Markdown file in terminal
-    local f
-    markdown $f | w3m -T text/html
-} #// readmd
+gfm() {
+	# read a Markdown file in terminal
+	local f=$1
+	pandoc $f --format=gfm --output=html5 | w3m -T text/html
+} #// gfm
 
 mkcp() {
-    # make a newdir, cp files into newdir, specified as last argument
-    local args="$@"
-    mkdir -p --  $args[(w)-1] && cp -- ${args[(ws: ' ' :)]}
+	# make a newdir, cp files into newdir, specified as last argument
+	local args="$@"
+	mkdir -p --  $args[(w)-1] && cp -- ${args[(ws: ' ' :)]}
 } # // mkcp
 
 mkmv() {
-    # make a newdir, mv files into newdir, specified as last argument
-    local args="$@"
-    mkdir -p -- $args[(w)-1] && mv -- $args
+	# make a newdir, mv files into newdir, specified as last argument
+	local args="$@"
+	mkdir -p -- $args[(w)-1] && mv -- $args
 } # // mkmv
 
 swap_file_names() {
-    # rename file1 to file2 and vice versa
-    local f1="$1"
-    local f2="$2"
-    mv "$f1" "temp"
-    mv "$f2" "$f1"
-    mv "temp" "$f2"
+	# rename file1 to file2 and vice versa
+	local f1="$1"
+	local f2="$2"
+	mv "$f1" "temp"
+	mv "$f2" "$f1"
+	mv "temp" "$f2"
 } #// swap_file_names
 
 man() {
-    # colorized man pages
-    env LESS_TERMCAP_mb=$'\E[01;31m' \
-        LESS_TERMCAP_md=$'\E[01;38;5;74m' \
-        LESS_TERMCAP_me=$'\E[0m' \
-        LESS_TERMCAP_se=$'\E[0m' \
-        LESS_TERMCAP_so=$'\E[38;5;246m' \
-        LESS_TERMCAP_ue=$'\E[0m' \
-        LESS_TERMCAP_us=$'\E[04;38;5;146m' \
-        man "$@"
-} #// man
+	# colorized man pages
+	env LESS_TERMCAP_mb=$'\E[01;31m' \
+		LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+		LESS_TERMCAP_me=$'\E[0m' \
+		LESS_TERMCAP_se=$'\E[0m' \
+		LESS_TERMCAP_so=$'\E[38;5;246m' \
+		LESS_TERMCAP_ue=$'\E[0m' \
+		LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+		man "$@"
+	} #// man
 
 topdf() {
-    # text to pdf
-    enscript --quiet --no-header --output=- ${1}  | ps2pdf - ${1%.*}.pdf
+	# text to pdf
+	enscript --quiet --no-header --output=- ${1}  | ps2pdf - ${1%.*}.pdf
 } #// topdf
 
 mergepdf() {
-    # merge pdfs
-    local output="${1}" ; shift
-    gs -q -dnopause -dbatch -sdevice=pdfwrite -soutputfile=$output $*
+	# merge pdfs
+	local output="${1}" ; shift
+	gs -q -dnopause -dbatch -sdevice=pdfwrite -soutputfile=$output $*
 } #// mergepdf
 
-dosubdir() {
-    # perform an operation on all files in all subdirectories
-    local cmd="$@"
-    dirs="$( find . -mindepth 1 -maxdepth 1 -type d ! -wholename '.')"
-    for dir in $dirs
-    do
-        builtin cd "$dir" && "$cmd" && builtin cd ..
-    done
-} #// dosubdir
-
-# help() {
-    # pipe help output to less
-#    builtin help $1 | less
-#} #// help
-
-symmetrize() {
-    # molecular symmetrizer
-    input=$1
-    output=${1%.*}.sym.xyz
-    java -jar ~/usr/bin/symmetrizer.jar -o "$output" "$input"
-} #// symmetrize
-
-# vim: ft=zsh
+open() {
+	mimeopen $1 &> /dev/null &
+}
