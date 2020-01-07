@@ -14,5 +14,6 @@
         "filetypes": ["sh"],
         "ignoredRootPaths": ["~"]
         }
-    }
+    },
+    "coc.preferences.extensionUpdateCheck": "never"
 }

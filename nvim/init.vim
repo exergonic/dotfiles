@@ -301,9 +301,6 @@ set hidden
 set notitle
 set visualbell t_vb=
 set novisualbell
-set tabstop=4
-set shiftwidth=4
-set expandtab
 set smartindent
 set autoindent
 set splitbelow
@@ -369,11 +366,15 @@ autocmd FileType * set fo-=r fo-=o
 " mutt (email) files have a textwidth of `n`
 autocmd BufRead /tmp/mutt-* set tw=72
 
-" For shell files, indents are 2 and they are hard tabs
-autocmd FileType sh set shiftwidth=2 tabstop=2 noexpandtab
 
 " Mark scripts executable upon write
-autocmd BufWritePost *.sh,*py,*.csh,*.scm silent !chmod +x %
+autocmd BufWritePost *.zsh,*.sh,*py,*.csh,*.scm silent !chmod +x %
+
+" For shell files, indents are 2 and they are hard tabs
+autocmd FileType sh,zsh set shiftwidth=2 tabstop=2 noexpandtab
+
+" Make Python files more good
+autocmd FileType python set tabstop=4 shiftwidth=4 expandtab
 
 " Ensure that markdown files are correctly recognized
 "autocmd BufNewFile,BufReadPost *.md,*.markd,*.markdown set filetype=markdown
@@ -381,6 +382,7 @@ autocmd BufWritePost *.sh,*py,*.csh,*.scm silent !chmod +x %
 " Auto remove all trailing whitespace on :w
 autocmd BufWritePre * :%s/\s\+$//e
 
+autocmd BufEnter,BufWinEnter,WinEnter term://* startinsert
 " }}}
 
 "code completion {{{1
@@ -426,7 +428,8 @@ call which_key#register('<Space>', "g:which_key_map")
 let g:which_key_map = {}
 
 
-set pastetoggle=<Leader>p
+nnoremap <silent><Leader>p :set invpaste<CR>
+let g:which_key_map.p = 'inv-paste-mode'
 
 nnoremap Q <Nop>
 nnoremap q <Nop>
@@ -438,21 +441,18 @@ inoremap ,, <Esc>
 vnoremap ,, <Esc>
 tnoremap ,, <C-\><C-N>
 
-"Easy quit / save and quit etc
-" nnoremap <silent><Leader>q :q<CR>
-" nnoremap <silent><Leader>qa :qa<CR>
-" nnoremap <silent><Leader>x :x<CR>
-" nnoremap <silent><Leader>xa :xa<CR>
+nnoremap <silent><Leader>` :split term://zsh<CR>
+
+nnoremap <silent><Leader>x :!./%<CR>
+let g:which_key_map.x = 'run-this-file'
 
 
 ""Buffers
-" nnoremap <silent><Leader>bb :b #<CR>
-" nnoremap <silent><Leader>bl :ls<CR>
-let g:which_key_map['b'] = {
-        \  'name' : 'buffer' ,
-        \  'b'    : [':b #<CR>' , 'prev-buffer'] ,
-        \  'l'    : [':ls<CR>'  , 'list-buffers'] ,
-        \ }
+let g:which_key_map.b = {'name' : '+buffer'}
+nnoremap <silent><Leader>bb :b #<CR>
+let g:which_key_map.b.b = 'prev-buffer'
+nnoremap <silent><Leader>bl :ls<CR>
+let g:which_key_map.b.l = 'list-buffers'
 
 ""Tab movement
 let g:which_key_map.t = {'name' : '+tab'}
@@ -490,6 +490,9 @@ let g:which_key_map['w'] = {
             \ 'L'    : ['<C-w>L' , 'move-pane-right'] ,
             \ '<'    : ['<C-w>5<' , 'decrease-panel-width'] ,
             \ '>'    : ['<C-w>5>' , 'increase-panel-width'] ,
+            \ 's'    : ['<C-w>s' , 'split-horiz'] ,
+            \ 'v'    : ['<C-w>v' , 'split-vertical'] ,
+            \ 'o'    : ['<C-w>o' , 'only-this-window'] ,
             \}
 
 

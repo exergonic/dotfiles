@@ -1,15 +1,8 @@
 #! /usr/bin/env zsh
+# vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 
 #Source outer files
 [[ -e ${HOME}/.zshrc.$HOST ]] && source ${HOME}/.zshrc.$HOST
-
-export LANG=en_US.UTF-8
-export LESS=-XR
-export EDITOR='nvim'
-export VISUAl=$EDITOR
-export TERM=xterm-256color
-
-path=(${HOME}/.local/bin $path)
 
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
@@ -57,6 +50,9 @@ zstyle :compinstall filename '~/.zshrc'
 
 # Shell options
 setopt extendedglob nomatch null_glob notify interactive_comments no_bg_nice
+
+# Prompt
+setopt prompt_subst
 
 ## Changing Directories
 setopt auto_cd auto_pushd pushd_ignore_dups pushd_to_home
@@ -120,44 +116,9 @@ bindkey '^j' down-history
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
 PS1="%{$fg[magenta]%}λ %{$reset_color%}"
-RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
+RPROMPT="%~"
+#RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
 
-# XDG {{{
-export XDG_CONFIG_HOME=${HOME}/.config
-export XDG_DATA_HOME=${HOME}/.local/share
-export XDG_CACHE_HOME=${HOME}/.cache
-export XDG_RUNTIME_DIR=${HOME}/.local/runtime
-# export XDG_CONFIGDIRS=/etc/xdg
-export XDG_DATA_DIRS=${XDG_DATA_DIRS}:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop
-#}}}
-
-# XCompose
-export QT_IM_MODULE=xum
-export GTK_IM_MODULE=uim
-unset XMODIFIERS
-
-# FASD https://github.com/clvv/fasd {{{
-# if which fasd &> /dev/null
-# then
-#     eval "$(fasd --init auto)"
-#     # init cache
-#     fasd_cache="$HOME/.fasd-init-cache"
-#     if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
-#           fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install \
-#               zsh-wcomp zsh-wcomp-install >| "$fasd_cache"
-#     fi
-#     source "$fasd_cache"
-#     unset fasd_cache
-#     # -- completions
-#     # C-p to do fasd-complete (files and directories)
-#     bindkey '^P' 'fasd-complete'
-#     # C-x C-f to do fasd-complete-f (only files)
-#     bindkey '^X^F' 'fasd-complete-f'
-#     # C-x C-d to do fasd-complete-d (only directories)
-#     bindkey '^X^D' 'fasd-complete-d'
-# fi
-# }}}
-#
 # pip zsh completion start {{{
 function _pip_completion() {
 	local words cword
@@ -185,6 +146,7 @@ bindkey '^ ' autosuggest-accept
 zgen load zsh-users/zsh-syntax-highlighting
 zgen load hlissner/zsh-autopair
 
+# powerlevel9k {{{
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir newline virtualenv)
 # POWERLEVEL9K_VI_INSERT_MODE_STRING="🅸"
 # POWERLEVEL9K_VI_COMMAND_MODE_STRING="🅽"
@@ -194,6 +156,7 @@ zgen load hlissner/zsh-autopair
 # POWERLEVEL9K_DISABLE_RPROMPT=true
 # POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # zgen load Powerlevel9k/powerlevel9k powerlevel9k
+# }}}
 
 source ${CONFIGDIR}/shell/aliases
 source ${CONFIGDIR}/shell/functions
@@ -203,6 +166,6 @@ bashcompinit
 
 eval "$(register-python-argcomplete pipx)"
 
-shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
-term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
-echo "NOW HACKING $shell IN $term"
+my_shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
+my_term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
+echo "NOW HACKING $my_shell IN $my_term"

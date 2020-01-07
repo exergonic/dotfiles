@@ -10,9 +10,37 @@
 ###                                           \_\/_/
 ################################################################################
 
-cd(){
+cd (){
 	# ls the contents once cd'ed into a dir
 	builtin cd "${@:-$HOME}" && exa --group-directories-first
+}
+
+is_interactive_sh () {
+	# is this shell interactive?
+	if [[ $- == **i** ]]
+	then
+		printf "%s\n" "... is interactive"
+		/bin/true
+	else
+		printf "%s\n" "... is NOT interactive"
+		/bin/false
+	fi
+}
+
+is_login_sh () {
+	# is this a login shell?
+	if [[ -o login ]]
+	then
+		printf "%s\n" "... is login shell"
+		/bin/true
+	else
+		printf "%s\n" "... is NOT login shell"
+		/bin/false
+	fi
+}
+
+path () {
+	echo $PATH | tr ":" "\n";
 }
 
 cdm(){
@@ -63,10 +91,10 @@ lmv() {
 	[[ -e $file ]] && [[ -e $dir ]] &&    mv $file $dir && ln -s $dir/$(basename $file) $(dirname $file);
 } #// lmv
 
-gfm() {
+readmd() {
 	# read a Markdown file in terminal
-	local f=$1
-	pandoc $f --format=gfm --output=html5 | w3m -T text/html
+	local f="$1"
+	pandoc --from=markdown_mmd --output=html "$f"  | w3m -T text/html
 } #// gfm
 
 mkcp() {
