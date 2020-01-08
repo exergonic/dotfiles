@@ -10,7 +10,7 @@ if ! filereadable(expand(stdpath('config') . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin(stdpath('config') . '/plugged')
+call plug#begin(expand(stdpath('cache') . '/plugged'))
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
@@ -19,6 +19,9 @@ endfunction
 " Which key https://github.com/liuchengxu/vim-which-key
 Plug 'liuchengxu/vim-which-key'
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+
+" simple x hotkey daemon
+Plug 'kovetskiy/sxhkd-vim'
 
 " Lots o' languages
 Plug 'sheerun/vim-polyglot'
