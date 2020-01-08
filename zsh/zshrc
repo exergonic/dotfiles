@@ -27,8 +27,9 @@ HIST_STAMPS="yyyy-mm-dd"
 autoload -Uz +X compinit
 autoload -U +X bashcompinit
 autoload -U promptinit
+unalias run-help &>/dev/null
 autoload -U run-help
-alias help=run-help
+alias help='run-help'
 autoload -U colors && colors
 
 # Zstyle
@@ -116,8 +117,8 @@ bindkey '^j' down-history
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
 PS1="%{$fg[magenta]%}λ %{$reset_color%}"
-RPROMPT="%~"
-#RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
+#RPROMPT="%~"
+RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
 
 # pip zsh completion start {{{
 function _pip_completion() {
@@ -165,7 +166,8 @@ compinit
 bashcompinit
 
 eval "$(register-python-argcomplete pipx)"
+PYTHONSTARTUP="${CONFIGDIR}/python_startup.py"
 
 my_shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
 my_term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
-echo "NOW HACKING $my_shell IN $my_term"
+# echo "NOW HACKING $my_shell IN $my_term"

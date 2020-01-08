@@ -1,3 +1,5 @@
+# CapsLock
 keycode 66 = Control_L
-keycode 107 = Super_R
-keycode 180 = Compose
+
+# PrtSc
+keycode 107 = Super_R 

@@ -439,11 +439,11 @@ nnoremap <Leader><Leader> :
 "Avoid escape
 inoremap ,, <Esc>
 vnoremap ,, <Esc>
-tnoremap ,, <C-\><C-N>
+tnoremap <Esc> <C-\><C-N>
 
 nnoremap <silent><Leader>` :split term://zsh<CR>
 
-nnoremap <silent><Leader>x :!./%<CR>
+nnoremap <silent><Leader>x :w<CR>:!./%<CR>
 let g:which_key_map.x = 'run-this-file'
 
 

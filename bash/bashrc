@@ -6,15 +6,14 @@ set -o vi
 shellopts=(autocd checkhash checkjobs histappend \
            checkwinsize cmdhist cdspell globstar \
            extglob  lithist nocaseglob no_empty_cmd_completion \
-			 		 shift_verbose)
+					 shift_verbose)
 
 for opt in "${shellopts[@]}"
 do
     shopt -s $opt
 done
 
-shopt -u mailwarn
-shopt -u hostcomplete
+shopt -u mailwarn hostcomplete
 
 # Terminal options
 export TERM=xterm-256color
@@ -26,6 +25,9 @@ export LESS=-X
 export HISTIGNORE=$'[ \t]*:&:[fb]g:exit'
 export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:ls' # ignore ls
 bind '"\e[Z":menu-complete'
+# bind '"^k":up-history'
+# bind '"^j":down-history'
+# bind '"^l":clear-screen'
 
 # Fancy colors
 red='\[\e[0;31m\]'
@@ -48,14 +50,15 @@ NC='\[\e[0m\]' # No Color
 
 # PS1
 # PS1="[\j] ${yellow}\u${NC}@${green}\h:${NC}\w\n${blue}λ${NC} "
-PS1="${blue}\w${NC} ${magenta}λ${NC} "
+PS1="${blue}\w${NC}
+${magenta}λ${NC} "
 PROMPT_DIRTRIM=4
 
-config_dir=${HOME}/Dropbox/dotfiles
-source ${config_dir}/shell/aliases
-source ${config_dir}/shell/functions
-source ${config_dir}/bash/dircolors.sh
-source ${config_dir}/shell/dirstack.sh
+CONFIG_DIR=${HOME}/.dotfiles
+source ${CONFIG_DIR}/shell/aliases
+source ${CONFIG_DIR}/shell/functions
+source ${CONFIG_DIR}/bash/dircolors.sh
+source ${CONFIG_DIR}/shell/dirstack.sh
 
 [[ -f ${HOME}/.bcrc ]] &&  export BC_ENV_ARGS="$HOME/.bcrc"
 [[ -f ${HOME}/.dirstack ]] && dir_stack="$( cat ${HOME}/.dirstack )"
@@ -70,12 +73,3 @@ export XDG_RUNTIME_DIR=${HOME}/.local/runtime
 export QT_IM_MODULE=xum
 export GTK_IM_MODULE=uim
 unset XMODIFIERS
-
-colors=(red RED blue BLUE cyan CYAN black BLACK \
-        green GREEN yellow YELLOW magenta MAGENTA white WHITE NC )
-
-for color in ${colors[@]}
-do
-    unset $color
-done
-

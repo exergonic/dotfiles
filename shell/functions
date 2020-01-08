@@ -10,48 +10,68 @@
 ###                                           \_\/_/
 ################################################################################
 
-cd (){
+cd() {
 	# ls the contents once cd'ed into a dir
 	builtin cd "${@:-$HOME}" && exa --group-directories-first
 }
 
-is_interactive_sh () {
+is_interactive_sh() {
 	# is this shell interactive?
-	if [[ $- == **i** ]]
-	then
+	if [[ $- == **i** ]]; then
 		printf "%s\n" "... is interactive"
-		/bin/true
+		true
 	else
 		printf "%s\n" "... is NOT interactive"
-		/bin/false
+		false
 	fi
 }
 
-is_login_sh () {
+is_login_sh() {
 	# is this a login shell?
-	if [[ -o login ]]
-	then
+	if [[ -o login ]]; then
 		printf "%s\n" "... is login shell"
-		/bin/true
+		true
 	else
 		printf "%s\n" "... is NOT login shell"
-		/bin/false
+		false
 	fi
 }
 
-path () {
-	echo $PATH | tr ":" "\n";
-}
+is_blank() { [[ -z "$*" ]]; }
 
-cdm(){
+is_notblank() { [[ -n "$*" ]]; }
+
+is_even() { (($1 % 2 == 0)); }
+
+is_dir() { [[ -d "$1" ]]; }
+
+file_is_dir() { [[ -d "$1" ]]; }
+
+file_is_newer() { [[ "$1" -nt "$2" ]]; }
+
+path() { echo $PATH | tr ":" "\n"; }
+
+tempcd() { cd $(mktemp -d); }
+alias tcd='tempcd'
+
+len() { printf "%4d\n" "$#@"; }
+
+p() { printf "%10s\n" "$*"; }
+
+car() { echo $@[1]; }
+alias head='car'
+
+cdr() { echo $xs[2,-1]; }
+alias tail='cdr'
+
+cdm() {
 	# cd into a directory from a menu
 	local PS3
 	local dirs
 	PS3="Select a directory #: "
-	dirs=($( find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*" ))
+	dirs=($(find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*"))
 	#
-	select dir in $dirs
-	do
+	select dir in $dirs; do
 		builtin cd "$dir" && ls
 		break
 	done
@@ -75,7 +95,7 @@ recent_pkgs() {
 
 mcd() {
 	# make a directory and cd into at the same time
-	[[ -n "$1" ]] &&    mkdir -p "$@" && cd "$1";
+	[[ -n "$1" ]] && mkdir -p "$@" && cd "$1"
 } #// mcd
 
 mntuser() {
@@ -88,25 +108,23 @@ mntuser() {
 lmv() {
 	# mv a file or directory and make a symbolic link to it
 	local file="$1" dir="$2"
-	[[ -e $file ]] && [[ -e $dir ]] &&    mv $file $dir && ln -s $dir/$(basename $file) $(dirname $file);
+	[[ -e $file ]] && [[ -e $dir ]] && mv $file $dir && ln -s $dir/$(basename $file) $(dirname $file)
 } #// lmv
 
 readmd() {
 	# read a Markdown file in terminal
 	local f="$1"
-	pandoc --from=markdown_mmd --output=html "$f"  | w3m -T text/html
+	pandoc --from=markdown_mmd --output=html "$f" | w3m -T text/html
 } #// gfm
 
 mkcp() {
 	# make a newdir, cp files into newdir, specified as last argument
-	local args="$@"
-	mkdir -p --  $args[(w)-1] && cp -- ${args[(ws: ' ' :)]}
+	mkdir -p ${@: -1:1} && cp * "${@: -1:1}/"
 } # // mkcp
 
 mkmv() {
 	# make a newdir, mv files into newdir, specified as last argument
-	local args="$@"
-	mkdir -p -- $args[(w)-1] && mv -- $args
+	mkdir -p ${@-1:1} && mv ./* "./${@: -1:1}/"
 } # // mkmv
 
 swap_file_names() {
@@ -128,19 +146,20 @@ man() {
 		LESS_TERMCAP_ue=$'\E[0m' \
 		LESS_TERMCAP_us=$'\E[04;38;5;146m' \
 		man "$@"
-	} #// man
+} #// man
 
 topdf() {
 	# text to pdf
-	enscript --quiet --no-header --output=- ${1}  | ps2pdf - ${1%.*}.pdf
+	enscript --quiet --no-header --output=- ${1} | ps2pdf - ${1%.*}.pdf
 } #// topdf
 
 mergepdf() {
 	# merge pdfs
-	local output="${1}" ; shift
+	local output="${1}"
+	shift
 	gs -q -dnopause -dbatch -sdevice=pdfwrite -soutputfile=$output $*
 } #// mergepdf
 
 open() {
-	mimeopen $1 &> /dev/null &
+	mimeopen $1 &>/dev/null &
 }

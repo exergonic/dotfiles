@@ -1,127 +1,42 @@
-*multiClickTime: 400
-! URxvt*depth: bitdepth
-! URxvt*buffered: boolean
-URxvt*geometry: 100x40 
+* multiClickTime: 400
 XTerm*metaSendsEscape: true
 UXTerm*metaSendsEscape: true
-!      Colors
-!
-!      color0    (black)            = Black
-!      color1    (red)              = Red3
-!      color2    (green)            = Green3
-!      color3    (yellow)           = Yellow3
-!      color4    (blue)             = Blue3
-!      color5    (magenta)          = Magenta3
-!      color6    (cyan)             = Cyan3
-!      color7    (white)            = AntiqueWhite
-!      color8    (bright black)     = Grey25
-!      color9    (bright red)       = Red
-!      color10   (bright green)     = Green
-!      color11   (bright yellow)    = Yellow
-!      color12   (bright blue)      = Blue
-!      color13   (bright magenta)   = Magenta
-!      color14   (bright cyan)      = Cyan
-!      color15   (bright white)     = White
-!      foreground                   = Black
-!      background                   = White
-!
-! URxvt*background: Black
-! URxvt*foreground: White
-! URxvt*colorn: colour
-! URxvt*colorBD: colour
-! URxvt*colorIT: colour
-! URxvt*colorUL: colour
-! URxvt*underlineColor: colour
-! URxvt*highlightColor: colour
-! URxvt*highlightTextColor: colour
-! URxvt*cursorColor: colour
-! URxvt*cursorColor2: colour
-! URxvt*reverseVideo: boolean
-! URxvt*jumpScroll: boolean
-! URxvt*skipScroll: boolean
-! URxvt*fading: number
-! URxvt*fadeColor: colour
-! URxvt*iconFile: file
-! URxvt*scrollColor: colour
-! URxvt*troughColor: colour
-! URxvt*borderColor: colour
-! URxvt*italicFont: fontlist
-! URxvt*boldItalicFont: fontlist
-! URxvt*intensityStyles: boolean
-! URxvt*title: string
-! URxvt*iconName: string
-! URxvt*mapAlert: boolean
+
+URxvt*depth: bitdepth
+URxvt*geometry: 100x40 
 URxvt*urgentOnBell: False
 URxvt*visualBell: False
 URxvt*loginShell: True
 URxvt*utmpInhibit: False
-! URxvt*print-pipe: string
 URxvt*scrollstyle: rxvt
-! URxvt*thickness: number
 URxvt*scrollBar: True
 URxvt*scrollBar_right: True
-! URxvt*scrollBar_floating: boolean
-! URxvt*scrollBar_align: mode
 URxvt*scrollTtyOutput: True
 URxvt*scrollWithBuffer: True
 URxvt*scrollTtyKeypress: True
 URxvt*saveLines: 10000
-! URxvt*internalBorder: number
-! URxvt*externalBorder: number
-! URxvt*borderLess: boolean
-! URxvt*skipBuiltinGlyphs: boolean
-! URxvt*termName: termname
-! URxvt*lineSpace: number
-! URxvt*meta8: boolean
 URxvt*mouseWheelScrollPage: False
-! URxvt*pastableTabs: boolean
 URxvt*cursorBlink: True
-! URxvt*cursorUnderline: boolean
 URxvt*pointerBlank: False
-! URxvt*pointerColor: colour
-! URxvt*pointerColor2: colour
 URxvt*pointerBlankDelay: 3
-! URxvt*backspacekey: string
-! URxvt*deletekey: string
-! URxvt*cutchars: string
-! URxvt*{|}
-! URxvt*preeditType: style
-! URxvt*inputMethod: name
-! URxvt*imLocale: name
-! URxvt*imFont: fontset
-! URxvt*tripleclickwords: boolean
-! URxvt*insecure: boolean
-! URxvt*modifier: modifier
-! URxvt*answerbackString: string
-! URxvt*secondaryScreen: boolean
-! URxvt*secondaryScroll: boolean
-! URxvt*hold: boolean
-! URxvt*chdir: path
-! URxvt*keysym.sym: string
-! URxvt*perl-ext: string
-! URxvt*perl-eval: string
-! URxvt*perl-lib: path
-! URxvt*selection.pattern-idx: perl-regex
-! URxvt*selection-autotransform.idx: perl-transform
-! URxvt*searchable-scrollback: keysym
-! URxvt*transient-for: windowid
-! URxvt*override-redirect: boolean
-! URxvt*iso14755: boolean
-! URxvt*iso14755_52: boolean
-
-! clickable links
 URxvt.perl-ext-common: default,matcher,tabbed,fullscreen
 URxvt.url-launcher: /usr/bin/google-chrome-stable
 URxvt.matcher.button: 1
-! pretty link color
 URxvt.colorUL: #4682B4
-!fullscreen baby
-!URxvt.keysym.F11: perl:fullscreen:switch
-!
-!
-!-------------------------------------------------------------------------------
-! Xft settings
-!-------------------------------------------------------------------------------
+URxvt.depth:                32
+URxvt.geometry:             90x30
+URxvt.transparent:          false
+URxvt.fading:               0
+URxvt.loginShell:           true
+URxvt.internalBorder:       3
+URxvt.lineSpace:            0
+URxvt.font:                 xft:Fira Code:Medium:size=12:antialias=true
+URxvt.cursorBlink: true
+URxvt.cursorColor: #657b83
+URxvt.cursorUnderline: false
+URxvt.pointerBlank: true
+URxvt.tabbed.tab-fg: 5
+URxvt.tabbed.tab-bg: #586e75
 
 Xft.dpi:                    96
 Xft.antialias:              true
@@ -129,40 +44,6 @@ Xft.rgba:                   rgb
 Xft.hinting:                true
 Xft.hintstyle:              hintslight
 
-
-URxvt.depth:                32
-URxvt.geometry:             90x30
-URxvt.transparent:          false
-URxvt.fading:               0
-! URxvt.urgentOnBell:         true
-! URxvt.visualBell:           true
-URxvt.loginShell:           true
-URxvt.internalBorder:       3
-URxvt.lineSpace:            0
-
-! Fonts
-! URxvt.font:     xft:Source Code Pro for Powerline:Medium:size=12:antialias=true
-URxvt.font:     xft:Inconsolata for Powerline:Medium:size=12:antialias=true
-! URxvt.boldFont: xft:Inconsolata-dz for Powerline:dz:size=12:antialias=true
-!URxvt.font:     xft:bitstream vera sans mono:size=10:antialias=true
-!URxvt.boldFont: xft:bitstream vera sans mono:bold:size=10:antialias=true
-!
-!
-! Cursor
-URxvt.cursorBlink: true
-URxvt.cursorColor: #657b83
-URxvt.cursorUnderline: false
- 
-! Pointer
-URxvt.pointerBlank: true
-
-! Tab colors
-URxvt.tabbed.tab-fg: 5
-URxvt.tabbed.tab-bg: #586e75
-
-
-!!Source http://github.com/altercation/solarized
- 
 *background: #002b36
 *foreground: #657b83
 *fading: 40
@@ -171,34 +52,26 @@ URxvt.tabbed.tab-bg: #586e75
 *pointerColorBackground: #586e75
 *pointerColorForeground: #93a1a1
 
-! black dark/light
 *color0: #073642
 *color8: #002b36
  
-!! red dark/light
 *color1: #dc322f
 *color9: #cb4b16
  
-!! green dark/light
 *color2: #859900
 *color10: #586e75
  
-!! yellow dark/light
 *color3: #b58900
 *color11: #657b83
  
-!! blue dark/light
 *color4: #268bd2
 *color12: #839496
  
-!! magenta dark/light
 *color5: #d33682
 *color13: #6c71c4
  
-!! cyan dark/light
 *color6: #2aa198
 *color14: #93a1a1
  
-!! white dark/light
 *color7: #eee8d5
 *color15: #fdf6e3
