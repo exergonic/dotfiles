@@ -1,6 +1,5 @@
-*.zwc
+__pycache__
 *plug*
-*.zwc
 emacs/straight
 *autoload*
 *plugged*
