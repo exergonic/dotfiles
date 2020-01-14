@@ -3,13 +3,13 @@ set keymap vi
 set match-hidden-files Off
 
 $if mode=vi
-    set keymap vi-insert
-    ",,": vi-movement-mode
-    ",,": vi-movement-mode
-    "\\t": transpose-chars
-    "\\T": transpose-words
-    #"\\": character-search
-    #"?": character-search-backward
+set keymap vi-insert
+",,": vi-movement-mode
+",,": vi-movement-mode
+"\\t": transpose-chars
+"\\T": transpose-words
+#"\\": character-search
+#"?": character-search-backward
 $endif
 
 set blink-matching-paren on

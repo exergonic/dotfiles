@@ -1,24 +1,24 @@
 #!/bin/bash
 
-# get them resources {{{
+# get them resources
 xrdb -merge "$HOME/.Xresources"
 
 # get dat modmap
 xmodmap "$HOME/.Xmodmap"
 
-# disable xset and prevent screen blanking
 xset -dpms
+# prevent screen blanking, beeping
 xset s off
-
-# disable beeping
 xset b off
+xset c 100
 
+# disable beeping xset b ofu
 # sync primary, clipboard, etc.
 autocutsel -fork &
 autocutsel -selection PRIMARY -fork &
 
-# set a pimpin' background
-feh --bg-scale "$HOME/.dotfiles/X/background.png" &
+# set background
+feh --bg-scale --randomize /home/bwayne/Images/chromecast1080/* &
 
 # start pulseaudio
 pulseaudio --start
@@ -28,4 +28,4 @@ pulseaudio --start
 # }}}
 
 # launch
-exec bspwm
+exec i3
