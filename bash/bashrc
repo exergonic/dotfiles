@@ -73,3 +73,5 @@ export XDG_RUNTIME_DIR=${HOME}/.local/runtime
 export QT_IM_MODULE=xum
 export GTK_IM_MODULE=uim
 unset XMODIFIERS
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

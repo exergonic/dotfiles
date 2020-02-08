@@ -39,30 +39,53 @@ is_login_sh() {
 
 is_blank() { [[ -z "$*" ]]; }
 
+
 is_notblank() { [[ -n "$*" ]]; }
+
 
 is_even() { (($1 % 2 == 0)); }
 
+
 is_dir() { [[ -d "$1" ]]; }
+
 
 file_is_dir() { [[ -d "$1" ]]; }
 
+
 file_is_newer() { [[ "$1" -nt "$2" ]]; }
 
+
 path() { echo $PATH | tr ":" "\n"; }
+
 
 tempcd() { cd $(mktemp -d); }
 alias tcd='tempcd'
 
+
 len() { printf "%4d\n" "$#@"; }
 
+
 p() { printf "%10s\n" "$*"; }
+
 
 car() { echo $@[1]; }
 alias head='car'
 
+
 cdr() { echo $xs[2,-1]; }
 alias tail='cdr'
+
+
+resolution() {
+	xdpyinfo | grep dimensions | awk '{print $2}'
+}
+alias dimensions=resolution
+
+
+# df() {
+# 	df -hH  --print-type --exclude-type=squashfs -x tmpfs -x devtmpfs -x vfat
+# }
+
 
 cdm() {
 	# cd into a directory from a menu
@@ -76,6 +99,7 @@ cdm() {
 		break
 	done
 } #// cmd
+
 
 emacs_vanilla() {
 	# Vanilla Emacs

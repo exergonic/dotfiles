@@ -116,7 +116,7 @@ bindkey '^j' down-history
 # %{$fg[white]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
-PS1="%{$fg[magenta]%}λ %{$reset_color%}"
+PROMPT="%(1j.[%j] .)%{$fg[cyan]%}==> %{$reset_color%}"
 #RPROMPT="%~"
 RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
 
@@ -171,3 +171,5 @@ PYTHONSTARTUP="${CONFIGDIR}/python_startup.py"
 my_shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
 my_term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
 # echo "NOW HACKING $my_shell IN $my_term"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
