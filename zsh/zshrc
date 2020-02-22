@@ -116,11 +116,8 @@ bindkey '^j' down-history
 # %{$fg[white]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
 # PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
-PROMPT="%(1j.[%j] .)%{$fg[cyan]%}==> %{$reset_color%}"
-#RPROMPT="%~"
-RPROMPT="%{$fg[grey]%}%~%{$reset_color%}"
 
-# pip zsh completion start {{{
+# pip zsh completion start
 function _pip_completion() {
 	local words cword
 	read -Ac words
@@ -130,46 +127,36 @@ function _pip_completion() {
 		PIP_AUTO_COMPLETE=1 $words[1]))
 }
 compctl -K _pip_completion pip
-# pip zsh completion end }}}
+
 
 # zgen
-if [[ ! -f ~/.zgen/zgen.zsh ]]; then
-	git clone https://github.com/zpm-zsh/zpm $HOME/.zgen
-fi
-
-source ~/.zgen/zgen.zsh
-
-zgen load zsh-users/zsh-autosuggestions
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-bindkey '^ ' autosuggest-accept
-
+source ${HOME}/.zgen/zgen.zsh
 zgen load zsh-users/zsh-syntax-highlighting
 zgen load hlissner/zsh-autopair
+zgen load zsh-users/zsh-autosuggestions
+		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+		bindkey '^ ' autosuggest-accept
 
-# powerlevel9k {{{
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode dir newline virtualenv)
-# POWERLEVEL9K_VI_INSERT_MODE_STRING="🅸"
-# POWERLEVEL9K_VI_COMMAND_MODE_STRING="🅽"
-# POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-# POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-# POWERLEVEL9K_SHORTEN_DELIMITER=""
-# POWERLEVEL9K_DISABLE_RPROMPT=true
-# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-# zgen load Powerlevel9k/powerlevel9k powerlevel9k
-# }}}
 
-source ${CONFIGDIR}/shell/aliases
-source ${CONFIGDIR}/shell/functions
-
-compinit
-bashcompinit
-
+# python
 eval "$(register-python-argcomplete pipx)"
 PYTHONSTARTUP="${CONFIGDIR}/python_startup.py"
 
-my_shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
-my_term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
+# my_shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
+# my_term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
 # echo "NOW HACKING $my_shell IN $my_term"
 
+# fuzzy finder fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# prompt
+if which starship &> /dev/null ; then
+	eval "$(starship init zsh)"
+else
+	PROMPT="%(1j.[%j] .)%{$fg[cyan]%}==> %{$reset_color%}"
+	RPROMPT="%{$fg[cyan]%}~%${reset_color%}"
+fi
+
+source ${CONFIGDIR-${HOME}/.dotfiles}/shell/aliases
+source ${CONFIGDIR-${HOME}/.dotfiles}/shell/functions
