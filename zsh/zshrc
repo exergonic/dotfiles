@@ -1,8 +1,14 @@
-#! /usr/bin/env zsh
 # vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
+#zmodload zsh/zprof
+
+
+# what's my terminal?
+my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
 
 #Source outer files
 [[ -e ${HOME}/.zshrc.$HOST ]] && source ${HOME}/.zshrc.$HOST
+source ${CONFIGDIR-${HOME}/.dotfiles}/shell/aliases
+source ${CONFIGDIR-${HOME}/.dotfiles}/shell/functions
 
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
@@ -19,25 +25,18 @@ COMPLETION_WAITING_DOTS="true"
 # Disable marking untracked files under VCS as dirty.
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Change the command execution time
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="yyyy-mm-dd"
 
 # Autoloads
-autoload -Uz +X compinit
-autoload -U +X bashcompinit
-autoload -U promptinit
-unalias run-help &>/dev/null
-autoload -U run-help
-alias help='run-help'
+unalias run-help
+autoload -Uz run-help
+alias help=run-help
 autoload -U colors && colors
 
 # Zstyle
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
-zstyle ':completion:*' list-colors ''
-#zstyle ':completion:*' list-colors 'di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 zstyle ":completion:*:commands" rehash 1
+zstyle ':completion::complete:*' gain-privileges 1 	# sudo completion
 
 # completion using a menu and vi keys
 zstyle ':completion:*' menu select
@@ -59,8 +58,9 @@ setopt prompt_subst
 setopt auto_cd auto_pushd pushd_ignore_dups pushd_to_home
 
 ## Completions
-setopt auto_list list_ambiguous
+setopt auto_list list_ambiguous complete_aliases
 
+# don't beep
 unsetopt beep
 
 # History Settings {{{
@@ -73,21 +73,21 @@ setopt append_history hist_find_no_dups hist_ignore_space hist_save_no_dups \
 export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000000
+
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+HIST_STAMPS="yyyy-mm-dd"
 #}}}
 
-# KEYMAP {{{
-function zle-keymap-select() {
-	zle reset-prompt
-	zle -R
-}
-
-zle -N zle-keymap-select
-zle -N edit-command-line
-
-# Vim mode
+# vim mode
 bindkey -v
-bindkey ",," vi-cmd-mode
+# Esc if in nvim, `,,' elsewise
+if [[ "$my_term" == "nvim" ]]; then
+	bindkey "Esc" vi-cmd-mode
+else
+	bindkey ",," vi-cmd-mode
+fi
 
+# emacs-like keybinds
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 
@@ -98,7 +98,7 @@ bindkey '^b' backward-word
 bindkey '^f' forward-word
 
 # V' in vi-cmd-mode will edit current line in Vim
-
+zle -N edit-command-line
 autoload edit-command-line
 bindkey -M vicmd 'V' edit-command-line
 
@@ -111,41 +111,19 @@ bindkey '^k' up-history
 bindkey '^j' down-history
 # }}}
 
-# Prompt
-# PROMPT="%(1j.[%j] .)%{$fg[yellow]%}%n%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%} %3~
-# %{$fg[white]%}λ%{$reset_color%} "
-# PS1="%(1j.[%j] .)%{$fg[blue]%}%3~ %{$fg[magenta]%}λ%{$reset_color%} "
-# PS1="%(1j.[%j] .)%{$fg[blue]%}%~ %{$fg[magenta]%}λ%{$reset_color%} "
-
-# pip zsh completion start
-function _pip_completion() {
-	local words cword
-	read -Ac words
-	read -cn cword
-	reply=($(COMP_WORDS="$words[*]" \
-		COMP_CWORD=$((cword - 1)) \
-		PIP_AUTO_COMPLETE=1 $words[1]))
-}
-compctl -K _pip_completion pip
-
 
 # zgen
-source ${HOME}/.zgen/zgen.zsh
-zgen load zsh-users/zsh-syntax-highlighting
-zgen load hlissner/zsh-autopair
-zgen load zsh-users/zsh-autosuggestions
-		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+if [[ -x ${HOME}/.zgen/zgen.zsh ]] ; then
+	source ${HOME}/.zgen/zgen.zsh
+	zgen load zsh-users/zsh-syntax-highlighting
+	zgen load zsh-users/zsh-completions
+	zgen load hlissner/zsh-autopair
+	zgen load zsh-users/zsh-autosuggestions
+		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
 		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 		bindkey '^ ' autosuggest-accept
+fi
 
-
-# python
-eval "$(register-python-argcomplete pipx)"
-PYTHONSTARTUP="${CONFIGDIR}/python_startup.py"
-
-# my_shell="$(zsh --version | awk '{print $1" "$2}' | tr '[:lower:]' '[:upper:]')"
-# my_term="$(ps --no-headers --pid $PPID | awk '{print $4}' | tr '[:lower:]' '[:upper:]')"
-# echo "NOW HACKING $my_shell IN $my_term"
 
 # fuzzy finder fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -158,5 +136,5 @@ else
 	RPROMPT="%{$fg[cyan]%}~%${reset_color%}"
 fi
 
-source ${CONFIGDIR-${HOME}/.dotfiles}/shell/aliases
-source ${CONFIGDIR-${HOME}/.dotfiles}/shell/functions
+autoload -U compinit && compinit
+#zprof

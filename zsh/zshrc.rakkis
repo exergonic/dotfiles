@@ -1,8 +1,19 @@
 export CONFIGDIR=${HOME}/.dotfiles
 
-alias update='sudo aptitude update'
-alias upgrade='sudo aptitude update && sudo aptitude upgrade'
-alias install='sudo aptitude install'
-
 # command not found
 source /etc/zsh_command_not_found
+
+
+# ubuntu only
+if [[ "$(grep -i -E "ubuntu|neon" /etc/lsb-release)" ]] ; then
+	alias au='sudo apt update'
+	if [[ "$(command -v pkcon)" ]] ; then
+		alias s='pkcon search'
+		alias i='sudo pkcon update && sudo pkcon install'
+		alias u='sudo pkcon update'
+	else
+		alias s='apt search'
+		alias i='sudo apt update && sudo apt install -y'
+		alias u='sudo apt update && sudo apt upgrade -y'
+	fi
+fi

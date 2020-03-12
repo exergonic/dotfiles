@@ -9,18 +9,18 @@ dirstack() {
 		dir_stack=$(printf "%s\n" $dir_stack | sort | tr "\n" " ")
 	}
 
-	_to_file() {
+	_ds_to_file() {
 		# write dirstack to ~/.dirstack
 		_sort
 		echo $dir_stack > ~/.dirstack
 	}
 
-	_echo_DS() {
+	_echo_ds() {
 		# print dirstack to screen
 		printf "%s\n" "${dir_stack}" | tr "[:blank:]" "\n"
 	}
 
-	_export_DS() {
+	_export_ds() {
 		# export new dir_stack to environment
 		local new_ds="$@"
 		dir_stack="$new_ds"
@@ -31,7 +31,7 @@ dirstack() {
 
 	case ${COMMAND} in
 		"")
-			_echo_DS ;;
+			_echo_ds ;;
 
 		"push"|"p")
 			grep "${PWD}" "${dir_stack}" >&/dev/null
@@ -42,13 +42,13 @@ dirstack() {
 				echo "The current directory ALREADY EXISTS in the stack."
 			else
 				if [[ -z "${dir_stack}" ]]; then
-					_export_DS "$PWD"
-					_echo_DS
-					_to_file
+					_export_ds "$PWD"
+					_echo_ds
+					_ds_to_file
 				else
-					_export_DS "${dir_stack} ${PWD}"
-					_echo_DS
-					_to_file
+					_export_ds "${dir_stack} ${PWD}"
+					_echo_ds
+					_ds_to_file
 				fi
 			fi
 			;;
@@ -71,34 +71,34 @@ dirstack() {
 			select DIR in ${dir_stack};
 			do
 				if [ "${REPLY}" == "1" ]; then
-					_export_DS "${dir_stack/${DIR} /}"
-					_to_file
+					_export_ds "${dir_stack/${DIR} /}"
+					_ds_to_file
 				else
-					_export_DS "${dir_stack/ ${DIR}/}"
-					_to_file
+					_export_ds "${dir_stack/ ${DIR}/}"
+					_ds_to_file
 				fi
 				break
 			done
 
-			_echo_DS
+			_echo_ds
 			;;
 
 		"clear"|"c")
 			echo "This will clear the entire directory stack."
 			read -p "Ctrl-c to abort." RESPONSE
-			_export_DS ""
-			_to_file
+			_export_ds ""
+			_ds_to_file
 			echo "dir_stack cleared"
 			;;
 
 		"backup"|"b")
 			echo "Backing up stack to ~/.dirstack"
-			_to_file
+			_ds_to_file
 			;;
 
 		"restore"|"r")
 			dir_stack="$( cat ~/.dirstack )"
-			_echo_DS
+			_echo_ds
 			;;
 
 		"help" | "h")

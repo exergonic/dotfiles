@@ -6,26 +6,26 @@ xrdb -merge "$HOME/.Xresources"
 # get dat modmap
 xmodmap "$HOME/.Xmodmap"
 
+# energy star off
 xset -dpms
-# prevent screen blanking, beeping
+# screen blanking off
 xset s off
+# no beeping
 xset b off
-xset c 100
 
 # disable beeping xset b ofu
 # sync primary, clipboard, etc.
-autocutsel -fork &
-autocutsel -selection PRIMARY -fork &
+# autocutsel -fork &
+# autocutsel -selection PRIMARY -fork &
 
 # set background
-feh --bg-scale --randomize /home/bwayne/Images/chromecast1080/* &
+# feh --bg-scale --randomize /home/bwayne/Images/chromecast1080/* &
 
 # start pulseaudio
 pulseaudio --start
 
 # save my eyes
-#redshift -v -b 1.0:0.7 -l 35.9728:-83.9422 -t 6500K:3500K & &> /dev/null
-# }}}
+redshift -v -b 1.0:0.7 -l 35.9728:-83.9422 -t 6500K:3500K &> /dev/null
 
 # launch
-exec i3
+exec bspwm

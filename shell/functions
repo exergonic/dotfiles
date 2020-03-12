@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-# vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
+# vim: ft=sh shiftwidth=2 tabstop=2 noexpandtab
 
 ################################################################################
 ### __                  _   _                  ____
@@ -10,31 +9,31 @@
 ###                                           \_\/_/
 ################################################################################
 
+# avoid `which' (https://stackoverflow.com/a/677212/1381065)
+
+# use `exa' if installed.
+if command -v exa &> /dev/null ; then
+	ls_cmd='exa'
+else
+	ls_cmd='/bin/ls'
+fi
+
+
 cd() {
 	# ls the contents once cd'ed into a dir
-	builtin cd "${@:-$HOME}" && exa --group-directories-first
+	builtin cd "${@:-$HOME}" && $ls_cmd --group-directories-first
 }
+
 
 is_interactive_sh() {
 	# is this shell interactive?
-	if [[ $- == **i** ]]; then
-		printf "%s\n" "... is interactive"
-		true
-	else
-		printf "%s\n" "... is NOT interactive"
-		false
-	fi
+	[[ $- == **i** ]] && printf "%s\n" "... is interactive"
 }
+
 
 is_login_sh() {
 	# is this a login shell?
-	if [[ -o login ]]; then
-		printf "%s\n" "... is login shell"
-		true
-	else
-		printf "%s\n" "... is NOT login shell"
-		false
-	fi
+	[[ -o login ]] && printf "%s\n" "... is login shell"
 }
 
 is_blank() { [[ -z "$*" ]]; }
@@ -49,13 +48,24 @@ is_even() { (($1 % 2 == 0)); }
 is_dir() { [[ -d "$1" ]]; }
 
 
+is_executable() { [[ -x "$1" ]]; }
+alias executes='is_executable'
+
+
 file_is_dir() { [[ -d "$1" ]]; }
 
 
 file_is_newer() { [[ "$1" -nt "$2" ]]; }
 
 
-path() { echo $PATH | tr ":" "\n"; }
+string_contains() {
+	# test that regex matches string
+	string="$1" ; regex="$2"
+	[[ "$string" =~ "$regex" ]]
+}
+
+
+path() { echo "$PATH" | tr ":" "\n"; }
 
 
 tempcd() { cd $(mktemp -d); }
@@ -69,12 +79,19 @@ p() { printf "%10s\n" "$*"; }
 
 
 car() { echo $@[1]; }
-alias head='car'
 
 
 cdr() { echo $xs[2,-1]; }
-alias tail='cdr'
 
+
+is_installed() {
+	dpkg-query --show --showformat='${db:Status-Status}' $1
+}
+alias installed=is_installed
+
+rc() {
+	$EDITOR $(fzf < $CONFIGDIR/rcfiles.list)
+}
 
 resolution() {
 	xdpyinfo | grep dimensions | awk '{print $2}'
@@ -82,34 +99,37 @@ resolution() {
 alias dimensions=resolution
 
 
-# df() {
-# 	df -hH  --print-type --exclude-type=squashfs -x tmpfs -x devtmpfs -x vfat
-# }
+df() {
+	/bin/df -hH  --print-type \
+		--exclude-type={squashfs,tmpfs,devtmpfs,vfat}
+	}
 
+rc() {
+	$EDITOR $(fzf < ${CONFIGDIR:-${HOME}/.dotfiles/rcfile.list})
+}
 
 cdm() {
 	# cd into a directory from a menu
-	local PS3
-	local dirs
-	PS3="Select a directory #: "
-	dirs=($(find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*"))
-	#
-	select dir in $dirs; do
-		builtin cd "$dir" && ls
-		break
-	done
+	local dirlist=$(find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*")
+	if command -v fzf ; then
+		cd "$(fzf <<< $dirlist)"
+	else
+		local PS3
+		setopt shwordsplit
+		PS3="Select a directory #: "
+		select dir in $dirlist; do
+			builtin cd "$dir" && $ls_cmd
+			break
+		done
+	fi
 } #// cmd
 
-
-emacs_vanilla() {
-	# Vanilla Emacs
-	EMACS_USER_DIRECTORY=~/.emacs.d.vanilla emacs $@
-}
 
 get_X_key() {
 	# Find the X key code for a given key press"
 	xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
 }
+
 
 recent_pkgs() {
 	# show recently installed packages. show 20 by default (Arch Linux only)
@@ -117,10 +137,12 @@ recent_pkgs() {
 	expac --timefmt='%Y-%m-%d %T' '%l\t%n' | sort | tail "-$number"
 }
 
+
 mcd() {
 	# make a directory and cd into at the same time
 	[[ -n "$1" ]] && mkdir -p "$@" && cd "$1"
 } #// mcd
+
 
 mntuser() {
 	# mount a dev as user
@@ -170,7 +192,7 @@ man() {
 		LESS_TERMCAP_ue=$'\E[0m' \
 		LESS_TERMCAP_us=$'\E[04;38;5;146m' \
 		man "$@"
-} #// man
+	} #// man
 
 topdf() {
 	# text to pdf
@@ -187,3 +209,53 @@ mergepdf() {
 open() {
 	mimeopen $1 &>/dev/null &
 }
+
+
+x() {
+	# extract tar archive
+	if [[ $#@ = 0 ]] ; then
+		printf "extract a tar archive\n"
+	else
+		archive="$1"
+		archive_extension="${1#*.}"
+		archive_mimetype="$(mimetype "$archive" | cut -d' ' -f2)"
+
+		case "$archive_extension" in
+			# gzip file
+			tar.gz  | tgz ) tar -xzvf "$archive" ;;
+			# bzip2 file
+			tar.bz2 | tbz ) tar -xjvf "$archive" ;;
+			#xzip file
+			tar.xz  | txz ) tar -xJvf "$archive" ;;
+			# zip
+			zip ) unzip "$archive" ;;
+			# gzip
+			gz | * ) tar -xvf "$archive" ;;
+		esac
+
+		[[ $? == 0 ]] || printf "%s\n" "was the file a zipped tar archive?"
+
+	fi
+}
+
+# display name of shell and name of terminal
+sh_term() {
+	sh="$(basename "${SHELL}")"
+	term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
+	printf "%s %s\n" "$sh" "$term"
+}
+
+# latitude and longitude from IP addr
+latlong() {
+	http ifconfig.co/json | jq '"\(.latitude),\(.longitude)"' | tr -d \"
+}
+alias geoloc=latlong
+
+wttr() {
+	local request
+	request="wttr.in/$(latlong)\?${1-2}QF"
+	[ "$(tput cols)" -lt 125 ] && request+='?n'
+	curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
+}
+
+#curl api.openweathermap.org/data/2.5/forecast?id=524901&APPID=$API_WEATHER_OWM

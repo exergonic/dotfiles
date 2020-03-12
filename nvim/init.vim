@@ -10,7 +10,6 @@ if ! filereadable(expand(stdpath('config') . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
 endif
 
-
 call plug#begin(expand(stdpath('cache') . '/plugged'))
 function! DoRemote(arg)
     UpdateRemotePlugins
@@ -21,6 +20,8 @@ endfunction
 Plug 'liuchengxu/vim-which-key'
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 
+Plug 'jlanzarotta/bufexplorer'
+
 " simple x hotkey daemon
 Plug 'kovetskiy/sxhkd-vim'
 
@@ -29,6 +30,9 @@ Plug 'sheerun/vim-polyglot'
 
 " Access to UNIX shell commands
 Plug 'tpope/vim-eunuch'
+
+" Surround stuff
+Plug 'tpope/vim-surround'
 
 " Fuzzy finder
 Plug 'kien/ctrlp.vim'
@@ -40,7 +44,6 @@ Plug 'bling/vim-bufferline'
 
 " Display indentation with thin, vertical line
 Plug 'Yggdroot/indentLine'
-    let g:indentLine_char = '┊'
 
 " Status line
 Plug 'bling/vim-airline'
@@ -61,7 +64,7 @@ Plug 'bling/vim-airline'
     let g:airline_symbols.dirty='⚡'  " }}}
 
 Plug 'vim-airline/vim-airline-themes'
-    let g:airline_theme = 'minimalist'
+    let g:airline_theme = 'moonfly'
         "biogoo
         "monochrome
         "badcat
@@ -72,7 +75,11 @@ Plug 'plan9-for-vimspace/acme-colors'
 Plug 'altercation/vim-colors-solarized'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'morhetz/gruvbox'
-Plug 'stephenmckinney/vim-solarized-powerline'
+Plug 'bluz71/vim-moonfly-colors'
+    let g:moonflyCursorColor = 1
+    let g:moonflyTerminalColors = 1
+    let g:moonflyUnderlineMatchParen = 1
+
 " }}}
 
 " Seemless movement between vim and tmux (cntrl+h|j|k|l movemnt)
@@ -80,7 +87,7 @@ Plug 'christoomey/vim-tmux-navigator'
 
 " Filesystem explorer
 Plug 'scrooloose/nerdtree'
-    let NERDTreeShowLineNumbers = 1
+    let NERDTreeShowLineNumbers = 0
     let NERDChristmasTree = 1
     nnoremap <silent><Leader>n :NERDTreeToggle<CR>
 
@@ -124,6 +131,14 @@ Plug 'godlygeek/tabular'
 
 " Insert pairs of certain characters, e.g. parens.
 Plug 'Raimondi/delimitMate'
+
+
+" Pull up a filesystem-tree with '-'
+Plug 'justinmk/vim-dirvish'
+
+" Distraction-free writing
+Plug 'junegunn/goyo.vim'
+
 
 " Readline while in insert mode
 Plug 'tpope/vim-rsi'
@@ -268,8 +283,8 @@ filetype plugin on
 filetype plugin indent on
 syntax on
 set ttyfast
-set autochdir
-" autocmd BufEnter * silent! lcd %:p:h  "! use only if autochdir doesn't work out
+"set autochdir    " not supported in dirvish
+autocmd BufEnter * silent! lcd %:p:h  "! use only if autochdir doesn't work out
 set backspace=indent,eol,start
 set ruler
 set showcmd
@@ -339,7 +354,7 @@ set nohlsearch
 "gui {{{1
 set termguicolors
 set bg=dark
-colorscheme gruvbox
+colorscheme moonfly
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_italicize_comments = '1'
 set guifont=FiraCode_Nerd_Font:h9
@@ -441,7 +456,7 @@ nnoremap <Leader><Leader> :
 "Avoid escape
 inoremap ,, <Esc>
 vnoremap ,, <Esc>
-tnoremap <Esc> <C-\><C-N>
+tnoremap ,, <C-\><C-N>
 
 nnoremap <silent><Leader>` :split term://zsh<CR>
 

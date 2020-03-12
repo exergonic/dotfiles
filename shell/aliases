@@ -1,16 +1,11 @@
 #!/usr/bin/env zsh
 # vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 
-# _ _
-# __ _| (_) __ _ ___  ___  ___
-# / _` | | |/ _` / __|/ _ \/ __|
-# | (_| | | | (_| \__ \  __/\__ \
- # \__,_|_|_|\__,_|___/\___||___/
-
 # cd aliases
 alias \.\.="cd .."           # cd up one dir
 alias \.\.\.="cd ../.."      # cd up two dirs
 alias \.\.\.\.="cd ../../.." # ...   three dirs
+
 
 # ls aliases
 alias ls='exa -h --group-directories-first'
@@ -37,19 +32,17 @@ alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gs='git status'
 alias gc='git commit'
 
+
 # Compression
 alias tbz='tar -cjvf'
 alias tgz='tar -czvf'
 alias txz='tar -cJvf'
-alias untbz='tar -xjvf'
-alias untgz='tar -xzvf'
-alias untxz='tar -xJvf'
 
 # Various {{{
 alias hddtemp='hddtemp --unit=F'
 alias i3help='less ~/.config/i3/config'
 alias info='info --vi-keys'
-alias myip='curl v4.ifconfig.co'
+alias myip='curl ifconfig.co'
 alias netstat="netstat -nputwc"
 alias pg='ping -c 3 www.google.com'
 alias restart='reboot'
@@ -63,14 +56,8 @@ alias trashsize='du -sh ~/.local/usr/share/Trash'
 # CPU management
 alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
-# Emacs
-alias e='emacsclient -c'
-alias et='emacsclient -t'
-
-# VIM {{{
-alias vi='vim'
-alias nvi='nvim'
-alias nv='nvim'
+# vim
+alias v='nvim'
 alias vibash="nvim ${CONFIGDIR}/bash/bashrc"
 alias vialiases="nvim ${CONFIGDIR}/shell/aliases"
 alias vifunctions="nvim ${CONFIGDIR}/shell/functions"
@@ -78,8 +65,8 @@ alias vims="nvim -O" #vim: open in verticle split
 alias vimt="nvim -p" #vim: open in tabs
 #}}}
 
+
 # recipe's, functions, and aliases {{{
-alias vivi="nvim ${CONFIGDIR}/vim/vimrc"
 alias nvivi="nvim ${CONFIGDIR}/nvim/init.vim"
 alias vizsh="nvim ${CONFIGDIR}/zsh/zshrc"
 alias srcfxns="source ${CONFIGDIR}/shell/functions"
@@ -106,19 +93,9 @@ alias srcbash="source ~/.bashrc"
 # Pasta from command line
 alias sprunge="curl -F'sprunge=<-' sprunge.us"
 
-# Tmux complains
-# alias tmux="TERM=tmux-256color tmux"
-
-# Decent initial clock
-alias xclock='xclock -fg white -bg black -chime'
-
 # Simple alias for piping text unto the X clipboard
 alias clipboard='xclip -selection clip'
 
-# Manual xflux management
-alias xflux='xflux -z 37921'
+alias is_internets='nmcli networking connectivity check'
+alias has_internets='is_internets'
 
-# MOPAC chemistry set
-alias mopac='/opt/mopac/MOPAC2012.exe'
-
-# vim: ft=zsh
