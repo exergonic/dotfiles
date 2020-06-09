@@ -48,7 +48,7 @@ set showmatch
 set cmdheight=2
 
 " When will the last window have a status line: 2 = always
-set laststatus=2
+set laststatus=1
 
 " Don't give intro message
 set shortmess+=I
@@ -57,7 +57,7 @@ set shortmess+=I
 
 " Folding
 " the fold column is `n` columns wide
-set foldcolumn=2
+" set foldcolumn=2
 
 " Fold points by using the marker method, as in this file
 set foldmethod=marker
@@ -65,28 +65,24 @@ set foldmethod=marker
 " Folds can be nested twice
 set foldnestmax=2
 
-" Backups and Undo
-" keep backups
+" backups and undo {{{1
 set backup
+set directory=$HOME/.local/runtime/vim/swap
+set backupdir=$HOME/.local/runtime/vim/backup
+set undodir=$HOME/.local/runtime/vim/undo
+set viminfofile=/dev/null
 
-" where to place backups
-set backupdir=/tmp
+call mkdir(&directory, "p")
+call mkdir(&backupdir, "p")
+call mkdir(&undodir, "p")
 
-" where to keep undo files
-set undodir=/tmp
-
-" Maximum number of changes that can be undone
 set undolevels=10000
 
-" Persistent undo
 if has('persistent_undo')
     set undofile
     set undoreload=10000
 endif
-
-" Directory for swap file
-set directory=/tmp
-
+" }}}
 
 " Searching
 " incremental searching
@@ -114,7 +110,7 @@ set sidescrolloff=15
 
 " Line numbers
 " give the numberline 4 spaces wide
-set numberwidth=4
+" set numberwidth=4
 
 " show numbers relative to the current line
 set relativenumber
@@ -182,18 +178,12 @@ Plug 'tpope/vim-eunuch'
 Plug 'ctrlpvim/ctrlp.vim'
 
 " Display indentation with thin, vertical line
-" Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 
 " Status line
-Plug 'bling/vim-airline'
+" Plug 'bling/vim-airline'
 
 " Colorscheme
-Plug 'altercation/vim-colors-solarized'
-Plug 'liuchengxu/space-vim-dark'
-Plug 'dracula/vim'
-
-" Solarized colorscheme for airline
-Plug 'stephenmckinney/vim-solarized-powerline'
 
 " Seemless movement between vim and tmux (cntrl+h|j|k|l movemnt)
 Plug 'christoomey/vim-tmux-navigator'
@@ -207,20 +197,10 @@ Plug 'kien/rainbow_parentheses.vim'
 " Filesystem explorer
 Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
 
-" File manager
-Plug 'vim-scripts/Ranger.vim'
 
 " Efficient toggling of commented code
 Plug 'tpope/vim-commentary'
 
-" Manipulate columns of ordered data
-Plug 'vim-scripts/VisIncr'
-
-" Calculate mathematical visual selections
-Plug 'vim-scripts/HowMuch'
-
-" Launches a calculator in a buffer
-Plug 'gregsexton/VimCalc'
 
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
@@ -228,34 +208,13 @@ Plug 'junegunn/goyo.vim'
 " A wiki for vim
 Plug 'vimwiki/vimwiki'
 
-" Align columns to tokens
-Plug 'godlygeek/tabular'
-
 " Syntax highlighting for i3 config file
 Plug 'PotatoesMaster/i3-vim-syntax'
 
 " Programming
 Plug 'scrooloose/syntastic'
 Plug 'Shougo/neocomplete.vim'
-Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-Plug 'clojure-emacs/cider', {'for': 'clojure'}
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-Plug 'fs111/pydoc.vim', {'for': 'python'}
-Plug 'jpalardy/vim-slime', {'for': ['python', 'scheme', 'racket', 'clojure']}
-Plug 'eagletmt/neco-ghc', {'for': 'haskell'}
-Plug 'eagletmt/ghcmod-vim', {'for': 'haskell'}
-Plug 'Shougo/vimproc', {
-            \ 'for': 'haskell',
-            \ 'do' : 'make',
-            \}
-Plug 'Twinside/vim-hoogle', {'for': 'haskell'}
-Plug 'MicahElliott/vrod', {'for': 'racket'}
-Plug 'wlangstroth/vim-racket', {'for': 'racket'}
-Plug 'bhurlow/vim-parinfer', {'for': ['scheme', 'racket', 'clojure', 'lisp']}
-Plug 'fsharp/vim-fsharp', {
-            \ 'for': 'fsharp',
-            \ 'do':  'make fsautocomplete',
-            \}
+
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -263,7 +222,7 @@ call plug#end()
 "GUI
 
 set bg=dark
-colorscheme default
+colorscheme elflord
 " highlight Comment cterm=italic
 
 if has("gui_running")
@@ -292,7 +251,11 @@ filetype plugin indent on
 " Use global sytax highlighting color settings
 syntax on
 
+" get rid of silly tildes
+highlight EndOfBuffer ctermfg=black ctermbg=black
 
+" tone down line number color
+highlight LineNr ctermfg=grey
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " AUTOCOMMANDS
@@ -350,44 +313,59 @@ au FileType python setlocal nosmartindent
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" HASKELL
-
-let g:haskellmode_completion_ghc = 1
-autocmd Filetype haskell setlocal omnifunc=necoghc#omnifunc
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FORTRAN
-
-" Fortran77 has strict column rules for some compilers
-" Distinguish between the two based upon file extension
-if (&ft=='fortran')
-    let s:extfname = expand("%:e")
-    let fortran_do_enddo=1
-    let fortran_more_precise=1
-    let fortran_have_tabs=1
-    if s:extfname ==? "f90"
-        let fortran_free_source=1
-        unlet! fortran_fixed_source
-    else
-        let fortran_fixed_source=1
-        unlet! fortran_free_source
-        autocmd FileType fortran set colorcolumn=6,73
-    endif
-endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"SHELL
-
-" indent CASE statement appropriately
-let g:sh_indent_case_labels=1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" EXTERNAL CONFIGS
-
-source $HOME/.vim/functions
 source $HOME/.vim/pluginrc
-source $HOME/.vim/keymaprc
+
+" Mapping
+
+let mapleader = "\<Space>"
+
+" Avoid escape
+inoremap ,, <Esc>
+vnoremap ,, <Esc>
+
+" Easier Ex Commands
+nnoremap <Leader>w :w<CR>
+nnoremap <Leader>x :x<CR>
+
+" NerdTree
+nnoremap <silent><Leader>n :NERDTreeToggle<CR>
+
+" Paste Mode
+nnoremap <silent><Leader>p :set invpaste paste?<CR>
+
+" Viewport Controls, ie moving between split panes
+nnoremap <Leader>wj <C-w>j
+nnoremap <Leader>wk <C-w>k
+nnoremap <Leader>wh <C-w>h
+nnoremap <Leader>wl <C-w>l
+
+" Move windows
+nnoremap <Leader>wJ <C-w>J
+nnoremap <Leader>wK <C-w>K
+nnoremap <Leader>wH <C-w>H
+nnoremap <Leader>wL <C-w>L
+
+nnoremap <Leader>w<Left> 5<C-w><
+nnoremap <Leader>w<Right> 5<C-w>>
+
+
+"Source vimrc
+nnoremap <Leader>vs :source ~/.vim/vimrc<cr>
+
+
+"invert listing lisptchars
+nnoremap <silent><Leader>il :set invlist<CR>
+
+"Space-o toggles folds
+nnoremap <Leader>o za
+vnoremap <Leader>o za
+
+""Tab movement
+nnoremap <silent><Leader>tl :tabnext<CR>
+nnoremap <silent><Leader>th :tabprev<CR>
+nnoremap <silent><Leader>tn :tabnew<CR>
+
+nmap <C-j> 3j3<C-e>
+nmap <C-k> 3k3<C-y>
 
 " vim: ft=vim

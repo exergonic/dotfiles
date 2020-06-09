@@ -33,23 +33,11 @@ let g:syntax_enable_baloons = 1
 " fancy color?
 highlight SyntasticError guibg=#2f0000
 
-" work around false flagging legit python3 constructs
-if has("mac")
-    let g:syntastic_python_python_exec = '/usr/local/bin/python3'
-else
-    let g:syntastic_python_python_exec = '/usr/bin/python3'
-endif
-
-" Let syntastic check for racket errors
-let g:syntastic_enable_racket_racket_checker = 1
 
 let g:syntastic_python_checkers = ['flake8', 'python', 'pep8']
-let g:syntastic_haskell_checkers = ['hlint', 'ghc_mod']
 let g:syntastic_error_symbol='✗'
 let g:syntastic_style_warning_symbol='†'
 let g:syntastic_warning_symbol='⚠'
-
-
 
 " Omnicompletion
 set omnifunc=syntaxcomplete#Complete
@@ -59,18 +47,10 @@ autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif "close preview window
 
-" Disable haskell-vim omnifunc
-let g:haskellmode_completion_ghc = 0
-autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-let g:necoghc_enable_detailed_browse = 1
-
 "Python
 let python_highlight_all = 1
 let g:pydoc_open_cmd = 'vsplit'
 let g:pydoc_highlight=0
-
-"Clojure
-let g:clojure_align_multiline_strings = 1
 
 
 "Taglist/Ctags
@@ -175,9 +155,5 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
-
-" VimSlime
-let g:slime_target = "tmux"
-let g:slime_paste_file = tempname()
 
 " vim: ft=vim

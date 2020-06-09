@@ -1,14 +1,11 @@
 # vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 #zmodload zsh/zprof
 
-
 # what's my terminal?
 my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
 
-#Source outer files
-[[ -e ${HOME}/.zshrc.$HOST ]] && source ${HOME}/.zshrc.$HOST
-source ${CONFIGDIR-${HOME}/.dotfiles}/shell/aliases
-source ${CONFIGDIR-${HOME}/.dotfiles}/shell/functions
+# local dotfiles home
+export CONFIGDIR=${CONFIGDIR:-${HOME}/.dotfiles}
 
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
@@ -27,7 +24,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 
 # Autoloads
-unalias run-help
+unalias run-help &> /dev/null
 autoload -Uz run-help
 alias help=run-help
 autoload -U colors && colors
@@ -36,7 +33,10 @@ autoload -U colors && colors
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle ":completion:*:commands" rehash 1
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+r:|[._-]=** r:|=**' '+l:|=* r:|=*'
 zstyle ':completion::complete:*' gain-privileges 1 	# sudo completion
+zstyle :compinstall filename '/home/bwayne/.zshrc'
 
 # completion using a menu and vi keys
 zstyle ':completion:*' menu select
@@ -112,22 +112,6 @@ bindkey '^j' down-history
 # }}}
 
 
-# zgen
-if [[ -x ${HOME}/.zgen/zgen.zsh ]] ; then
-	source ${HOME}/.zgen/zgen.zsh
-	zgen load zsh-users/zsh-syntax-highlighting
-	zgen load zsh-users/zsh-completions
-	zgen load hlissner/zsh-autopair
-	zgen load zsh-users/zsh-autosuggestions
-		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
-		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-		bindkey '^ ' autosuggest-accept
-fi
-
-
-# fuzzy finder fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # prompt
 if which starship &> /dev/null ; then
 	eval "$(starship init zsh)"
@@ -136,5 +120,15 @@ else
 	RPROMPT="%{$fg[cyan]%}~%${reset_color%}"
 fi
 
-autoload -U compinit && compinit
+#Source outer files
+source ${CONFIGDIR}/zsh/zshrc.$HOST
+source ${CONFIGDIR}/shell/aliases
+source ${CONFIGDIR}/shell/functions
+
+alias d='cd $HOME/desk'
+alias dots='cd $HOME/.dotfiles'
+alias conf='cd $HOME/.config'
+
+autoload -Uz compinit && compinit
+
 #zprof

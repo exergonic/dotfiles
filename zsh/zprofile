@@ -1,0 +1,49 @@
+# runs on login
+
+#timezone
+export TZ='America/Chicago'
+
+# Add ~/.local/bin to $PATH:
+export PATH="${HOME}/.node_modules_global/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:${HOME}/.go/bin:${HOME}/.local/bin:$PATH"
+export MANPATH="/usr/local/man:${HOME}/.local/share/man:$MANPATH"
+# eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) # linuxbrew
+
+export LANG=en_US.UTF-8
+export TERM=xterm-256color
+
+# Default programs:
+export EDITOR="nvim"
+export VISUAL=$EDITOR
+export PAGER="less"
+export TERMINAL="konsole"
+export BROWSER="firefox"
+export READER="zathura"
+export OWMAP_APIKEY='95377bab8840fc4ee6ae64ca613ac103'
+export GOPATH="$HOME/.go"
+export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
+
+# LESS config:
+export LESS=-XR
+export LESSHISTFILE=/dev/null
+
+#export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')" {{{
+#export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+#export LESS_TERMCAP_me="$(printf '%b' '[0m')"
+#export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+#export LESS_TERMCAP_se="$(printf '%b' '[0m')"
+#export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+#export LESS_TERMCAP_ue="$(printf '%b' '[0m')" }}}
+
+# XDG
+export XDG_CONFIG_HOME=${HOME}/.config
+export XDG_DATA_HOME=${HOME}/.local/share
+export XDG_CACHE_HOME=${HOME}/.cache
+export XDG_RUNTIME_DIR=${HOME}/.local/runtime
+export XDG_CONFIGDIRS=/etc/xdg
+XDG_DATA_DIRS=${XDG_DATA_DIRS}:/usr/local/share:/usr/share:/var/lib/snapd/desktop:
+XDG_DATA_DIRS+=/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share:
+export XDG_DATA_DIRS
+
+# XCompose
+export QT_IM_MODULE=xum
+export GTK_IM_MODULE=uim

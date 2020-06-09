@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#! /usr/bin/env zsh
 # vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 
 # cd aliases
@@ -6,6 +6,7 @@ alias \.\.="cd .."           # cd up one dir
 alias \.\.\.="cd ../.."      # cd up two dirs
 alias \.\.\.\.="cd ../../.." # ...   three dirs
 
+alias sound='systemctl --user restart pulseaudio.service'
 
 # ls aliases
 alias ls='exa -h --group-directories-first'
@@ -20,6 +21,7 @@ alias lc='ls -ltcr'                                             # Sort by and sh
 alias lu='ls -ltur'                                             # Sort by and show access time, most recent last
 
 # core utilities
+alias sudo='sudo '
 alias grep='grep --color=auto'
 alias mv='mv -vi'
 alias cp='cp -v'
@@ -56,11 +58,12 @@ alias trashsize='du -sh ~/.local/usr/share/Trash'
 # CPU management
 alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
-# vim
+# vim {{{
 alias v='nvim'
-alias vibash="nvim ${CONFIGDIR}/bash/bashrc"
-alias vialiases="nvim ${CONFIGDIR}/shell/aliases"
-alias vifunctions="nvim ${CONFIGDIR}/shell/functions"
+alias vi='vim'
+alias vibash="nvim ${CONFIGDIR:-${HOME}/.dotfiles}/bash/bashrc"
+alias vialiases="nvim ${CONFIGDIR:-${HOME}/.dotfiles}/shell/aliases"
+alias vifunctions="nvim ${CONFIGDIR:-${HOME}/.dotfiles}/shell/functions"
 alias vims="nvim -O" #vim: open in verticle split
 alias vimt="nvim -p" #vim: open in tabs
 #}}}
@@ -76,18 +79,13 @@ alias srcbash="source ~/.bashrc"
 #}}}
 
 # Arch Package Management {{{
-# alias pacinstall='sudo pacman -S'
-# alias pacupgrade='sudo pacman -Syu'
-# alias pacremove='sudo pacman -Rsnu'
-# alias pacsearch='pacman -Ss'
-# alias pacinfo='pacman -Qi'
-# alias pacclean='sudo paccache -r -k 1 -v'
-# alias newmirrors="sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist && cat /etc/pacman.d/mirrorlist"
-# alias packages="pacman -Qqen" # Display packages explicitly installed
-# alias orphans="pacman -Qtdq" # Display unused packages
-# #alias update="newmirrors && yay -Syu"
-# alias pp='sudo powerpill'
-# alias bb='sudo bb-wrapper --aur'
+alias pacremove='sudo pacman -Rsnu'
+alias pacinfo='pacman -Qi'
+alias pacclean='sudo paccache -r -k 1 -v'
+alias newmirrors='sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist'
+alias packages="pacman -Qqen" # Display packages explicitly installed
+alias orphans="pacman -Qtdq" # Display unused packages
+alias update="newmirrors && yay -Syu"
 # # }}}
 
 # Pasta from command line

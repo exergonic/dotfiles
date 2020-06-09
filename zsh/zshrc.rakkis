@@ -1,19 +1,40 @@
-export CONFIGDIR=${HOME}/.dotfiles
+# vim: ft=sh sw=2 ts=2 noet
 
-# command not found
-source /etc/zsh_command_not_found
+# Arch Linux
+
+# command-not-found
+source /usr/share/doc/pkgfile/command-not-found.zsh
+
+# zsh-syntax-highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# zsh autopair
+source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
+
+# zsh autosuggestions
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZ=20
+bindkey '^ ' autosuggest-accept
+
+# fzf
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
 
 
-# ubuntu only
-if [[ "$(grep -i -E "ubuntu|neon" /etc/lsb-release)" ]] ; then
-	alias au='sudo apt update'
-	if [[ "$(command -v pkcon)" ]] ; then
-		alias s='pkcon search'
-		alias i='sudo pkcon update && sudo pkcon install'
-		alias u='sudo pkcon update'
-	else
-		alias s='apt search'
-		alias i='sudo apt update && sudo apt install -y'
-		alias u='sudo apt update && sudo apt upgrade -y'
-	fi
-fi
+# Ubuntu {{{
+# elif [[ "$(grep -i -E "ubuntu|neon" /etc/lsb-release)" ]]; then
+# 	source /etc/zsh_command_not_found
+# 	# fuzzy finder fzf
+# 	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# 	alias au='sudo apt update'
+# 	if [[ "$(command -v pkcon)" ]]; then
+# 		alias s='pkcon search'
+# 		alias i='sudo pkcon update && sudo pkcon install'
+# 		alias u='sudo pkcon update'
+# 	else
+# 		alias s='apt search'
+# 		alias i='sudo apt update && sudo apt install -y'
+# 		alias u='sudo apt update && sudo apt upgrade -y'
+# 	fi
+# fi }}}

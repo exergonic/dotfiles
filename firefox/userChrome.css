@@ -1,12 +1,16 @@
-@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-
 /* Sidebar styling */
 #TabsToolbar {
     visibility: collapse;
 }
 
+/*Hide sidebar header*/
 #sidebar-header {
     visibility: collapse !important;
+}
+
+/* Reduce minimum width of the sidebar */
+#sidebar {
+    min-width: 50px !important;
 }
 
 /* Correct input fields when using dark themes */

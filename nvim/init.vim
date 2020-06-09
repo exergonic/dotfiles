@@ -70,7 +70,7 @@ Plug 'vim-airline/vim-airline-themes'
         "badcat
         "minimalist
 
-" Colorschemes {{{2
+" Colorschemes {{{
 Plug 'plan9-for-vimspace/acme-colors'
 Plug 'altercation/vim-colors-solarized'
 Plug 'liuchengxu/space-vim-dark'
@@ -79,7 +79,6 @@ Plug 'bluz71/vim-moonfly-colors'
     let g:moonflyCursorColor = 1
     let g:moonflyTerminalColors = 1
     let g:moonflyUnderlineMatchParen = 1
-
 " }}}
 
 " Seemless movement between vim and tmux (cntrl+h|j|k|l movemnt)
@@ -308,7 +307,7 @@ set sidescrolloff=15
 set numberwidth=4
 set relativenumber
 set number
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
 set modeline
 set wildmenu
 set wildmode=list:longest,full
@@ -334,9 +333,15 @@ set foldnestmax=2
 
 " backups and undo {{{1
 set backup
-set directory=~/.temp
-set backupdir=~/.temp
-set undodir=~/.temp
+set directory=$HOME/.local/runtime/vim/swap
+set backupdir=$HOME/.local/runtime/vim/backup
+set undodir=$HOME/.local/runtime/vim/undo
+set viminfofile=/dev/null
+
+call mkdir(&directory, "p")
+call mkdir(&backupdir, "p")
+call mkdir(&undodir, "p")
+
 set undolevels=10000
 if has('persistent_undo')
     set undofile
@@ -353,12 +358,15 @@ set nohlsearch
 
 "gui {{{1
 set termguicolors
-set bg=dark
+set bg=light
 colorscheme moonfly
-let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_italicize_comments = '1'
+" let g:gruvbox_contrast_dark = 'hard'
+" let g:gruvbox_italicize_comments = '1'
 set guifont=FiraCode_Nerd_Font:h9
-highlight Comment cterm=italic
+"highlight Comment cterm=italic
+
+" get rid of silly tildes
+highlight EndOfBuffer ctermfg=black ctermbg=black
 " }}}
 
 
@@ -446,7 +454,14 @@ let g:which_key_map = {}
 
 
 nnoremap <silent><Leader>p :set invpaste<CR>
-let g:which_key_map.p = 'inv-paste-mode'
+let g:which_key_map.P = 'inv-paste-mode'
+
+nnoremap <silent><Leader>y "+y
+vnoremap <silent><Leader>y "+y
+let g:which_key_map.y = 'yank-sys-clipboard'
+
+nnoremap <silent><Leader>p "+p
+let g:which_key_map.p = 'put-sys-clipboard'
 
 nnoremap Q <Nop>
 nnoremap q <Nop>
