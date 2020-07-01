@@ -67,10 +67,9 @@ set foldnestmax=2
 
 " backups and undo {{{1
 set backup
-set directory=$HOME/.local/runtime/vim/swap
-set backupdir=$HOME/.local/runtime/vim/backup
-set undodir=$HOME/.local/runtime/vim/undo
-set viminfofile=/dev/null
+set directory=$HOME/.local/vim/swap
+set backupdir=$HOME/.local/vim/backup
+set undodir=$HOME/.local/vim/undo
 
 call mkdir(&directory, "p")
 call mkdir(&backupdir, "p")
