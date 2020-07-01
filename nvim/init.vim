@@ -475,6 +475,10 @@ tnoremap ,, <C-\><C-N>
 
 nnoremap <silent><Leader>` :split term://zsh<CR>
 
+" write buffer
+nnoremap <silent><Leader>w :w<CR>
+let g:which_key_map.w = 'write-buffer'
+
 nnoremap <silent><Leader>x :w<CR>:!./%<CR>
 let g:which_key_map.x = 'run-this-file'
 
