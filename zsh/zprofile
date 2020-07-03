@@ -4,7 +4,8 @@
 export TZ='America/Chicago'
 
 # Add ~/.local/bin to $PATH:
-export PATH="${HOME}/.node_modules_global/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:${HOME}/.go/bin:${HOME}/.local/bin:$PATH"
+PATH="${HOME}/.node_modules_global/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:${HOME}/.go/bin:${HOME}/.local/bin:$PATH"
+export PATH="${HOME}/.local/bin/research_utilities/boss:$PATH"
 export MANPATH="/usr/local/man:${HOME}/.local/share/man:$MANPATH"
 # eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) # linuxbrew
 
