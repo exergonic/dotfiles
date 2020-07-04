@@ -1,0 +1,33 @@
+unalias ls
+alias l.='ls -d .??*'
+
+cd() {
+    builtin cd "${@:-$HOME}" && ls
+}
+
+alias v='vim'
+unalias rm
+
+
+
+fpath=( "$HOME/.zfunctions" $fpath )
+autoload -U promptinit; promptinit
+prompt spaceship
+
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  exec_time     # Execution time
+  line_sep      # Line break
+  battery       # Battery level and status
+#  vi_mode       # Vi-mode indicator
+#  jobs          # Background jobs indicator
+  char          # Prompt character
+)
+
+SPACESHIP_CHAR_SYMBOL='λ '

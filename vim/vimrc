@@ -48,7 +48,7 @@ set showmatch
 set cmdheight=2
 
 " When will the last window have a status line: 2 = always
-set laststatus=1
+set laststatus=2
 
 " Don't give intro message
 set shortmess+=I
@@ -180,9 +180,16 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Yggdroot/indentLine'
 
 " Status line
-" Plug 'bling/vim-airline'
+Plug 'bling/vim-airline'
+
+Plug 'vim-airline/vim-airline-themes'
+    let g:airline_theme = 'moonfly'
 
 " Colorscheme
+Plug 'bluz71/vim-moonfly-colors'
+    let g:moonflyCursorColor = 1
+    let g:moonflyTerminalColors = 1
+    let g:moonflyUnderlineMatchParen = 1
 
 " Seemless movement between vim and tmux (cntrl+h|j|k|l movemnt)
 Plug 'christoomey/vim-tmux-navigator'
@@ -212,7 +219,7 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 
 " Programming
 Plug 'scrooloose/syntastic'
-Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/neocomplete.vim'
 
 call plug#end()
 
@@ -221,8 +228,9 @@ call plug#end()
 "GUI
 
 set bg=dark
-colorscheme elflord
+colorscheme moonfly
 " highlight Comment cterm=italic
+highlight EndOfBuffer ctermfg=black ctermbg=black
 
 if has("gui_running")
     set bg=dark
@@ -312,13 +320,14 @@ au FileType python setlocal nosmartindent
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-source $HOME/.vim/pluginrc
-
 " Mapping
 
 let mapleader = "\<Space>"
 
+
 " Avoid escape
+
+map ,, <Esc>
 inoremap ,, <Esc>
 vnoremap ,, <Esc>
 

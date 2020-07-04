@@ -2,10 +2,8 @@
 #zmodload zsh/zprof
 
 # what's my terminal?
-my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
+# my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
 
-# local dotfiles home
-export CONFIGDIR=${CONFIGDIR:-${HOME}/.dotfiles}
 
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
@@ -117,13 +115,17 @@ if which starship &> /dev/null ; then
 	eval "$(starship init zsh)"
 else
 	PROMPT="%(1j.[%j] .)%{$fg[cyan]%}==> %{$reset_color%}"
-	RPROMPT="%{$fg[cyan]%}~%${reset_color%}"
+	RPROMPT="%~"
 fi
 
+# local dotfiles home
+export CONFIGDIR=${CONFIGDIR:-${HOME}/.dotfiles}
+
 #Source outer files
-source ${CONFIGDIR}/zsh/zshrc.$HOST
 source ${CONFIGDIR}/shell/aliases
 source ${CONFIGDIR}/shell/functions
+[[ -e ${CONFIGDIR}/zsh/zshrc.$HOST ]] && \
+	source ${CONFIGDIR}/zsh/zshrc.$HOST
 
 alias d='cd $HOME/desk'
 alias dots='cd $HOME/.dotfiles'
