@@ -73,10 +73,10 @@ alias vimt="nvim -p" #vim: open in tabs
 
 
 # recipe's, functions, and aliases {{{
-alias nvivi="nvim ${CONFIGDIR}/nvim/init.vim"
-alias vizsh="nvim ${CONFIGDIR}/zsh/zshrc"
-alias srcfxns="source ${CONFIGDIR}/shell/functions"
-alias srcaliases="source ${CONFIGDIR}/shell/aliases"
+alias nvivi="nvim ${CONFIGDIR-${HOME}/.dotfiles}}/nvim/init.vim"
+alias vizsh="nvim ${CONFIGDIR-${HOME}/.dotfiles}}/zsh/zshrc"
+alias srcfxns="source ${CONFIGDIR-${HOME}/.dotfiles}}/shell/functions"
+alias srcaliases="source ${CONFIGDIR-${HOME}/.dotfiles}}/shell/aliases"
 alias srczsh="source ~/.zshrc"
 alias srcbash="source ~/.bashrc"
 #}}}

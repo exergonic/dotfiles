@@ -12,12 +12,12 @@
 # avoid `which' (https://stackoverflow.com/a/677212/1381065)
 
 # use `exa' if installed.
-[[ "$(command -v exa)" ]] && ls_cmd='exa'
+#[[ "$(command -v exa)" ]] && ls_cmd='exa'
 
 
 cd() {
 	# ls the contents once cd'ed into a dir
-	builtin cd "${@:-$HOME}" && $ls_cmd --group-directories-first
+	builtin cd "${@:-$HOME}" && ls
 }
 
 
