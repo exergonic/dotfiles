@@ -4,13 +4,15 @@
     "python.formatting.provider": "black",
     "python.formatting.blackPath": "/home/bwayne/.local/bin/black",
     "python.jediPath": "/home/bwayne/.local/lib/python3.6/site-packages/jedi",
-
     "languageserver": {
         "base": {
             "command": "bash-language-server",
-            "args": ["start"],
-            "filetypes": ["sh"],
-            "ignoredRootPaths": ["~"]
+            "args": [
+                "start"
+            ],
+            "filetypes": [
+                "sh"
+            ]
         }
     },
 }

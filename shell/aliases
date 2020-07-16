@@ -9,19 +9,22 @@ alias \.\.\.\.="cd ../../.." # ...   three dirs
 alias sound='systemctl --user restart pulseaudio.service'
 
 # ls aliases
-alias ls='exa -h --group-directories-first'
+if [[ "$(command -v exa)" ]]
+then
+	alias ls='exa -h --group-directories-first'
+fi
+
 alias l='ls -1'                                                 # Show files in a single column
-alias l.='\ls --color=always --group-directories-first -d .??*' # Show hidden files
+alias l.='ls --color=always -d .??*' # Show hidden files
 alias ll='ls -l'                                                # Show 'long' file information
 alias la='ls -A'                                                # Show all files
 alias ld='ls -ld'                                               # Show info about cwd
-alias lx='ls -lXB'                                              # Sort by extension
-alias lt='ls -ltr'                                              # Sort by date, most recent last
-alias lc='ls -ltcr'                                             # Sort by and show change time, most recent last
-alias lu='ls -ltur'                                             # Sort by and show access time, most recent last
+alias lx='ls -XB'                                              # Sort by extension
+alias lt='ls -tr'                                              # Sort by date, most recent last
+alias lc='ls -tcr'                                             # Sort by and show change time, most recent last
+alias lu='ls -tur'                                             # Sort by and show access time, most recent last
 
 # core utilities
-alias sudo='sudo '
 alias grep='grep --color=auto'
 alias mv='mv -vi'
 alias cp='cp -v'
