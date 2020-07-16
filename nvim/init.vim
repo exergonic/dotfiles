@@ -10,7 +10,7 @@ if ! filereadable(expand(stdpath('config') . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall
 endif
 
-call plug#begin(expand(stdpath('cache') . '/plugged'))
+call plug#begin(expand(stdpath('config') . '/plugged'))
 function! DoRemote(arg)
     UpdateRemotePlugins
 endfunction
