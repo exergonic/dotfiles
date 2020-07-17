@@ -15,4 +15,12 @@
             ]
         }
     },
+    "languageserver": {
+	    "fortran": {
+	      "command": "/home/bwayne/.local/bin/fortls",
+	      "args": ["--lowercase_intrinsics"],
+	      "filetypes": ["fortran"],
+	      "rootPatterns": [".fortls" , ".git/"]
+	    }
+    }
 }

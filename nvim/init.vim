@@ -273,6 +273,9 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "    nnoremap <silent> <space>r  :<C-u>CocListResume<CR>
 ""}}}
 
+" Fortran
+Plug 'rudrab/vimf90'
+
 call plug#end()
 "}}}
 
@@ -368,7 +371,6 @@ set guifont=FiraCode_Nerd_Font:h9
 " get rid of silly tildes
 highlight EndOfBuffer ctermfg=black ctermbg=black
 " }}}
-
 
 " syntax {{{1
 filetype plugin on
