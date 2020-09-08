@@ -1,10 +1,6 @@
 # vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 #zmodload zsh/zprof
 
-# what's my terminal?
-# my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
-
-
 # Hyphen-insensitive completion.
 HYPHEN_INSENSITIVE="true"
 
@@ -72,12 +68,13 @@ export HISTSIZE=1000000
 export HISTFILE=~/.zhistory
 export SAVEHIST=10000000
 
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# The optional three formats: mm/dd/yyyy | dd.mm.yyyy | yyyy-mm-dd
 HIST_STAMPS="yyyy-mm-dd"
 #}}}
 
-# vim mode
+# VIM IS LIFE!
 bindkey -v
+# what's Escape remapped to?
 # Esc if in nvim, `,,' elsewise
 if [[ "$my_term" == "nvim" ]]; then
 	bindkey "Esc" vi-cmd-mode
@@ -111,7 +108,7 @@ bindkey '^j' down-history
 
 
 # prompt
-if which starship &> /dev/null ; then
+if command -v starship &> /dev/null ; then
 	eval "$(starship init zsh)"
 else
 	PROMPT="%(1j.[%j] .)%{$fg[cyan]%}==> %{$reset_color%}"
@@ -132,5 +129,11 @@ alias dots='cd $HOME/.dotfiles'
 alias conf='cd $HOME/.config'
 
 autoload -Uz compinit && compinit
+
+# what's my terminal?
+# if [[ "$(grep -i 'arch' /etc/os-release )" ]] ; then
+# 	my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
+# 	printf "%s\n" "$my_term --> $(zsh --version)"
+# fi
 
 #zprof

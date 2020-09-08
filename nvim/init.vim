@@ -122,6 +122,9 @@ Plug 'kien/rainbow_parentheses.vim'
         \ ]
 " }}}
 
+" Preview css colors
+Plug 'ap/vim-css-color'
+
 " Efficient toggling of commented code
 Plug 'tpope/vim-commentary'
 
@@ -502,37 +505,30 @@ nnoremap <silent><Leader>tn :tabnew<CR>
 let g:which_key_map.t.n = 'new-tab'
 
 " " Viewport Controls, ie moving between split panes
-" nnoremap <Leader>wj <C-w>j
-" nnoremap <Leader>wk <C-w>k
-" nnoremap <Leader>wh <C-w>h
-" nnoremap <Leader>wl <C-w>l
-" nnoremap <Leader>wo <C-w>o
+let g:which_key_map.w = {'name' : '+window'}
+let g:which_key_map.w.h = 'window-left'
+nnoremap <Leader>wh <C-w>h
+let g:which_key_map.w.j = 'window-down'
+nnoremap <Leader>wj <C-w>j
+let g:which_key_map.w.k = 'window-up'
+nnoremap <Leader>wk <C-w>k
+let g:which_key_map.w.l = 'window-right'
+nnoremap <Leader>wl <C-w>l
+let g:which_key_map.w.o = 'window-only'
+nnoremap <Leader>wo <C-w>o
 "
 " " Move windows
-" nnoremap <Leader>wJ <C-w>J
-" nnoremap <Leader>wK <C-w>K
-" nnoremap <Leader>wH <C-w>H
-" nnoremap <Leader>wL <C-w>L
+let g:which_key_map.w.J = 'move-window-down'
+ nnoremap <Leader>wJ <C-w>J
+let g:which_key_map.w.K = 'move-window-up'
+nnoremap <Leader>wK <C-w>K
+let g:which_key_map.w.H = 'move-window-left'
+nnoremap <Leader>wH <C-w>H
+let g:which_key_map.w.L = 'move-window-right'
+nnoremap <Leader>wL <C-w>L
 
-"nnoremap <Leader>w<Left> 5<C-w><
-"nnoremap <Leader>w<Right> 5<C-w>>
-let g:which_key_map['w'] = {
-            \ 'name' : '+windows' ,
-            \ 'j'    : ['<C-w>j' , 'pane-down'] ,
-            \ 'k'    : ['<C-w>k', 'pane-up'] ,
-            \ 'h'    : ['<C-w>h' , 'pane-left'] ,
-            \ 'l'    : ['<C-w>l' , 'pane-right'] ,
-            \ 'J'    : ['<C-w>J' , 'move-pane-down'] ,
-            \ 'K'    : ['<C-w>K' , 'move-pane-up'] ,
-            \ 'H'    : ['<C-w>H' , 'move-pane-left'] ,
-            \ 'L'    : ['<C-w>L' , 'move-pane-right'] ,
-            \ '<'    : ['<C-w>5<' , 'decrease-panel-width'] ,
-            \ '>'    : ['<C-w>5>' , 'increase-panel-width'] ,
-            \ 's'    : ['<C-w>s' , 'split-horiz'] ,
-            \ 'v'    : ['<C-w>v' , 'split-vertical'] ,
-            \ 'o'    : ['<C-w>o' , 'only-this-window'] ,
-            \}
-
+nnoremap <Leader>w<Left> 5<C-w><
+nnoremap <Leader>w<Right> 5<C-w>>
 
 " Editing files
 

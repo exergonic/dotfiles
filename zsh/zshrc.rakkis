@@ -1,7 +1,6 @@
 # vim: ft=sh sw=2 ts=2 noet
 
 # Arch Linux
-
 # command-not-found
 source /usr/share/doc/pkgfile/command-not-found.zsh
 
@@ -23,18 +22,23 @@ source /usr/share/fzf/completion.zsh
 
 
 # Ubuntu {{{
-# elif [[ "$(grep -i -E "ubuntu|neon" /etc/lsb-release)" ]]; then
-# 	source /etc/zsh_command_not_found
-# 	# fuzzy finder fzf
-# 	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-# 	alias au='sudo apt update'
-# 	if [[ "$(command -v pkcon)" ]]; then
-# 		alias s='pkcon search'
-# 		alias i='sudo pkcon update && sudo pkcon install'
-# 		alias u='sudo pkcon update'
-# 	else
-# 		alias s='apt search'
-# 		alias i='sudo apt update && sudo apt install -y'
-# 		alias u='sudo apt update && sudo apt upgrade -y'
-# 	fi
-# fi }}}
+if [[ -f /etc/lsb-release ]] && [[ "$(grep -i -E "ubuntu|neon" /etc/lsb-release)" ]]
+then
+	#command not found
+	source /etc/zsh_command_not_found
+
+	# fuzzy finder fzf
+	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+	# aliases for updating
+	alias au='sudo apt update'
+	if [[ "$(command -v pkcon)" ]]; then
+		alias s='pkcon search'
+		alias i='sudo pkcon update && sudo pkcon install'
+		alias u='sudo pkcon update'
+	else
+		alias s='apt search'
+		alias i='sudo apt update && sudo apt install -y'
+		alias u='sudo apt update && sudo apt upgrade -y'
+	fi
+fi # }}}

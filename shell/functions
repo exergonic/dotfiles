@@ -235,11 +235,16 @@ x() {
 }
 
 # display name of shell and name of terminal
+my_term() {
+	ps --no-headers --pid $PPID | awk '{print $4}'
+}
+
 sh_term() {
 	sh="$(basename "${SHELL}")"
 	term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
 	printf "%s %s\n" "$sh" "$term"
 }
+
 
 # latitude and longitude from IP addr
 latlong() {
