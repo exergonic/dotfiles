@@ -55,6 +55,11 @@ alias rsync='rsync --progress'
 alias sicp="racket -i -p neil/sicp -l xrepl"
 #}}}
 
+## youtube-dl
+yt='youtube-dl --add-metadate -i'
+# extra audio (best quality)
+yta='yt -x -f bestaudio/best'
+
 # trash-cli Trash size
 alias trashsize='du -sh ~/.local/usr/share/Trash'
 
@@ -87,6 +92,7 @@ alias pacinfo='pacman -Qi'
 alias pacclean='sudo paccache -r -k 1 -v'
 alias newmirrors='sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist'
 alias packages="pacman -Qqen" # Display packages explicitly installed
+alias packages2='comm -23 <(pacman -Qq) <(pacman -Qqg base base-devel | sort)'
 alias orphans="pacman -Qtdq" # Display unused packages
 alias update="newmirrors && yay -Syu"
 # # }}}

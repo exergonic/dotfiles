@@ -18,7 +18,12 @@ endfunction
 
 " Which key https://github.com/liuchengxu/vim-which-key
 Plug 'liuchengxu/vim-which-key'
-nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+    nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
+    set timeoutlen=500
+    " hide statusline of which-key window
+    autocmd! FileType which_key
+    autocmd  FileType which_key set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 
 Plug 'jlanzarotta/bufexplorer'
 
@@ -342,7 +347,7 @@ set backup
 set directory=$HOME/.local/runtime/vim/swap
 set backupdir=$HOME/.local/runtime/vim/backup
 set undodir=$HOME/.local/runtime/vim/undo
-set viminfofile=/dev/null
+set viminfofile=/tmp/viminfo
 
 call mkdir(&directory, "p")
 call mkdir(&backupdir, "p")
@@ -478,11 +483,13 @@ inoremap ,, <Esc>
 vnoremap ,, <Esc>
 tnoremap ,, <C-\><C-N>
 
-nnoremap <silent><Leader>` :split term://zsh<CR>
+" nnoremap <silent><Leader>` :split term://zsh<CR>
+" let g:which_key_map. = 'split-term'
+
 
 " write buffer
-nnoremap <silent><Leader>w :w<CR>
-let g:which_key_map.w = 'write-buffer'
+nnoremap <silent><Leader>s :w<CR>
+let g:which_key_map.s = 'write-buffer'
 
 nnoremap <silent><Leader>x :w<CR>:!./%<CR>
 let g:which_key_map.x = 'run-this-file'
@@ -494,6 +501,8 @@ nnoremap <silent><Leader>bb :b #<CR>
 let g:which_key_map.b.b = 'prev-buffer'
 nnoremap <silent><Leader>bl :ls<CR>
 let g:which_key_map.b.l = 'list-buffers'
+nnoremap <silent><Leader>bd :bd<CR>
+let g:which_key_map.b.d = 'buffer-delete'
 
 ""Tab movement
 let g:which_key_map.t = {'name' : '+tab'}
@@ -506,35 +515,35 @@ let g:which_key_map.t.n = 'new-tab'
 
 " " Viewport Controls, ie moving between split panes
 let g:which_key_map.w = {'name' : '+window'}
+    nnoremap <Leader>wh <C-w>h
 let g:which_key_map.w.h = 'window-left'
-nnoremap <Leader>wh <C-w>h
+    nnoremap <Leader>wj <C-w>j
 let g:which_key_map.w.j = 'window-down'
-nnoremap <Leader>wj <C-w>j
+    nnoremap <Leader>wk <C-w>k
 let g:which_key_map.w.k = 'window-up'
-nnoremap <Leader>wk <C-w>k
+    nnoremap <Leader>wl <C-w>l
 let g:which_key_map.w.l = 'window-right'
-nnoremap <Leader>wl <C-w>l
+    nnoremap <Leader>wo <C-w>o
 let g:which_key_map.w.o = 'window-only'
-nnoremap <Leader>wo <C-w>o
 "
 " " Move windows
 let g:which_key_map.w.J = 'move-window-down'
- nnoremap <Leader>wJ <C-w>J
+    nnoremap <Leader>wJ <C-w>J
 let g:which_key_map.w.K = 'move-window-up'
-nnoremap <Leader>wK <C-w>K
+    nnoremap <Leader>wK <C-w>K
 let g:which_key_map.w.H = 'move-window-left'
-nnoremap <Leader>wH <C-w>H
+    nnoremap <Leader>wH <C-w>H
 let g:which_key_map.w.L = 'move-window-right'
-nnoremap <Leader>wL <C-w>L
+    nnoremap <Leader>wL <C-w>L
 
-nnoremap <Leader>w<Left> 5<C-w><
-nnoremap <Leader>w<Right> 5<C-w>>
+" let g:which_key_map.w.- = '+ window size'
+"     nnoremap <Leader>w<Left> 5<C-w><
+" nnoremap <Leader>w<Right> 5<C-w>>
 
 " Editing files
-
 let g:which_key_map.f = { 'name' : '+files'}
 "open file under cursor in vertical split
-nnoremap <silent><Leader>fv :vertical wincmd f<CR>
+    nnoremap <silent><Leader>fv :vertical wincmd f<CR>
 let g:which_key_map.f.v = 'file-in-vsplit'
 
 "open file under cursor in horizotal split
@@ -549,6 +558,10 @@ let g:which_key_map.f.t = 'file-in-tab'
 let g:which_key_map.v = {'name': '+vim'}
 nnoremap <silent><Leader>ve :tabnew $MYVIMRC<cr>
 let g:which_key_map.v.e = 'edit-vimrc'
+let g:which_key_map.v.u = 'update plugins (vimplug)'
+nnoremap <Leader>vu :PlugUpdate<CR>
+let g:which_key_map.v.U = 'update vimplug'
+nnoremap <Leader>vU :PlugUpgrade<CR>
 
 "Source vimrc
 nnoremap <Leader>vs :source $MYVIMRC<cr>
@@ -560,6 +573,7 @@ nnoremap <silent><Leader>il :set invlist<CR>
 "Space-o toggles folds
 nnoremap <Leader>o za
 vnoremap <Leader>o za
+let g:which_key_map.o = 'fold-toggle'
 
 nmap <C-j> 3j3<C-e>
 nmap <C-k> 3k3<C-y>
