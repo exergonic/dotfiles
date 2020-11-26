@@ -203,7 +203,7 @@ mergepdf() {
 } #// mergepdf
 
 open() {
-	devour.sh mimeopen $1
+	devour mimeopen $1
 }
 
 

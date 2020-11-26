@@ -151,11 +151,18 @@ Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-rsi'
 
 " Python + Jedi =  ??
-Plug 'davidhalter/jedi-vim'
-    let g:jedi#auto_initialization = 0
+" Plug 'davidhalter/jedi-vim'
+"     let g:jedi#auto_initialization = 0
 
 "" Language Server
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [
+            \ 'coc-json',
+            \ 'coc-git',
+            \ 'coc-sh',
+            \ 'coc-vimlsp'
+            \ ]
+
 ""{{{
 "    if has('win32')
 "        let g:coc_node_path = 'C:/Users/arach/scoop/apps/nodejs/current/node.exe'
@@ -371,10 +378,7 @@ set nohlsearch
 set termguicolors
 set bg=light
 colorscheme moonfly
-" let g:gruvbox_contrast_dark = 'hard'
-" let g:gruvbox_italicize_comments = '1'
 set guifont=FiraCode_Nerd_Font:h9
-"highlight Comment cterm=italic
 
 " get rid of silly tildes
 highlight EndOfBuffer ctermfg=black ctermbg=black
@@ -384,6 +388,12 @@ highlight EndOfBuffer ctermfg=black ctermbg=black
 filetype plugin on
 filetype plugin indent on
 syntax on
+
+" vim languageserver
+let g:markdown_fenced_languages = [
+            \ 'vim',
+            \ 'help'
+            \]
 " }}}
 
 " autocommands {{{1

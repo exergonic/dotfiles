@@ -87,6 +87,7 @@ alias srcbash="source ~/.bashrc"
 #}}}
 
 # Arch Package Management {{{
+alias pacinstall="sudo pacman -S"
 alias pacremove='sudo pacman -Rsnu'
 alias pacinfo='pacman -Qi'
 alias pacclean='sudo paccache -r -k 1 -v'

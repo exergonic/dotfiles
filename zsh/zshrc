@@ -65,7 +65,7 @@ setopt append_history hist_find_no_dups hist_ignore_space hist_save_no_dups \
 	inc_append_history share_history
 
 export HISTSIZE=1000000
-export HISTFILE=~/.zhistory
+export HISTFILE=~/.local/share/zsh/history
 export SAVEHIST=10000000
 
 # The optional three formats: mm/dd/yyyy | dd.mm.yyyy | yyyy-mm-dd

@@ -1,9 +1,9 @@
 {
     "coc.preferences.extensionUpdateCheck": "weekly",
-    "python.jediEnabled": false,
-    "python.formatting.provider": "black",
-    "python.formatting.blackPath": "/home/bwayne/.local/bin/black",
-    "python.jediPath": "/home/bwayne/.local/lib/python3.6/site-packages/jedi",
+    // "python.jediEnabled": false,
+    // "python.formatting.provider": "black",
+    // "python.formatting.blackPath": "/home/bwayne/.local/bin/black",
+    // "python.jediPath": "/home/bwayne/.local/lib/python3.6/site-packages/jedi",
     "languageserver": {
         "bash": {
             "command": "bash-language-server",
