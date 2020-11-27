@@ -4,10 +4,8 @@
 export TZ='America/Chicago'
 
 # Add ~/.local/bin to $PATH:
-PATH="${HOME}/.local/share/npm/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:${HOME}/.go/bin:${HOME}/.local/bin:$PATH"
-export PATH="${HOME}/.local/bin/research_utilities/boss:$PATH"
-export MANPATH="/usr/local/man:${HOME}/.local/share/man:$MANPATH"
-# eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv) # linuxbrew
+export PATH="${HOME}/.local/share/npm/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:${HOME}/.go/bin:${HOME}/.local/bin:$PATH"
+export MANPATH="/usr/local/man:$MANPATH"
 
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
@@ -23,7 +21,6 @@ export OWMAP_APIKEY='95377bab8840fc4ee6ae64ca613ac103'
 export GOPATH="$HOME/.go"
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 export GTK_USE_PORTAL=1
-export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
 # export XAUTHORITY=$HOME/.local/runtime/Xauthority
 
 # LESS config:

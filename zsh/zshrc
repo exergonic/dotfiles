@@ -23,24 +23,26 @@ autoload -Uz run-help
 alias help=run-help
 autoload -U colors && colors
 
-# Zstyle
+# Completions
+autoload -Uz compinit
 zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
 zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
 zstyle ":completion:*:commands" rehash 1
 zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+r:|[._-]=** r:|=**' '+l:|=* r:|=*'
 zstyle ':completion::complete:*' gain-privileges 1 	# sudo completion
-zstyle :compinstall filename '/home/bwayne/.zshrc'
-
-# completion using a menu and vi keys
 zstyle ':completion:*' menu select
 zmodload zsh/complist
+
+# completion using a menu and vi keys
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 
 zstyle :compinstall filename '~/.zshrc'
+compinit
+_comp_options+=(globdots)     # include hidden files
 
 # Shell options
 setopt extendedglob nomatch null_glob notify interactive_comments no_bg_nice
@@ -72,15 +74,9 @@ export SAVEHIST=10000000
 HIST_STAMPS="yyyy-mm-dd"
 #}}}
 
-# VIM IS LIFE!
+# vi mode
 bindkey -v
-# what's Escape remapped to?
-# Esc if in nvim, `,,' elsewise
-if [[ "$my_term" == "nvim" ]]; then
-	bindkey "Esc" vi-cmd-mode
-else
-	bindkey ",," vi-cmd-mode
-fi
+bindkey ",," vi-cmd-mode
 
 # emacs-like keybinds
 bindkey '^h' backward-delete-char
@@ -92,10 +88,6 @@ bindkey '^e' end-of-line
 bindkey '^b' backward-word
 bindkey '^f' forward-word
 
-# V' in vi-cmd-mode will edit current line in Vim
-zle -N edit-command-line
-autoload edit-command-line
-bindkey -M vicmd 'V' edit-command-line
 
 # Search through history forward and backward using ^R, ^N
 bindkey '^R' history-incremental-search-backward
@@ -104,6 +96,11 @@ bindkey '^N' history-incremental-search-forward
 # Scroll up and down through history
 bindkey '^k' up-history
 bindkey '^j' down-history
+
+# V' in vi-cmd-mode will edit current line in Vim
+zle -N edit-command-line
+autoload edit-command-line
+bindkey -M vicmd 'V' edit-command-line
 # }}}
 
 
@@ -123,17 +120,5 @@ source ${CONFIGDIR}/shell/aliases
 source ${CONFIGDIR}/shell/functions
 [[ -e ${CONFIGDIR}/zsh/zshrc.$HOST ]] && \
 	source ${CONFIGDIR}/zsh/zshrc.$HOST
-
-alias d='cd $HOME/desk'
-alias dots='cd $HOME/.dotfiles'
-alias conf='cd $HOME/.config'
-
-autoload -Uz compinit && compinit
-
-# what's my terminal?
-# if [[ "$(grep -i 'arch' /etc/os-release )" ]] ; then
-# 	my_term="$(ps --no-headers --pid $PPID | awk '{print $4}')"
-# 	printf "%s\n" "$my_term --> $(zsh --version)"
-# fi
 
 #zprof

@@ -101,25 +101,24 @@ df() {
 	}
 
 rc() {
-	$EDITOR $(fzf < ${CONFIGDIR:-${HOME}}/.dotfiles/rcfile.list)
+	# edit a recipe file
+	$EDITOR $(fzf < ${CONFIGDIR:-${HOME}}/rcfiles.list)
 }
 
 cdm() {
 	# cd into a directory from a menu
-	local dirlist=$(find . -mindepth 1 -maxdepth 1 -type d ! -path "./.??*")
-	if command -v fzf ; then
-		cd "$(fzf <<< $dirlist)"
-	else
-		local PS3
-		setopt shwordsplit
-		PS3="Select a directory #: "
-		select dir in $dirlist; do
-			builtin cd "$dir" && $ls_cmd
-			break
-		done
-	fi
+	DIR=$(find * -maxdepth 0 -type d -print 2> /dev/null | fzf-tmux) && cd $DIR
 } #// cmd
 
+pfx() {
+	# menu of available packages with preview. use TAB to select packages to install
+	pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
+}
+
+prs() {
+	# pacman remove selections
+	pacman -Qq | fzf --multi --preview 'pacman -Qi {1}' | xargs -ro sudo pacman -Rns
+}
 
 get_X_key() {
 	# Find the X key code for a given key press"

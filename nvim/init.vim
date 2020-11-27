@@ -160,7 +160,8 @@ let g:coc_global_extensions = [
             \ 'coc-json',
             \ 'coc-git',
             \ 'coc-sh',
-            \ 'coc-vimlsp'
+            \ 'coc-vimlsp',
+            \ 'coc-rls'
             \ ]
 
 ""{{{
@@ -354,7 +355,6 @@ set backup
 set directory=$HOME/.local/runtime/vim/swap
 set backupdir=$HOME/.local/runtime/vim/backup
 set undodir=$HOME/.local/runtime/vim/undo
-set viminfofile=/tmp/viminfo
 
 call mkdir(&directory, "p")
 call mkdir(&backupdir, "p")
