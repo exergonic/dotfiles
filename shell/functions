@@ -86,7 +86,9 @@ is_installed() {
 alias installed=is_installed
 
 rc() {
-	$EDITOR $(fzf < ${CONFIGDIR:-${HOME}/.dotfiles}/rcfiles.list)
+	prefix=${CONFIGDIR:-${HOME}/.dotfiles}
+	selected=$(fzf < $prefix/rcfiles.list)
+	$EDITOR "$prefix/$selected"
 }
 
 resolution() {
@@ -100,20 +102,18 @@ df() {
 		--exclude-type={squashfs,tmpfs,devtmpfs,vfat}
 	}
 
-rc() {
-	# edit a recipe file
-	$EDITOR $(fzf < ${CONFIGDIR:-${HOME}}/rcfiles.list)
-}
 
 cdm() {
 	# cd into a directory from a menu
 	DIR=$(find * -maxdepth 0 -type d -print 2> /dev/null | fzf-tmux) && cd $DIR
 } #// cmd
 
-pfx() {
+fuzzy_pac_install() {
+	# pacman | fzf | xargs
 	# menu of available packages with preview. use TAB to select packages to install
 	pacman -Slq | fzf --multi --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
 }
+alias fpac='fuzzy_pac_install'
 
 prs() {
 	# pacman remove selections

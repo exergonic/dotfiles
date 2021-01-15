@@ -30,7 +30,7 @@ alias mv='mv -vi'
 alias cp='cp -v'
 alias rm='trash'
 alias du='du -sh'
-alias cat='bat'
+# alias cat='bat'
 
 # Git
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -59,9 +59,6 @@ alias sicp="racket -i -p neil/sicp -l xrepl"
 yt='youtube-dl --add-metadate -i'
 # extra audio (best quality)
 yta='yt -x -f bestaudio/best'
-
-# trash-cli Trash size
-alias trashsize='du -sh ~/.local/usr/share/Trash'
 
 # CPU management
 alias performance="sudo cpupower --cpu all frequency-set --governor performance"

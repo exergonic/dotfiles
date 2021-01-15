@@ -3,8 +3,9 @@
 #timezone
 export TZ='America/Chicago'
 
-# Add ~/.local/bin to $PATH:
-export PATH="${HOME}/.local/share/npm/bin:${HOME}/.cabal/bin:${HOME}/.local/bin:${HOME}/.go/bin:${HOME}/.local/bin:$PATH"
+typeset -U PATH path
+path=("${HOME}/.local/share/npm/bin" "${HOME}/.cabal/bin" "${HOME}/.local/bin" "${HOME}/.go/bin" "$path[@]")
+export PATH
 export MANPATH="/usr/local/man:$MANPATH"
 
 export LANG=en_US.UTF-8
