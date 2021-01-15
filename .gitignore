@@ -2,4 +2,3 @@ __pycache__
 emacs/straight
 *autoload*
 *plugged*
-tmux/plugins
