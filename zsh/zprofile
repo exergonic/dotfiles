@@ -3,10 +3,12 @@
 #timezone
 export TZ='America/Chicago'
 
+# path(s)
 typeset -U PATH path
 path=("${HOME}/.local/share/npm/bin" "${HOME}/.cabal/bin" "${HOME}/.local/bin" "${HOME}/.go/bin" "$path[@]")
 export PATH
 export MANPATH="/usr/local/man:$MANPATH"
+export GOPATH="$HOME/.go"
 
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
@@ -19,7 +21,6 @@ export TERMINAL="konsole"
 export BROWSER="firefox"
 export READER="zathura"
 export OWMAP_APIKEY='95377bab8840fc4ee6ae64ca613ac103'
-export GOPATH="$HOME/.go"
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 export GTK_USE_PORTAL=1
 # export XAUTHORITY=$HOME/.local/runtime/Xauthority

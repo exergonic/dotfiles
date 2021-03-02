@@ -1,25 +1,33 @@
 # vim: ft=zsh sw=2 ts=2 noet
 
+
+# verify file executable and source it
+safe_source() {
+    if [[ -e "$1" ]] ; then
+        source $1
+    fi
+}
 # Arch Linux
-if [[ -e /etc/arch-release ]]
-then
-	# command-not-found
-	source /usr/share/doc/pkgfile/command-not-found.zsh
 
-
-	# zsh autopair
-	source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
-
-	# zsh autosuggestions
-	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
-	ZSH_AUTOSUGGEST_BUFFER_MAX_SIZ=20
-	bindkey '^ ' autosuggest-accept
-
-	# fzf
-	source /usr/share/fzf/key-bindings.zsh
-	source /usr/share/fzf/completion.zsh
-
-	# zsh-syntax-highlighting
-	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source shell plugins
+if [[ -e /etc/arch-release ]] ; then
+    
+    # command-not-found
+    safe_source /usr/share/doc/pkgfile/command-not-found.zsh
+    
+    # zsh autopair
+    safe_source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
+    
+    # zsh autosuggestions
+    safe_source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZ=20
+    bindkey '^ ' autosuggest-accept
+    
+    # fzf
+    safe_source /usr/share/fzf/key-bindings.zsh
+    safe_source /usr/share/fzf/completion.zsh
+    
+    # zsh-syntax-highlighting
+    safe_source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
