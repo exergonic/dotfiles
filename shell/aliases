@@ -84,10 +84,10 @@ alias srcbash="source ~/.bashrc"
 #}}}
 
 # Arch Package Management {{{
-alias pacinstall="sudo pacman -S"
-alias pacremove='sudo pacman -Rsnu'
-alias pacinfo='pacman -Qi'
-alias pacclean='sudo paccache -r -k 1 -v'
+# alias pacinstall="sudo pacman -S"
+# alias pacremove='sudo pacman -Rsnu'
+# alias pacinfo='pacman -Qi'
+# alias pacclean='sudo paccache -r -k 1 -v'
 alias newmirrors='sudo reflector --verbose --protocol https --score 50 --number 10 --sort rate --save /etc/pacman.d/mirrorlist'
 alias packages="pacman -Qqen" # Display packages explicitly installed
 alias packages2='comm -23 <(pacman -Qq) <(pacman -Qqg base base-devel | sort)'

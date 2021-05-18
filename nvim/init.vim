@@ -546,6 +546,11 @@ let g:which_key_map.w.H = 'move-window-left'
 let g:which_key_map.w.L = 'move-window-right'
     nnoremap <Leader>wL <C-w>L
 
+" equalize windows
+" let g:which_key_map.w.= = 'equalize-windows'
+    nnoremap <Leader>w= <C-w>=
+
+
 " let g:which_key_map.w.- = '+ window size'
 "     nnoremap <Leader>w<Left> 5<C-w><
 " nnoremap <Leader>w<Right> 5<C-w>>
@@ -577,7 +582,10 @@ nnoremap <Leader>vU :PlugUpgrade<CR>
 nnoremap <Leader>vs :source $MYVIMRC<cr>
 let g:which_key_map.v.s = 'source-vimrc'
 
-"invert listing lisptchars
+"Invertible values
+let g:which_key_map.i = {'name': '+invert' }
+"display listchars
+let g:which_key_map.i.l = 'invert listchars'
 nnoremap <silent><Leader>il :set invlist<CR>
 
 "Space-o toggles folds
