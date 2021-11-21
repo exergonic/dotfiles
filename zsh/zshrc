@@ -113,28 +113,30 @@ else
 fi
 
 # local dotfiles home
-export CONFIGDIR=${CONFIGDIR:-${HOME}/.dotfiles}
-
-#Source outer files
-source ${CONFIGDIR}/shell/aliases
-source ${CONFIGDIR}/shell/functions
-[[ -e ${CONFIGDIR}/zsh/zshrc.$HOST ]] && \
-	source ${CONFIGDIR}/zsh/zshrc.$HOST
+if [[ -x ${HOME}/.dotfiles ]] ; then
+	dotfiles="$HOME/.dotfiles"
+	flist=( "$dotfiles/shell/aliases"	  \
+				  "$dotfiles/shell/functions" \
+			 	  "$dotfiles/zsh/zshrc.$HOST" )
+	for f in $flist ; do
+		[[ -e $f ]] && source $f
+	done
+fi
 
 #zprof
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/bwayne/psi4conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/bwayne/psi4conda/etc/profile.d/conda.sh" ]; then
-        . "/home/bwayne/psi4conda/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/bwayne/psi4conda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/home/bwayne/psi4conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/bwayne/psi4conda/etc/profile.d/conda.sh" ]; then
+#         . "/home/bwayne/psi4conda/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/bwayne/psi4conda/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
 

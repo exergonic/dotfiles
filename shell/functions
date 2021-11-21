@@ -81,7 +81,10 @@ cdr() { echo $xs[2,-1]; }
 
 
 is_installed() {
-	dpkg-query --show --showformat='${db:Status-Status}' $1
+	# arch
+	pacman -Q $1
+	# debian
+	#dpkg-query --show --showformat='${db:Status-Status}' $1
 }
 alias installed=is_installed
 
@@ -145,7 +148,7 @@ mntuser() {
 	# mount a dev as user
 	local dev="$1"
 	local mntpoint="$2"
-	sudo mount -ouser,umask=0000 "$dev $mntpoint"
+	sudo mount -ouser,umask=0000 "$dev" "$mntpoint"
 }
 
 lmv() {
@@ -211,7 +214,8 @@ open() {
 x() {
 	# extract tar archive
 	if [[ $#@ = 0 ]] ; then
-		printf "extract a tar archive\n"
+		printf "HELP: extract a tar archive\n"
+		printf "HELP: pass archive as first argument\n"
 	else
 		archive="$1"
 		archive_extension="${1#*.}"
