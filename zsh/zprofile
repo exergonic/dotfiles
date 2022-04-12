@@ -1,7 +1,7 @@
 # runs on login
 
 #timezone
-export TZ='America/Chicago'
+# export TZ='America/Chicago'
 
 # path(s)
 typeset -U PATH path

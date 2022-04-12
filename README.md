@@ -2,11 +2,11 @@
 
 **Status**
 
-```nvim``` 👍 
+```nvim``` 👍
 
-```zsh``` 👍  
+```zsh``` 👍
 
-```userChrome.css``` 👍  
+```userChrome.css``` 👍
 
 ```X``` :frowning_face:
 
@@ -16,7 +16,7 @@
 
 
 
-**How**
+# How
 
 ```sh
 git clone git@github.com:exergonic/dotfiles ~/.dotfiles
