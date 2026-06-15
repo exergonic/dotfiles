@@ -30,7 +30,17 @@ alias mv='mv -vi'
 alias cp='cp -v'
 alias rm='trash'
 alias du='du -sh'
-# alias cat='bat'
+
+# use bat instead of cat
+if [[ "$(command -v bat)" ]]
+then
+	alias cat='bat'
+fi
+
+if [[ "$(command -v batcat)" ]]
+then
+	alias cat='batcat'
+fi
 
 # Git
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -75,7 +85,7 @@ alias vimt="nvim -p" #vim: open in tabs
 
 
 # recipe's, functions, and aliases {{{
-alias nvivi="nvim ${CONFIGDIR-${HOME}/.dotfiles}/nvim/init.vim"
+alias nvivi="nvim ${CONFIGDIR-${HOME}/.dotfiles}/nvim/init.lua"
 alias vizsh="nvim ${CONFIGDIR-${HOME}/.dotfiles}/zsh/zshrc"
 alias srcfxns="source ${CONFIGDIR-${HOME}/.dotfiles}/shell/functions"
 alias srcaliases="source ${CONFIGDIR-${HOME}/.dotfiles}/shell/aliases"

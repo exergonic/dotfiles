@@ -67,7 +67,7 @@ setopt append_history hist_find_no_dups hist_ignore_space hist_save_no_dups \
 	inc_append_history share_history
 
 export HISTSIZE=1000000
-export HISTFILE=~/.local/share/zsh/history
+export HISTFILE=~/.zhist
 export SAVEHIST=10000000
 
 # The optional three formats: mm/dd/yyyy | dd.mm.yyyy | yyyy-mm-dd
@@ -127,16 +127,17 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-# __conda_setup="$('/home/bwayne/psi4conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/bwayne/psi4conda/etc/profile.d/conda.sh" ]; then
-#         . "/home/bwayne/psi4conda/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/home/bwayne/psi4conda/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
+__conda_setup="$('/home/mccan/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/mccan/miniforge3/etc/profile.d/conda.sh" ]; then
+        . "/home/mccan/miniforge3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/mccan/miniforge3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
 # <<< conda initialize <<<
 
+conda activate chem
