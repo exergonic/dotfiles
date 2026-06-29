@@ -125,6 +125,8 @@ fi
 
 #zprof
 
+# PATH="$HOME/.local/bin:$PATH"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/mccan/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -140,4 +142,5 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-conda activate chem
+# conda activate chem
+
