@@ -15,7 +15,6 @@ Personal configuration files for my development environment.
 | `wezterm/`  | WezTerm terminal configuration         |
 | `emacs/`    | Emacs configuration                    |
 | `vim/`      | Legacy Vim configuration               |
-| `xorg/`     | X11 configuration                      |
 | `firefox/`  | Firefox userChrome customization       |
 
 ## Usage
