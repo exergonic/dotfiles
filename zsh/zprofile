@@ -17,10 +17,9 @@ export TERM=xterm-256color
 export EDITOR="nvim"
 export VISUAL=$EDITOR
 export PAGER="less"
-export TERMINAL="konsole"
-export BROWSER="firefox"
-export READER="zathura"
-export OWMAP_APIKEY='95377bab8840fc4ee6ae64ca613ac103'
+# export TERMINAL="konsole"
+# export BROWSER="firefox"
+# export READER="zathura"
 export GTK2_RC_FILES="$HOME/.config/gtk-2.0/gtkrc-2.0"
 export GTK_USE_PORTAL=1
 # export XAUTHORITY=$HOME/.local/runtime/Xauthority
@@ -29,13 +28,13 @@ export GTK_USE_PORTAL=1
 export LESS=-XR
 export LESSHISTFILE=/dev/null
 
-#export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')" {{{
-#export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
-#export LESS_TERMCAP_me="$(printf '%b' '[0m')"
-#export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
-#export LESS_TERMCAP_se="$(printf '%b' '[0m')"
-#export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
-#export LESS_TERMCAP_ue="$(printf '%b' '[0m')" }}}
+export LESS_TERMCAP_mb="$(printf '%b' '[1;31m')"
+export LESS_TERMCAP_md="$(printf '%b' '[1;36m')"
+export LESS_TERMCAP_me="$(printf '%b' '[0m')"
+export LESS_TERMCAP_so="$(printf '%b' '[01;44;33m')"
+export LESS_TERMCAP_se="$(printf '%b' '[0m')"
+export LESS_TERMCAP_us="$(printf '%b' '[1;32m')"
+export LESS_TERMCAP_ue="$(printf '%b' '[0m')"
 
 # XDG
 # export XDG_CONFIG_HOME=${HOME}/.config
