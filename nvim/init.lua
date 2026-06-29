@@ -354,9 +354,9 @@ vim.opt.backupdir = vim.fn.expand('~/.local/state/nvim/backup//')
 vim.opt.undodir = vim.fn.expand('~/.local/state/nvim/undo//')
 
 -- Create directories if they don't exist
-vim.fn.mkdir(vim.opt.directory:get(), 'p')
-vim.fn.mkdir(vim.opt.backupdir:get(), 'p')
-vim.fn.mkdir(vim.opt.undodir:get(), 'p')
+vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/swap//'), 'p')
+vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/backup//'), 'p')
+vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/undo//'), 'p')
 
 vim.opt.undofile = true
 vim.opt.undoreload = 10000
