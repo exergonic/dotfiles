@@ -11,6 +11,8 @@ Personal configuration files for my development environment.
 | `bash/`     | Bash rc files (legacy)                 |
 | `shell/`    | Shared aliases and functions           |
 | `tmux/`     | Tmux configuration                     |
+| `powershell/` | PowerShell 7 profile                    |
+| `wezterm/`  | WezTerm terminal configuration         |
 | `emacs/`    | Emacs configuration                    |
 | `vim/`      | Legacy Vim configuration               |
 | `xorg/`     | X11 configuration                      |
