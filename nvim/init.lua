@@ -48,6 +48,11 @@ require("lazy").setup({
             lazy = false
         },
         {
+            "folke/which-key.nvim",
+            event = "VeryLazy",
+            opts = {},
+        },
+        {
             "alexghergh/nvim-tmux-navigation",
             config = function()
               require("nvim-tmux-navigation").setup({})
@@ -222,8 +227,7 @@ cmp.setup({
 
 -- Gui {{{
 vim.cmd("colorscheme onehalfdark")
--- Highlight to hide end-of-buffer tildes
--- vim.api.nvim_set_hl(0, 'EndOfBuffer', { ctermfg = 'black', ctermbg = 'black' })
+vim.api.nvim_set_hl(0, 'EndOfBuffer', { ctermfg = 'black', ctermbg = 'black' })
 
 -- Make transparent to match the terminal background
 -- local function make_transparent()
@@ -268,6 +272,7 @@ vim.opt.showmatch = true
 vim.opt.laststatus = 2
 vim.opt.shortmess:append('I')
 vim.opt.updatetime = 300
+vim.opt.timeoutlen = 500
 vim.opt.signcolumn = 'yes'
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
@@ -316,8 +321,11 @@ vim.opt.undoreload = 10000
 vim.opt.undolevels = 10000
 
 -- Syntax and filetype
+vim.g.markdown_fenced_languages = { "vim", "help" }
+vim.g.sh_indent_case_labels = 1
 vim.cmd('filetype plugin indent on')
 vim.cmd('syntax on') -- }}}
+
 
 -- Autocommands {{{
 vim.api.nvim_create_autocmd('BufReadPost', {
@@ -361,11 +369,35 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   command = '%s/\\s\\+$//e',
 })
 
--- vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'WinEnter' }, {
---   pattern = 'term://*',
---   command = 'startinsert',
--- }) --
+-- Auto-cd to current file's directory
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  callback = function()
+    vim.cmd('silent! lcd %:p:h')
+  end,
+})
 
+-- Start insert mode in terminal buffers
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'WinEnter' }, {
+  pattern = 'term://*',
+  command = 'startinsert',
+})
+
+-- Python-specific overrides
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function()
+    vim.bo.smartindent = false
+  end,
+})
+
+-- Muttrc / email textwidth
+vim.api.nvim_create_autocmd('BufRead', {
+  pattern = '/tmp/mutt-*',
+  callback = function()
+    vim.opt.textwidth = 72
+  end,
+})
 
 -- Close preview window if I move the cursor
 vim.api.nvim_create_autocmd('CursorMovedI', {
@@ -398,7 +430,55 @@ vim.keymap.set('v', ',,', '<Esc>')
 vim.keymap.set('t', ',,', '<C-\\><C-N>')
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
--- }}}
+vim.keymap.set('n', 'Q', '<Nop>')
+vim.keymap.set('n', 'q', '<Nop>')
+
+-- Which-key leaderboard
+local wk = require("which-key")
+wk.add({
+  { "<leader><leader>", ":", desc = "Command mode", mode = "n" },
+  { "<leader>s", "<cmd>w<CR>", desc = "Write buffer", mode = "n" },
+  { "<leader>x", "<cmd>w<CR><cmd>!./%<CR>", desc = "Write and execute", mode = "n" },
+  { "<leader>y", '"+y', desc = "Yank to clipboard", mode = { "n", "v" } },
+  { "<leader>p", '"+p', desc = "Paste from clipboard", mode = "n" },
+  { "<leader>P", "<cmd>set invpaste<CR>", desc = "Toggle paste mode", mode = "n" },
+  { "<leader>o", "za", desc = "Toggle fold", mode = { "n", "v" } },
+  { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "File explorer", mode = "n" },
+
+  { "<leader>b", group = "Buffer", mode = "n" },
+  { "<leader>bb", "<cmd>b #<CR>", desc = "Previous buffer" },
+  { "<leader>bl", "<cmd>ls<CR>", desc = "List buffers" },
+  { "<leader>bd", "<cmd>bd<CR>", desc = "Delete buffer" },
+
+  { "<leader>t", group = "Tab", mode = "n" },
+  { "<leader>tl", "<cmd>tabnext<CR>", desc = "Next tab" },
+  { "<leader>th", "<cmd>tabprev<CR>", desc = "Previous tab" },
+  { "<leader>tn", "<cmd>tabnew<CR>", desc = "New tab" },
+
+  { "<leader>w", group = "Window", mode = "n" },
+  { "<leader>wh", "<C-w>h", desc = "Window left" },
+  { "<leader>wj", "<C-w>j", desc = "Window down" },
+  { "<leader>wk", "<C-w>k", desc = "Window up" },
+  { "<leader>wl", "<C-w>l", desc = "Window right" },
+  { "<leader>wo", "<C-w>o", desc = "Only this window" },
+  { "<leader>wJ", "<C-w>J", desc = "Move window down" },
+  { "<leader>wK", "<C-w>K", desc = "Move window up" },
+  { "<leader>wH", "<C-w>H", desc = "Move window left" },
+  { "<leader>wL", "<C-w>L", desc = "Move window right" },
+  { "<leader>w=", "<C-w>=", desc = "Equalize windows" },
+
+  { "<leader>f", group = "File", mode = "n" },
+  { "<leader>fv", "<cmd>vertical wincmd f<CR>", desc = "Open in vsplit" },
+  { "<leader>fh", "<cmd>wincmd f<CR>", desc = "Open in split" },
+  { "<leader>ft", "<cmd>wincmd gf<CR>", desc = "Open in tab" },
+
+  { "<leader>v", group = "Vim", mode = "n" },
+  { "<leader>ve", "<cmd>tabnew $MYVIMRC<CR>", desc = "Edit config" },
+  { "<leader>vs", "<cmd>source $MYVIMRC<CR>", desc = "Source config" },
+
+  { "<leader>i", group = "Invert", mode = "n" },
+  { "<leader>il", "<cmd>set invlist<CR>", desc = "Toggle invisibles" },
+}) -- }}}
 
 -- Tabs {{{
 vim.opt.tabstop = 4
