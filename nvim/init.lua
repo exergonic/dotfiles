@@ -51,6 +51,48 @@ require("lazy").setup({
             "folke/which-key.nvim",
             event = "VeryLazy",
             opts = {},
+            config = function(_, opts)
+                local wk = require("which-key")
+                wk.setup(opts)
+                wk.add({
+                    { "<leader><leader>", ":", desc = "Command mode", mode = "n" },
+                    { "<leader>s", "<cmd>w<CR>", desc = "Write buffer", mode = "n" },
+                    { "<leader>x", "<cmd>w<CR><cmd>!./%<CR>", desc = "Write and execute", mode = "n" },
+                    { "<leader>y", '"+y', desc = "Yank to clipboard", mode = { "n", "v" } },
+                    { "<leader>p", '"+p', desc = "Paste from clipboard", mode = "n" },
+                    { "<leader>P", "<cmd>set invpaste<CR>", desc = "Toggle paste mode", mode = "n" },
+                    { "<leader>o", "za", desc = "Toggle fold", mode = { "n", "v" } },
+                    { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "File explorer", mode = "n" },
+                    { "<leader>b", group = "Buffer", mode = "n" },
+                    { "<leader>bb", "<cmd>b #<CR>", desc = "Previous buffer" },
+                    { "<leader>bl", "<cmd>ls<CR>", desc = "List buffers" },
+                    { "<leader>bd", "<cmd>bd<CR>", desc = "Delete buffer" },
+                    { "<leader>t", group = "Tab", mode = "n" },
+                    { "<leader>tl", "<cmd>tabnext<CR>", desc = "Next tab" },
+                    { "<leader>th", "<cmd>tabprev<CR>", desc = "Previous tab" },
+                    { "<leader>tn", "<cmd>tabnew<CR>", desc = "New tab" },
+                    { "<leader>w", group = "Window", mode = "n" },
+                    { "<leader>wh", "<C-w>h", desc = "Window left" },
+                    { "<leader>wj", "<C-w>j", desc = "Window down" },
+                    { "<leader>wk", "<C-w>k", desc = "Window up" },
+                    { "<leader>wl", "<C-w>l", desc = "Window right" },
+                    { "<leader>wo", "<C-w>o", desc = "Only this window" },
+                    { "<leader>wJ", "<C-w>J", desc = "Move window down" },
+                    { "<leader>wK", "<C-w>K", desc = "Move window up" },
+                    { "<leader>wH", "<C-w>H", desc = "Move window left" },
+                    { "<leader>wL", "<C-w>L", desc = "Move window right" },
+                    { "<leader>w=", "<C-w>=", desc = "Equalize windows" },
+                    { "<leader>f", group = "File", mode = "n" },
+                    { "<leader>fv", "<cmd>vertical wincmd f<CR>", desc = "Open in vsplit" },
+                    { "<leader>fh", "<cmd>wincmd f<CR>", desc = "Open in split" },
+                    { "<leader>ft", "<cmd>wincmd gf<CR>", desc = "Open in tab" },
+                    { "<leader>v", group = "Vim", mode = "n" },
+                    { "<leader>ve", "<cmd>tabnew $MYVIMRC<CR>", desc = "Edit config" },
+                    { "<leader>vs", "<cmd>source $MYVIMRC<CR>", desc = "Source config" },
+                    { "<leader>i", group = "Invert", mode = "n" },
+                    { "<leader>il", "<cmd>set invlist<CR>", desc = "Toggle invisibles" },
+                })
+            end,
         },
         {
             "alexghergh/nvim-tmux-navigation",
@@ -432,53 +474,7 @@ vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('n', 'Q', '<Nop>')
 vim.keymap.set('n', 'q', '<Nop>')
-
--- Which-key leaderboard
-local wk = require("which-key")
-wk.add({
-  { "<leader><leader>", ":", desc = "Command mode", mode = "n" },
-  { "<leader>s", "<cmd>w<CR>", desc = "Write buffer", mode = "n" },
-  { "<leader>x", "<cmd>w<CR><cmd>!./%<CR>", desc = "Write and execute", mode = "n" },
-  { "<leader>y", '"+y', desc = "Yank to clipboard", mode = { "n", "v" } },
-  { "<leader>p", '"+p', desc = "Paste from clipboard", mode = "n" },
-  { "<leader>P", "<cmd>set invpaste<CR>", desc = "Toggle paste mode", mode = "n" },
-  { "<leader>o", "za", desc = "Toggle fold", mode = { "n", "v" } },
-  { "<leader>e", "<cmd>Neotree toggle<CR>", desc = "File explorer", mode = "n" },
-
-  { "<leader>b", group = "Buffer", mode = "n" },
-  { "<leader>bb", "<cmd>b #<CR>", desc = "Previous buffer" },
-  { "<leader>bl", "<cmd>ls<CR>", desc = "List buffers" },
-  { "<leader>bd", "<cmd>bd<CR>", desc = "Delete buffer" },
-
-  { "<leader>t", group = "Tab", mode = "n" },
-  { "<leader>tl", "<cmd>tabnext<CR>", desc = "Next tab" },
-  { "<leader>th", "<cmd>tabprev<CR>", desc = "Previous tab" },
-  { "<leader>tn", "<cmd>tabnew<CR>", desc = "New tab" },
-
-  { "<leader>w", group = "Window", mode = "n" },
-  { "<leader>wh", "<C-w>h", desc = "Window left" },
-  { "<leader>wj", "<C-w>j", desc = "Window down" },
-  { "<leader>wk", "<C-w>k", desc = "Window up" },
-  { "<leader>wl", "<C-w>l", desc = "Window right" },
-  { "<leader>wo", "<C-w>o", desc = "Only this window" },
-  { "<leader>wJ", "<C-w>J", desc = "Move window down" },
-  { "<leader>wK", "<C-w>K", desc = "Move window up" },
-  { "<leader>wH", "<C-w>H", desc = "Move window left" },
-  { "<leader>wL", "<C-w>L", desc = "Move window right" },
-  { "<leader>w=", "<C-w>=", desc = "Equalize windows" },
-
-  { "<leader>f", group = "File", mode = "n" },
-  { "<leader>fv", "<cmd>vertical wincmd f<CR>", desc = "Open in vsplit" },
-  { "<leader>fh", "<cmd>wincmd f<CR>", desc = "Open in split" },
-  { "<leader>ft", "<cmd>wincmd gf<CR>", desc = "Open in tab" },
-
-  { "<leader>v", group = "Vim", mode = "n" },
-  { "<leader>ve", "<cmd>tabnew $MYVIMRC<CR>", desc = "Edit config" },
-  { "<leader>vs", "<cmd>source $MYVIMRC<CR>", desc = "Source config" },
-
-  { "<leader>i", group = "Invert", mode = "n" },
-  { "<leader>il", "<cmd>set invlist<CR>", desc = "Toggle invisibles" },
-}) -- }}}
+-- }}}
 
 -- Tabs {{{
 vim.opt.tabstop = 4
