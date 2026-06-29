@@ -77,30 +77,21 @@ require("lazy").setup({
             "saadparwaiz1/cmp_luasnip",
             "rafamadriz/friendly-snippets",
         },
-	{
-		"nvim-treesitter/nvim-treesitter",
-		branch = "main", -- Explicitly use the new main branch
-		build = ":TSUpdate",
-		lazy = false, -- Ensure loaded at startup
-		---@type TSConfig
-		opts = {
-			ensure_installed = { "python", "lua", "vim", "vimdoc", "query" },
-			auto_install = true,
-			-- Do NOT set highlight/indent here anymore in the new API
-		},
-		config = function(_, opts)
-			local ts = require("nvim-treesitter")
-			ts.setup(opts)
-
-			-- Manually enable highlighting and indentation via autocmd (New API requirement)
-			vim.api.nvim_create_autocmd("FileType", {
-				callback = function()
-					pcall(vim.treesitter.start)
-					vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-				end,
-			})
-		end,
-	},
+    {
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        build = ":TSUpdate",
+        lazy = false,
+        opts = {
+            ensure_installed = { "python", "lua", "vim", "vimdoc", "query" },
+            auto_install = true,
+            highlight = { enable = true },
+            indent = { enable = true },
+        },
+        config = function(_, opts)
+            require("nvim-treesitter").setup(opts)
+        end,
+    },
     },
     install = { colorscheme = { "onehalfdark" } },
     checker = { enabled = true },
@@ -184,7 +175,7 @@ local luasnip = require("luasnip")
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
-  auto_brackets = { "python" }, -- Critical for Python
+  -- auto_brackets is handled by nvim-cmp-autopairs if installed
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
@@ -265,18 +256,15 @@ vim.cmd("colorscheme onehalfdark")
 
 -- Basic settings {{{
 vim.opt.backspace = 'indent,eol,start'
-vim.opt.ruler = true
 vim.opt.showcmd = true
 vim.opt.confirm = true
 vim.opt.virtualedit = 'block'
 vim.opt.history = 200
 vim.opt.encoding = 'utf-8'
-vim.opt.termguicolors = true  -- Enables 24-bit RGB colors (replaces t_Co=256)
+vim.opt.termguicolors = true
 vim.opt.list = true
-vim.opt.listchars = { eol = '¬', tab = '»·', trail = '·' }
-vim.opt.showmode = true
+vim.opt.listchars = { tab = '»·', trail = '·' }
 vim.opt.showmatch = true
-vim.opt.cmdheight = 2
 vim.opt.laststatus = 2
 vim.opt.shortmess:append('I')
 vim.opt.updatetime = 300
@@ -288,16 +276,13 @@ vim.opt.sidescrolloff = 15
 vim.opt.numberwidth = 4
 vim.opt.relativenumber = true
 vim.opt.number = true
--- vim.opt.clipboard:append('unnamedplus')  -- Uncomment if needed
+-- vim.opt.clipboard:append('unnamedplus')
 vim.opt.modeline = true
-vim.opt.wildmenu = true
 vim.opt.wildmode = { 'list:longest', 'full' }
 vim.opt.autowrite = true
 vim.opt.autoread = true
-vim.opt.hidden = true
 vim.opt.title = false
 vim.opt.visualbell = true
-vim.opt.smartindent = true
 vim.opt.autoindent = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -322,9 +307,9 @@ vim.opt.backupdir = vim.fn.expand('~/.local/state/nvim/backup//')
 vim.opt.undodir = vim.fn.expand('~/.local/state/nvim/undo//')
 
 -- Create directories if they don't exist
--- vim.fn.mkdir(vim.opt.directory:get(), 'p')
--- vim.fn.mkdir(vim.opt.backupdir:get(), 'p')
--- vim.fn.mkdir(vim.opt.undodir:get(), 'p')
+vim.fn.mkdir(vim.opt.directory:get(), 'p')
+vim.fn.mkdir(vim.opt.backupdir:get(), 'p')
+vim.fn.mkdir(vim.opt.undodir:get(), 'p')
 
 vim.opt.undofile = true
 vim.opt.undoreload = 10000
@@ -404,7 +389,7 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 
 -- Code completion {{{
 vim.opt.omnifunc = 'syntaxcomplete#Complete'
-vim.opt.completeopt = { 'longest', 'menuone', 'preview' }
+vim.opt.completeopt = { 'longest', 'menuone' }
 -- }}}
 
 -- Mappings {{{

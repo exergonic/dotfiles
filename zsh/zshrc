@@ -1,22 +1,6 @@
 # vim: ft=zsh shiftwidth=2 tabstop=2 noexpandtab
 #zmodload zsh/zprof
 
-# Hyphen-insensitive completion.
-HYPHEN_INSENSITIVE="true"
-
-# Disable auto-setting terminal title.
-DISABLE_AUTO_TITLE="true"
-
-# Enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
-
-# Disable marking untracked files under VCS as dirty.
-DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-
 # Autoloads
 unalias run-help &> /dev/null
 autoload -Uz run-help
@@ -94,8 +78,9 @@ bindkey '^R' history-incremental-search-backward
 bindkey '^N' history-incremental-search-forward
 
 # Scroll up and down through history
-bindkey '^k' up-history
-bindkey '^j' down-history
+# NOTE: Avoid ^k/^j — they conflict with nvim-tmux-navigation
+bindkey '^p' up-history
+bindkey '^n' down-history
 
 # V' in vi-cmd-mode will edit current line in Vim
 zle -N edit-command-line

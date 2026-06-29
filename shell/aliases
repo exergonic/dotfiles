@@ -8,10 +8,10 @@ alias \.\.\.\.="cd ../../.." # ...   three dirs
 
 alias sound='systemctl --user restart pulseaudio.service'
 
-# ls aliases
-if [[ "$(command -v exa)" ]]
+# ls aliases (eza is the maintained successor to exa)
+if [[ "$(command -v eza)" ]]
 then
-	alias ls='exa -h --group-directories-first'
+	alias ls='eza -h --group-directories-first'
 fi
 
 alias l='ls -1'                                                 # Show files in a single column
@@ -28,7 +28,6 @@ alias lu='ls -tur'                                             # Sort by and sho
 alias grep='grep --color=auto'
 alias mv='mv -vi'
 alias cp='cp -v'
-alias rm='trash'
 alias du='du -sh'
 
 # use bat instead of cat
@@ -65,17 +64,20 @@ alias rsync='rsync --progress'
 alias sicp="racket -i -p neil/sicp -l xrepl"
 #}}}
 
-## youtube-dl
-yt='youtube-dl --add-metadate -i'
-# extra audio (best quality)
-yta='yt -x -f bestaudio/best'
+## youtube-dl / yt-dlp
+if [[ "$(command -v yt-dlp)" ]]; then
+	alias yt='yt-dlp --add-metadata -i'
+elif [[ "$(command -v youtube-dl)" ]]; then
+	alias yt='youtube-dl --add-metadata -i'
+fi
+alias yta='yt -x -f bestaudio/best'
 
 # CPU management
 alias performance="sudo cpupower --cpu all frequency-set --governor performance"
 
 # vim {{{
 alias v='nvim'
-alias vi='vim'
+alias vi='nvim'
 alias vibash="nvim ${CONFIGDIR:-${HOME}/.dotfiles}/bash/bashrc"
 alias vialiases="nvim ${CONFIGDIR:-${HOME}/.dotfiles}/shell/aliases"
 alias vifunctions="nvim ${CONFIGDIR:-${HOME}/.dotfiles}/shell/functions"

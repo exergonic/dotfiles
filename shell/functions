@@ -264,4 +264,19 @@ wttr() {
 	curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
 }
 
+trash() {
+	# move files to ~/.Trash instead of permanent deletion
+	local date="$( date +%F )"
+	local files="$@"
+	if [[ -z "$files" ]]; then
+		echo "usage: trash <files>"
+	else
+		[[ ! -d "${HOME}/.Trash/${date}" ]] && mkdir -p "${HOME}/.Trash/${date}"
+		for f in ${files}; do
+			mv -fv "${f}" "${HOME}/.Trash/${date}/"
+		done
+		echo "(trashcan is ~/.Trash/${date})"
+	fi
+}
+
 #curl api.openweathermap.org/data/2.5/forecast?id=524901&APPID=$API_WEATHER_OWM
