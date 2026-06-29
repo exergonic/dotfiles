@@ -1,0 +1,113 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [],
+    "copyFormatting": "none",
+    "copyOnSelect": false,
+    "defaultProfile": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+    "keybindings": 
+    [
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": "Terminal.DuplicatePaneRight",
+            "keys": "alt+shift+\\"
+        },
+        {
+            "id": null,
+            "keys": "alt+shift+plus"
+        }
+    ],
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": 
+    {
+        "defaults": 
+        {
+            "antialiasingMode": "cleartype",
+            "bellStyle": "none",
+            "font": 
+            {
+                "face": "CaskaydiaCove Nerd Font Mono"
+            },
+            "padding": "8",
+            "rightClickContextMenu": true,
+            "showMarksOnScrollbar": true
+        },
+        "list": 
+        [
+            {
+                "colorScheme": "One Half Dark",
+                "cursorShape": "underscore",
+                "font": 
+                {
+                    "face": "Cascadia Code"
+                },
+                "guid": "{b19ff146-425d-5d89-8af4-3b1eb132ea66}",
+                "hidden": false,
+                "name": "Ubuntu",
+                "source": "Microsoft.WSL"
+            },
+            {
+                "colorScheme": "Campbell Powershell",
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "colorScheme": "One Half Dark",
+                "experimental.retroTerminalEffect": false,
+                "guid": "{790da1db-4830-58f5-b7a7-0df2c5cd0070}",
+                "hidden": false,
+                "intenseTextStyle": "bold",
+                "name": "archlinux",
+                "source": "Microsoft.WSL",
+                "startingDirectory": null,
+                "tabTitle": null,
+                "useAcrylic": true
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "Command Prompt"
+            },
+            {
+                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+                "hidden": false,
+                "name": "Azure Cloud Shell",
+                "source": "Windows.Terminal.Azure"
+            },
+            {
+                "colorScheme": "Campbell Powershell",
+                "guid": "{574e775e-4f2a-5b96-ac1e-a2962a402336}",
+                "hidden": false,
+                "name": "PowerShell 7",
+                "source": "Windows.Terminal.PowershellCore"
+            },
+            {
+                "colorScheme": "One Half Dark",
+                "commandline": "C:\\Program Files\\Git\\bin\\bash.exe --login -i",
+                "guid": "{4a424825-7872-405b-8200-a937d4ca5606}",
+                "hidden": false,
+                "icon": "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+                "name": "Git Bash",
+                "startingDirectory": "%USERPROFILE%"
+            }
+        ]
+    },
+    "schemes": [],
+    "themes": [],
+    "useAcrylicInTabRow": true
+}
