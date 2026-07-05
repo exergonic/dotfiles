@@ -1,6 +1,24 @@
 # vim: ft=zsh sw=2 ts=2 noet
 
-PATH+=:/snap/bin:
+# Super Specific Aliases
+alias chem='conda activate chem'
+
+
+# PATH ADDITIONS------------------------------
+
+# Ubuntu snaps
+export PATH+=/snap/bin:
+
+# pixi
+export PATH="/home/mccan/.pixi/bin:$PATH"
+
+# opencode
+export PATH="/home/mccan/.opencode/bin:$PATH"
+
+############################################################
+
+
+# ZSH CUSTOMIZATION------------------------------
 
 # verify file executable and source it
 safe_source() {
@@ -9,25 +27,27 @@ safe_source() {
     fi
 }
 
-# Ubuntu
 
 # source shell plugins
 # command-not-found
-# safe_source /usr/share/doc/pkgfile/command-not-found.zsh
+safe_source /etc/zsh_command_not_found
 
 # zsh autopair
 # safe_source /usr/share/zsh/plugins/zsh-autopair/autopair.zsh
 
 # zsh autosuggestions
 safe_source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZ=20
-bindkey '^ ' autosuggest-accept
+	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=4'
+	ZSH_AUTOSUGGEST_BUFFER_MAX_SIZ=20
+	bindkey '^ ' autosuggest-accept
 
 
 # zsh-syntax-highlighting
 safe_source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 safe_source /etc/zsh_command_not_foun
+
+
+
 # fzf
 #    safe_source /usr/share/fzf/key-bindings.zsh
 #    safe_source /usr/share/fzf/completion.zsh
