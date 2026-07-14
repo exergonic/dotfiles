@@ -11,11 +11,11 @@ alias sound='systemctl --user restart pulseaudio.service'
 # ls aliases (eza is the maintained successor to exa)
 if [[ "$(command -v eza)" ]]
 then
-	alias ls='eza -h --group-directories-first'
+	alias ls='eza -h --group-directories-first --icons=always --color=always'
 fi
 
 alias l='ls -1'                                                 # Show files in a single column
-alias l.='ls --color=always -d .??*' # Show hidden files
+alias l.='ls -d .??*' # Show hidden files
 alias ll='ls -l'                                                # Show 'long' file information
 alias la='ls -A'                                                # Show all files
 alias ld='ls -ld'                                               # Show info about cwd
@@ -45,6 +45,7 @@ fi
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gs='git status'
 alias gc='git commit'
+alias lg='lazygit'
 
 
 # Compression
