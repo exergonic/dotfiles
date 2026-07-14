@@ -16,18 +16,100 @@ end
 vim.opt.rtp:prepend(lazypath)
 -- }}}
 
--- Setup lazy.nvim {{{
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
+-- Basic settings {{{
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+vim.opt.backspace = 'indent,eol,start'
+vim.opt.showcmd = true
+vim.opt.confirm = true
+vim.opt.virtualedit = 'block'
+vim.opt.history = 200
+vim.opt.encoding = 'utf-8'
+vim.opt.termguicolors = true
+vim.opt.list = true
+vim.opt.listchars = { tab = '»·', trail = '·' }
+vim.opt.showmatch = true
+vim.opt.laststatus = 2
+-- vim.opt.shortmess:append('I')
+vim.opt.updatetime = 300
+vim.opt.timeoutlen = 500
+vim.opt.signcolumn = 'yes'
+vim.opt.cursorline = true
+vim.opt.scrolloff = 10
+vim.opt.sidescroll = 15
+vim.opt.sidescrolloff = 15
+vim.opt.numberwidth = 4
+vim.opt.relativenumber = true
+vim.opt.number = true
+vim.opt.clipboard:append('unnamedplus')
+vim.opt.modeline = true
+vim.opt.wildmode = { 'list:longest', 'full' }
+vim.opt.autowrite = true
+vim.opt.autoread = true
+vim.opt.title = false
+vim.opt.visualbell = true
+vim.opt.autoindent = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.pumheight = 10
+vim.opt.helpheight = 20
+
+-- Folding
+vim.opt.foldcolumn = '2'
+vim.opt.foldmethod = 'marker'
+vim.opt.foldnestmax = 2
+
+-- Searching
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.hlsearch = false
+
+-- Create directories if they don't exist
+vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/swap//'), 'p')
+vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/backup//'), 'p')
+vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/undo//'), 'p')
+
+-- Backups and undo
+vim.opt.backup = true
+vim.opt.directory = vim.fn.expand('~/.local/state/nvim/swap//')
+vim.opt.backupdir = vim.fn.expand('~/.local/state/nvim/backup//')
+vim.opt.undodir = vim.fn.expand('~/.local/state/nvim/undo//')
+vim.opt.undofile = true
+vim.opt.undoreload = 10000
+vim.opt.undolevels = 10000
+
+-- Code completion
+vim.opt.omnifunc = 'syntaxcomplete#Complete'
+vim.opt.completeopt = { 'longest', 'menuone' }
+
+-- Tabs
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- Syntax and filetype
+vim.g.markdown_fenced_languages = { "vim", "help" }
+vim.g.sh_indent_case_labels = 1
+vim.cmd('filetype plugin indent on')
+vim.cmd('syntax on')
+
+-- Check if running on Windows and if bash is executable
+if (vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1) and vim.fn.executable('bash') == 1 then
+    vim.opt.shell = [["C:/Program Files/Git/usr/bin/bash.exe"]]
+    vim.opt.shellcmdflag = '-c'
+    vim.opt.shellxquote = ""
+    vim.opt.shellslash = true
+end
 
 -- Disable netrw (Must be before lazy.setup)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+-- }}}
 
+-- Setup Lazy {{{
 require("lazy").setup({
     spec = {
         {
@@ -54,7 +136,7 @@ require("lazy").setup({
             config = function(_, opts)
                 local wk = require("which-key")
                 wk.setup(opts)
-                wk.add({
+                wk.add({ --{{{
                     { "<leader><leader>", ":", desc = "Command mode", mode = "n" },
                     { "<leader>s", "<cmd>w<CR>", desc = "Write buffer", mode = "n" },
                     { "<leader>x", "<cmd>w<CR><cmd>!./%<CR>", desc = "Write and execute", mode = "n" },
@@ -90,19 +172,19 @@ require("lazy").setup({
                     { "<leader>ve", "<cmd>tabnew $MYVIMRC<CR>", desc = "Edit config" },
                     { "<leader>vs", "<cmd>source $MYVIMRC<CR>", desc = "Source config" },
                     { "<leader>i", group = "Invert", mode = "n" },
-                    { "<leader>il", "<cmd>set invlist<CR>", desc = "Toggle invisibles" },
+                    { "<leader>il", "<cmd>set invlist<CR>", desc = "Toggle invisibles" }, --}}}
                 })
             end,
         },
         {
             "alexghergh/nvim-tmux-navigation",
             config = function()
-              require("nvim-tmux-navigation").setup({})
-              vim.keymap.set("n", "<C-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
-              vim.keymap.set("n", "<C-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
-              vim.keymap.set("n", "<C-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
-              vim.keymap.set("n", "<C-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
-              vim.keymap.set("n", "<C-\\>", require("nvim-tmux-navigation").NvimTmuxNavigateLastActive)
+                require("nvim-tmux-navigation").setup({})
+                vim.keymap.set("n", "<C-h>", require("nvim-tmux-navigation").NvimTmuxNavigateLeft)
+                vim.keymap.set("n", "<C-j>", require("nvim-tmux-navigation").NvimTmuxNavigateDown)
+                vim.keymap.set("n", "<C-k>", require("nvim-tmux-navigation").NvimTmuxNavigateUp)
+                vim.keymap.set("n", "<C-l>", require("nvim-tmux-navigation").NvimTmuxNavigateRight)
+                vim.keymap.set("n", "<C-\\>", require("nvim-tmux-navigation").NvimTmuxNavigateLastActive)
             end
         },
         {
@@ -124,26 +206,34 @@ require("lazy").setup({
             "saadparwaiz1/cmp_luasnip",
             "rafamadriz/friendly-snippets",
         },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        branch = "main",
-        build = ":TSUpdate",
-        lazy = false,
-        opts = {
-            ensure_installed = { "python", "lua", "vim", "vimdoc", "query" },
-            auto_install = true,
-            highlight = { enable = true },
-            indent = { enable = true },
+        {
+            "nvim-treesitter/nvim-treesitter",
+            branch = "main",
+            build = ":TSUpdate",
+            lazy = false,
+            opts = {
+                ensure_installed = { "python", "lua", "vim", "vimdoc", "query" },
+                auto_install = true,
+                highlight = { enable = true },
+                indent = { enable = true },
+            },
+            config = function(_, opts)
+                require("nvim-treesitter").setup(opts)
+            end,
         },
-        config = function(_, opts)
-            require("nvim-treesitter").setup(opts)
-        end,
-    },
+        {
+            'nvim-telescope/telescope.nvim', version = '*',
+            dependencies = {
+                'nvim-lua/plenary.nvim',
+                -- optional but recommended
+                { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+            }
+        },
     },
     install = { colorscheme = { "onehalfdark" } },
     checker = { enabled = true },
 })
--- }}}
+-- }}} End Setup Lazy
 
 -- Mason, LSP, Autocompletion Setup {{{
 -- LSP & Mason
@@ -159,7 +249,7 @@ require("mason").setup({
 
 -- Ensure servers are installed.
 require("mason-lspconfig").setup({
-  ensure_installed = { "pyright", "ruff" },
+  ensure_installed = { "ty", "ruff" },
   automatic_installation = true,
 })
 
@@ -168,9 +258,9 @@ vim.lsp.config("*", {
   on_attach = function(client, bufnr)
     -- Set buffer-local keymaps
     vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = bufnr, desc = "Hover" })
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to Definition" })
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = bufnr, desc = "References" })
-    vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
+    vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { buffer = bufnr, desc = "Go to Definition" })
+    vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { buffer = bufnr, desc = "References" })
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = bufnr, desc = "Code Action" })
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = bufnr, desc = "Rename" })
 
     -- Enable completion capabilities if not already set by server
@@ -300,76 +390,9 @@ vim.api.nvim_set_hl(0, 'EndOfBuffer', { ctermfg = 'black', ctermbg = 'black' })
 
 -- }}}
 
--- Basic settings {{{
-vim.opt.backspace = 'indent,eol,start'
-vim.opt.showcmd = true
-vim.opt.confirm = true
-vim.opt.virtualedit = 'block'
-vim.opt.history = 200
-vim.opt.encoding = 'utf-8'
-vim.opt.termguicolors = true
-vim.opt.list = true
-vim.opt.listchars = { tab = '»·', trail = '·' }
-vim.opt.showmatch = true
-vim.opt.laststatus = 2
-vim.opt.shortmess:append('I')
-vim.opt.updatetime = 300
-vim.opt.timeoutlen = 500
-vim.opt.signcolumn = 'yes'
-vim.opt.cursorline = true
-vim.opt.scrolloff = 10
-vim.opt.sidescroll = 15
-vim.opt.sidescrolloff = 15
-vim.opt.numberwidth = 4
-vim.opt.relativenumber = true
-vim.opt.number = true
--- vim.opt.clipboard:append('unnamedplus')
-vim.opt.modeline = true
-vim.opt.wildmode = { 'list:longest', 'full' }
-vim.opt.autowrite = true
-vim.opt.autoread = true
-vim.opt.title = false
-vim.opt.visualbell = true
-vim.opt.autoindent = true
-vim.opt.splitbelow = true
-vim.opt.splitright = true
-vim.opt.pumheight = 10
-vim.opt.helpheight = 20
-
--- Folding
-vim.opt.foldcolumn = '2'
-vim.opt.foldmethod = 'marker'
-vim.opt.foldnestmax = 2
-
--- Searching
-vim.opt.incsearch = true
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
-vim.opt.hlsearch = false
-
--- Backups and undo
-vim.opt.backup = true
-vim.opt.directory = vim.fn.expand('~/.local/state/nvim/swap//')
-vim.opt.backupdir = vim.fn.expand('~/.local/state/nvim/backup//')
-vim.opt.undodir = vim.fn.expand('~/.local/state/nvim/undo//')
-
--- Create directories if they don't exist
-vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/swap//'), 'p')
-vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/backup//'), 'p')
-vim.fn.mkdir(vim.fn.expand('~/.local/state/nvim/undo//'), 'p')
-
-vim.opt.undofile = true
-vim.opt.undoreload = 10000
-vim.opt.undolevels = 10000
-
--- Syntax and filetype
-vim.g.markdown_fenced_languages = { "vim", "help" }
-vim.g.sh_indent_case_labels = 1
-vim.cmd('filetype plugin indent on')
-vim.cmd('syntax on') -- }}}
-
-
 -- Autocommands {{{
+
+-- restore cursor to position in buffer
 vim.api.nvim_create_autocmd('BufReadPost', {
   pattern = '*',
   callback = function()
@@ -405,10 +428,13 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
--- remove ending whitespace on save
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*',
-  command = '%s/\\s\\+$//e',
+-- remove ending whitespace on save, while preserving cursor posotion
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    local pos = vim.api.nvim_win_get_cursor(0)
+    vim.cmd([[%s/\s\+$//e]])
+    vim.api.nvim_win_set_cursor(0, pos)
+  end
 })
 
 -- Auto-cd to current file's directory
@@ -461,25 +487,23 @@ vim.api.nvim_create_autocmd('InsertLeave', {
   end,
 }) -- }}}
 
--- Code completion {{{
-vim.opt.omnifunc = 'syntaxcomplete#Complete'
-vim.opt.completeopt = { 'longest', 'menuone' }
--- }}}
-
 -- Mappings {{{
+
+-- ",," is escape in all modes
 vim.keymap.set('i', ',,', '<Esc>')
 vim.keymap.set('v', ',,', '<Esc>')
 vim.keymap.set('t', ',,', '<C-\\><C-N>')
+vim.keymap.set('c', ',,', '<Esc>')
+
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('n', 'Q', '<Nop>')
 vim.keymap.set('n', 'q', '<Nop>')
--- }}}
 
--- Tabs {{{
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
---}}}
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
+vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+-- }}}
 
