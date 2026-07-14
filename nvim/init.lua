@@ -278,14 +278,13 @@ vim.lsp.config("*", {
   capabilities = vim.tbl_deep_extend("force", vim.lsp.config["*"].capabilities, cmp_capabilities),
 })
 
--- 3. Configure Pyright (Extends the default config from nvim-lspconfig)
-vim.lsp.config("pyright", {
+-- 3. Configure ty (Extends the default config from nvim-lspconfig)
+vim.lsp.config("ty", {
   settings = {
-    python = {
-      analysis = {
-        typeCheckingMode = "basic",
-        useLibraryCodeForTypes = true,
-        autoSearchPaths = true,
+    ty = {
+      inlayHints = {
+        variableTypes = true,
+        callArgumentNames = true,
       },
     },
   },
@@ -301,7 +300,7 @@ vim.lsp.config("ruff", {
 })
 
 -- 5. Enable the servers
-vim.lsp.enable({ "pyright", "ruff" })
+vim.lsp.enable({ "ty", "ruff" })
 
 -- =============================================================================
 -- 5. NVIM-CMP CONFIGURATION
