@@ -164,10 +164,15 @@ require("lazy").setup({
                     { "<leader>wH", "<C-w>H", desc = "Move window left" },
                     { "<leader>wL", "<C-w>L", desc = "Move window right" },
                     { "<leader>w=", "<C-w>=", desc = "Equalize windows" },
-                    { "<leader>f", group = "File", mode = "n" },
-                    { "<leader>fv", "<cmd>vertical wincmd f<CR>", desc = "Open in vsplit" },
-                    { "<leader>fh", "<cmd>wincmd f<CR>", desc = "Open in split" },
-                    { "<leader>ft", "<cmd>wincmd gf<CR>", desc = "Open in tab" },
+                    { "<leader>F", group = "File", mode = "n" },
+                    { "<leader>Fv", "<cmd>vertical wincmd f<CR>", desc = "Open in vsplit" },
+                    { "<leader>Fh", "<cmd>wincmd f<CR>", desc = "Open in split" },
+                    { "<leader>Ft", "<cmd>wincmd gf<CR>", desc = "Open in tab" },
+                    { "<leader>f", group = "Telescope", mode = "n" },
+                    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find files" },
+                    { "<leader>fg", "<cmd>Telescope live_grep<CR>", desc = "Live grep" },
+                    { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+                    { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help tags" },
                     { "<leader>v", group = "Vim", mode = "n" },
                     { "<leader>ve", "<cmd>tabnew $MYVIMRC<CR>", desc = "Edit config" },
                     { "<leader>vs", "<cmd>source $MYVIMRC<CR>", desc = "Source config" },
@@ -499,10 +504,5 @@ vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('n', 'Q', '<Nop>')
 vim.keymap.set('n', 'q', '<Nop>')
 
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 -- }}}
 
