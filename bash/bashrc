@@ -6,7 +6,7 @@ set -o vi
 shellopts=(autocd checkhash checkjobs histappend \
            checkwinsize cmdhist cdspell globstar \
            extglob  lithist nocaseglob no_empty_cmd_completion \
-					 shift_verbose)
+           shift_verbose)
 
 for opt in "${shellopts[@]}"
 do
@@ -14,6 +14,18 @@ do
 done
 
 shopt -u mailwarn hostcomplete
+
+# History settings
+export HISTSIZE=1000000
+export HISTFILESIZE=10000000
+export HISTTIMEFORMAT="%F %T "
+export HISTFILE=~/.bash_history
+# Append to history immediately (like zsh inc_append_history)
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+shopt -s histappend histreedit histverify
+
+# Enable programmable completion features
+shopt -s progcomp
 
 # Terminal options
 export TERM=xterm-256color
@@ -48,30 +60,44 @@ white='\[\e[0;37m\]'
 WHITE='\[\e[1;37m\]'
 NC='\[\e[0m\]' # No Color
 
-# PS1
-# PS1="[\j] ${yellow}\u${NC}@${green}\h:${NC}\w\n${blue}λ${NC} "
-PS1="${blue}\w${NC}
-${magenta}λ${NC} "
-PROMPT_DIRTRIM=4
 
 CONFIG_DIR=${HOME}/.dotfiles
 source ${CONFIG_DIR}/shell/aliases
 source ${CONFIG_DIR}/shell/functions
 source ${CONFIG_DIR}/bash/dircolors.sh
-source ${CONFIG_DIR}/shell/dirstack.sh
+
 
 [[ -f ${HOME}/.bcrc ]] &&  export BC_ENV_ARGS="$HOME/.bcrc"
-[[ -f ${HOME}/.dirstack ]] && dir_stack="$( cat ${HOME}/.dirstack )"
 
-export GPG_TTY=$(tty)¬
-export XDG_CONFIG_HOME=${HOME}/.config
-export XDG_CONFIG_DIRS=/etc/xdg
-export XDG_DATA_HOME=${HOME}/.local/share
-export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
-export XDG_CACHE_HOME=${HOME}/.cache
-export XDG_RUNTIME_DIR=${HOME}/.local/runtime
-export QT_IM_MODULE=xum
-export GTK_IM_MODULE=uim
-unset XMODIFIERS
+# PS1
+if command -v starship &> /dev/null ; then
+    eval "$(starship init bash)"
+else
+    # PS1="[\j] ${yellow}\u${NC}@${green}\h:${NC}\w\n${blue}λ${NC} "
+    PS1="${blue}\w${NC}\n${magenta}λ${NC} "
+    PROMPT_DIRTRIM=4
+fi
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# better cd with memory
+command -v zoxide &> /dev/null && eval "$(zoxide init bash)"
+
+# Bash completion
+[[ -r /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
+
+# fzf completions and keybindings
+command -v fzf &> /dev/null && eval "$(fzf --bash)"
+
+
+
+# export GPG_TTY=$(tty)¬
+# export XDG_CONFIG_HOME=${HOME}/.config
+# export XDG_CONFIG_DIRS=/etc/xdg
+# export XDG_DATA_HOME=${HOME}/.local/share
+# export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
+# export XDG_CACHE_HOME=${HOME}/.cache
+# export XDG_RUNTIME_DIR=${HOME}/.local/runtime
+# export QT_IM_MODULE=xum
+# export GTK_IM_MODULE=uim
+# unset XMODIFIERS
+fastfetch
+

@@ -1,26 +1,49 @@
 set editing-mode vi
 set keymap vi
-set match-hidden-files Off
+
+# Show all completions on first Tab
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Ignore case
+set completion-ignore-case on
+
+# Colors
+set colored-stats on
+set colored-completion-prefix on
+
+# Visual feedback
+set blink-matching-paren on
+set bell-style off
+
+# Completion display
+set menu-complete-display-prefix on
+set completion-prefix-display-length 5
+set completion-display-width 120
+
+# History
+set history-preserve-point on
+
+# Skip hidden files in completion
+set match-hidden-files off
+
+# Tab cycles through completions (menu style)
+"\C-i": menu-complete
+"\e[Z": menu-complete-backward
+
+# Prefix-based history search (type prefix, then ^P/^N to cycle)
+"\C-p": history-search-backward
+"\C-n": history-search-forward
+
+# Incremental history search (like zsh's ^R/^S)
+"\C-r": reverse-search-history
+"\C-s": forward-search-history
+
+# Word movement (like zsh defaults)
+"\eb": backward-word
+"\ef": forward-word
 
 $if mode=vi
 set keymap vi-insert
 ",,": vi-movement-mode
-",,": vi-movement-mode
-"\\t": transpose-chars
-"\\T": transpose-words
-#"\\": character-search
-#"?": character-search-backward
 $endif
-
-set blink-matching-paren on
-set bell-style off
-#possible completions uses colors
-set colored-stats on
-set completion-display-width 80
-set completion-prefix-display-length 5
-set completion-query-items 250
-set horizontal-scroll-mode off
-set show-all-if-ambiguous on
-set completion-ignore-case on
-set enable-keypad on
-set history-preserve-point on
