@@ -111,6 +111,7 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Setup Lazy {{{
 require("lazy").setup({
+    checker = { enabled = false },
     spec = {
         {
             "nvim-neo-tree/neo-tree.nvim",
@@ -234,6 +235,92 @@ require("lazy").setup({
                 { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
             }
         },
+        {
+            "rcarriga/nvim-notify",
+            opts = {
+                render = "minimal",
+                animation = "fade",
+                timeout = 3000,
+                max_height = function() return math.floor(vim.o.lines * 0.75) end,
+                max_width = function() return math.floor(vim.o.columns * 0.75) end,
+                on_open = function(win)
+                    vim.api.nvim_win_set_config(win, { zindex = 100 })
+                end,
+            },
+        },
+        {
+            "folke/noice.nvim",
+            event = "VeryLazy",
+            opts = {
+                -- Enable the preset to use nvim-notify for notifications
+                presets = {
+                    bottom_search = false, -- Use a classic bottom cmdline for search
+                    command_palette = true, -- Position the cmdline and popupmenu together
+                    long_message_to_split = true, -- Long messages will be sent to a split
+                    inc_rename = false, -- Enables an input dialog for inc-rename.nvim
+                    lsp_doc_border = true, -- Add a border to hover docs and signature help
+                },
+                popupmenu = {
+                    enabled = true,
+                    backend = cmp,
+                },
+                routes = {
+                    -- Example: Route specific messages to the notify view
+                    {
+                        view = "notify",
+                        filter = { event = "msg_show", kind = "", find = "written" },
+                        opts = { skip = true }, -- Skip "file written" messages entirely
+                    },
+                },
+            },
+            dependencies = {
+                "MunifTanjim/nui.nvim",
+                "rcarriga/nvim-notify",
+            },
+        },
+        -- {
+        --     "gelguy/wilder.nvim",
+        --     build = ":UpdateRemotePlugins",
+        --     config = function()
+        --         local wilder = require("wilder")
+        --         wilder.setup({ modes = { ":", "/", "?" } })
+        --
+        --         wilder.set_option("pipeline", {
+        --             wilder.branch(
+        --                 wilder.python_file_finder_pipeline({
+        --                     file_command = function(ctx, arg)
+        --                         if string.find(arg, ".") ~= nil then
+        --                             return {"fd", "-tf", "-H"}
+        --                         else
+        --                             return {"fd", "-tf"}
+        --                         end
+        --                     end,
+        --                     dir_command = {"fd", "-td"},
+        --                     fuzzy_filter = wilder.lua_fzy_filter(),
+        --                 }),
+        --                 wilder.cmdline_pipeline({
+        --                     language = "lua", -- 'python' or 'lua'
+        --                     fuzzy = 1,        -- Enable fuzzy matching
+        --                 }),
+        --                 {
+        --                     wilder.check(function(ctx, x) return x == "" end),
+        --                     wilder.history(),
+        --                 }
+        --             ),
+        --         })
+        --
+        --         wilder.set_option("renderer", wilder.popupmenu_renderer({
+        --             highlighter = wilder.basic_highlighter(),
+        --             left = { " " },
+        --             right = { " ", wilder.popupmenu_scrollbar() },
+        --             apply_incsearch_fix = false,
+        --         }))
+        --     end,
+        --     dependencies = {
+        --         "nvim-lua/plenary.nvim",
+        --         "romgrk/fzy-lua-native",
+        --     },
+        -- },
     },
     install = { colorscheme = { "onehalfdark" } },
     checker = { enabled = true },
@@ -494,10 +581,10 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 -- Mappings {{{
 
 -- ",," is escape in all modes
-vim.keymap.set('i', ',,', '<Esc>')
-vim.keymap.set('v', ',,', '<Esc>')
-vim.keymap.set('t', ',,', '<C-\\><C-N>')
-vim.keymap.set('c', ',,', '<Esc>')
+vim.keymap.set('i', 'jk', '<Esc>')
+vim.keymap.set('v', 'jk', '<Esc>')
+vim.keymap.set('t', 'jk', '<C-\\><C-N>')
+vim.keymap.set('c', 'jk', '<Esc>')
 
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
@@ -506,3 +593,4 @@ vim.keymap.set('n', 'q', '<Nop>')
 
 -- }}}
 
+vim.notify("Plugin updates available!", vim.log.levels.WARN, { title = "Lazy" })
