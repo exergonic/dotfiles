@@ -267,10 +267,27 @@ require("lazy").setup({
                 routes = {
                     -- Example: Route specific messages to the notify view
                     {
+                        filter = { cmdline = "!" },
+                        view = "split",
+                        opts = { enter = true },
+                    },
+                    {
                         view = "notify",
                         filter = { event = "msg_show", kind = "", find = "written" },
                         opts = { skip = true }, -- Skip "file written" messages entirely
                     },
+                    {
+                        filter = { event = "msg_show", kind = { "", "shell" }, find = "" },
+                        view = "split",
+                        opts = { enter = false },
+                    },
+                },
+                messages = {
+                    enabled = true,
+                    view = "split",
+                    view_search = "mini",   -- tiny bottom-right overlay, auto-dismisses
+                    -- view_search = "notify",  -- notification via nvim-notify, also auto-dismisses
+                    -- view_search = false,     -- disable entirely
                 },
             },
             dependencies = {
@@ -529,12 +546,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- Auto-cd to current file's directory
-vim.api.nvim_create_autocmd('BufEnter', {
-  pattern = '*',
-  callback = function()
-    vim.cmd('silent! lcd %:p:h')
-  end,
-})
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--   pattern = '*',
+--   callback = function()
+--     vim.cmd('silent! lcd %:p:h')
+--   end,
+-- })
 
 -- Start insert mode in terminal buffers
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter', 'WinEnter' }, {
@@ -580,11 +597,11 @@ vim.api.nvim_create_autocmd('InsertLeave', {
 
 -- Mappings {{{
 
--- ",," is escape in all modes
-vim.keymap.set('i', 'jk', '<Esc>')
-vim.keymap.set('v', 'jk', '<Esc>')
-vim.keymap.set('t', 'jk', '<C-\\><C-N>')
-vim.keymap.set('c', 'jk', '<Esc>')
+-- ",," is escape
+vim.keymap.set('i', ',,', '<Esc>')
+vim.keymap.set('v', ',,', '<Esc>')
+vim.keymap.set('t', ',,', '<C-\\><C-N>')
+vim.keymap.set('c', ',,', '<Esc>')
 
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
