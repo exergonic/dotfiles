@@ -79,7 +79,7 @@ else
 fi
 
 # better cd with memory
-command -v zoxide &> /dev/null && eval "$(zoxide init bash)"
+command -v zoxide &> /dev/null && eval "$(zoxide init bash --cmd cd)"
 
 # Bash completion
 [[ -r /usr/share/bash-completion/bash_completion ]] && source /usr/share/bash-completion/bash_completion
