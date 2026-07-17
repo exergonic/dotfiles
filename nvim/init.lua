@@ -239,13 +239,14 @@ require("lazy").setup({
             "rcarriga/nvim-notify",
             opts = {
                 render = "minimal",
-                animation = "fade",
                 timeout = 3000,
                 max_height = function() return math.floor(vim.o.lines * 0.75) end,
                 max_width = function() return math.floor(vim.o.columns * 0.75) end,
                 on_open = function(win)
                     vim.api.nvim_win_set_config(win, { zindex = 100 })
                 end,
+                stages = "fade",
+                fps = 60,
             },
         },
         {
@@ -268,23 +269,25 @@ require("lazy").setup({
                     -- Example: Route specific messages to the notify view
                     {
                         filter = { cmdline = "!" },
-                        view = "split",
-                        opts = { enter = true },
+                        -- view = "split",
+                        view = "notify",
+                        opts = { enter = false },
                     },
                     {
-                        view = "notify",
                         filter = { event = "msg_show", kind = "", find = "written" },
+                        view = "notify",
                         opts = { skip = true }, -- Skip "file written" messages entirely
                     },
                     {
                         filter = { event = "msg_show", kind = { "", "shell" }, find = "" },
-                        view = "split",
+                        view = "notify",
+                        --view = "split",
                         opts = { enter = false },
                     },
                 },
                 messages = {
                     enabled = true,
-                    view = "split",
+                    -- view = "split",
                     view_search = "mini",   -- tiny bottom-right overlay, auto-dismisses
                     -- view_search = "notify",  -- notification via nvim-notify, also auto-dismisses
                     -- view_search = false,     -- disable entirely
