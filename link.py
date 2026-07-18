@@ -66,6 +66,7 @@ LINKS: list[tuple[str, LinkTarget, list[str]]] = [
     # ── Windows only -----------------------------------------------
     ("helix",                          "~/AppData/Roaming/helix",       ["windows"]),
     ("nvim",                           "~/AppData/Local/nvim",          ["windows"]),
+    ("Zellij",                         "~/AppData/Roaming/Zellij",      ["windows"]),
     ("terminal/settings.json",         _wt_settings,                    ["windows"]),
     ("powershell/Microsoft.PowerShell_profile.ps1",
                                        "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
