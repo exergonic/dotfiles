@@ -64,6 +64,7 @@ LINKS: list[tuple[str, LinkTarget, list[str]]] = [
     ("emacs/spacemacs",                "~/.spacemacs",                  ["all"]),
     ("emacs/_emacs",                   "~/.emacs",                      ["all"]),
     # ── Windows only -----------------------------------------------
+    ("helix",                          "~/AppData/Roaming/helix",       ["windows"]),
     ("nvim",                           "~/AppData/Local/nvim",          ["windows"]),
     ("terminal/settings.json",         _wt_settings,                    ["windows"]),
     ("powershell/Microsoft.PowerShell_profile.ps1",
