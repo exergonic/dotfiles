@@ -1,0 +1,7 @@
+theme = "autumn"
+
+[editor]
+cursorline = true
+line-number = "relative"
+end-of-line-diagnostics = "hint"
+
