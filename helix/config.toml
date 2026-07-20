@@ -1,5 +1,13 @@
 theme = "autumn"
 
+[keys.normal]
+0 = "goto_line_start"
+G = "goto_file_end"
+"$" = "goto_line_end"
+
+[keys.insert]
+"," = { "," = "normal_mode" }
+
 [editor]
 cursorline = true
 line-number = "relative"
