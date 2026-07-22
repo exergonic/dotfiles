@@ -7,9 +7,12 @@ G = "goto_file_end"
 
 [keys.insert]
 "," = { "," = "normal_mode" }
+C-p = "signature_help"
 
 [editor]
 cursorline = true
 line-number = "relative"
 end-of-line-diagnostics = "hint"
 
+[editor.lsp]
+auto-signature-help = false
