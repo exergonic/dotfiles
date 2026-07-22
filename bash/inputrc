@@ -27,10 +27,6 @@ set history-preserve-point on
 # Skip hidden files in completion
 set match-hidden-files off
 
-# Tab cycles through completions (menu style)
-TAB: menu-complete
-"\e[Z": menu-complete-backward
-
 # Prefix-based history search (type prefix, then ^P/^N to cycle)
 "\C-p": history-search-backward
 "\C-n": history-search-forward
@@ -46,4 +42,6 @@ TAB: menu-complete
 $if mode=vi
 set keymap vi-insert
 ",,": vi-movement-mode
+TAB: menu-complete
+"\e[Z": menu-complete-backward
 $endif

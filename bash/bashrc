@@ -36,7 +36,6 @@ export GREP_COLOR="36"
 export LESS=-X
 export HISTIGNORE=$'[ \t]*:&:[fb]g:exit'
 export HISTIGNORE=$'[ \t]*:&:[fb]g:exit:ls' # ignore ls
-bind '"\e[Z":menu-complete'
 # bind '"^k":up-history'
 # bind '"^j":down-history'
 # bind '"^l":clear-screen'
