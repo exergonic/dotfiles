@@ -87,7 +87,7 @@ function symln {
 Invoke-Expression (&starship init powershell)
 Invoke-Expression (& { (zoxide init powershell --hook pwd | Out-String) })
 (& pixi completion --shell powershell) | Out-String | Invoke-Expression
-
+. ([ScriptBlock]::Create((& scoop-search --hook | Out-String)))
 
 # DO NOT MODIFY -- coreutils -- 60b36fc6-2d59-49df-be51-28dd2f4c3c9a
 # vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
