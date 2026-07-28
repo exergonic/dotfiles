@@ -111,7 +111,6 @@ vim.g.loaded_netrwPlugin = 1
 
 -- Setup Lazy {{{
 require("lazy").setup({
-    checker = { enabled = false },
     spec = {
         {
             "nvim-neo-tree/neo-tree.nvim",
@@ -343,7 +342,8 @@ require("lazy").setup({
         -- },
     },
     install = { colorscheme = { "onehalfdark" } },
-    checker = { enabled = true },
+    checker = { enabled = true, notify = false },
+    change_detection = { notify = false },
 })
 -- }}} End Setup Lazy
 
@@ -613,4 +613,4 @@ vim.keymap.set('n', 'q', '<Nop>')
 
 -- }}}
 
-vim.notify("Plugin updates available!", vim.log.levels.WARN, { title = "Lazy" })
+-- vim.notify("Plugin updates available!", vim.log.levels.WARN, { title = "Lazy" })
