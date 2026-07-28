@@ -56,7 +56,7 @@ LINKS: list[tuple[str, LinkTarget, list[str]]] = [
     ("bash/inputrc",                   "~/.inputrc",                    ["all"]),
     ("zsh/zshrc",                      "~/.zshrc",                      ["all"]),
     ("zsh/zprofile",                   "~/.zprofile",                   ["all"]),
-    ("wezterm/.wezterm.lua",           "~/.wezterm.lua",                ["all"]),
+    ("wezterm/wezterm.lua",           "~/.wezterm.lua",                ["all"]),
     ("tmux/tmux.conf",                 "~/.tmux.conf",                  ["all"]),
     ("npmrc",                          "~/.npmrc",                      ["all"]),
     ("python_startup.py",              "~/.python_startup.py",          ["all"]),
@@ -69,7 +69,7 @@ LINKS: list[tuple[str, LinkTarget, list[str]]] = [
     ("Zellij",                         "~/AppData/Roaming/Zellij",      ["windows"]),
     ("terminal/settings.json",         _wt_settings,                    ["windows"]),
     ("powershell/Microsoft.PowerShell_profile.ps1",
-                                       "~/Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
+                                       "~/OneDrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
                                                                         ["windows"]),
     # ── Linux-only ──────────────────────────────────────────────
     ("nvim",                           "~/.config/nvim",                ["linux"]),
