@@ -7,3 +7,8 @@
 *.bashrc text eol=lf
 *.zshrc text eol=lf
 *.rc text eol=lf
+
+# Shell-sourced dirs: no-extension files (functions, aliases, rc files) must stay LF too
+shell/* text eol=lf
+bash/* text eol=lf
+zsh/* text eol=lf
