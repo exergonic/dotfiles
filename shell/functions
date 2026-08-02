@@ -207,7 +207,9 @@ mergepdf() {
 } #// mergepdf
 
 open() {
-	devour mimeopen $1
+	# devour is X11-only; mimeopen works everywhere
+	# devour mimeopen $1
+	mimeopen $1
 }
 
 

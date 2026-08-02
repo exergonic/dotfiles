@@ -91,7 +91,7 @@ command -v fzf &> /dev/null && eval "$(fzf --bash)"
 
 
 # export GPG_TTY=$(tty)¬
-export XDG_CONFIG_HOME=${HOME}/.config
+# export XDG_CONFIG_HOME=${HOME}/.config
 # export XDG_CONFIG_DIRS=/etc/xdg
 # export XDG_DATA_HOME=${HOME}/.local/share
 # export XDG_DATA_DIRS=/usr/local/share/:/usr/share/
@@ -100,4 +100,4 @@ export XDG_CONFIG_HOME=${HOME}/.config
 # export QT_IM_MODULE=xum
 # export GTK_IM_MODULE=uim
 # unset XMODIFIERS
-fastfetch
+command -v fastfetch &> /dev/null && fastfetch
