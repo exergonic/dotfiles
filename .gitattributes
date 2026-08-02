@@ -1,0 +1,9 @@
+# Line endings: LF in the repo for everything, native on checkout.
+# Stops Windows-edited files (CRLF) from leaking into the repo.
+* text=auto
+
+# Shell-sourced files must stay LF even in a Windows working tree (bash chokes on CRLF)
+*.sh text eol=lf
+*.bashrc text eol=lf
+*.zshrc text eol=lf
+*.rc text eol=lf
