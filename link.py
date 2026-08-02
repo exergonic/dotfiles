@@ -63,6 +63,7 @@ LINKS: list[tuple[str, LinkTarget, list[str]]] = [
     ("emacs/init.el",                  "~/.emacs.d/init.el",            ["all"]),
     ("emacs/spacemacs",                "~/.spacemacs",                  ["all"]),
     ("emacs/_emacs",                   "~/.emacs",                      ["all"]),
+    ("nvim",                           "~/.config/nvim",                ["all"]),
     # ── Windows only -----------------------------------------------
     ("helix",                          "~/AppData/Roaming/helix",       ["windows"]),
     ("nvim",                           "~/AppData/Local/nvim",          ["windows"]),
@@ -72,6 +73,7 @@ LINKS: list[tuple[str, LinkTarget, list[str]]] = [
                                        "~/OneDrive/Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
                                                                         ["windows"]),
     # ── Linux-only ──────────────────────────────────────────────
+    ("Zellij",                         "~/.config/Zellij",      ["windows"]),
     ("nvim",                           "~/.config/nvim",                ["linux"]),
 
     # ── macOS-only ──────────────────────────────────────────────
