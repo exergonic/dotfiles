@@ -129,6 +129,7 @@ require("lazy").setup({
             "MarcoKorinth/onehalf.nvim",
             lazy = false
         },
+        { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
         {
             "folke/which-key.nvim",
             event = "VeryLazy",
@@ -297,51 +298,8 @@ require("lazy").setup({
                 "rcarriga/nvim-notify",
             },
         },
-        -- {
-        --     "gelguy/wilder.nvim",
-        --     build = ":UpdateRemotePlugins",
-        --     config = function()
-        --         local wilder = require("wilder")
-        --         wilder.setup({ modes = { ":", "/", "?" } })
-        --
-        --         wilder.set_option("pipeline", {
-        --             wilder.branch(
-        --                 wilder.python_file_finder_pipeline({
-        --                     file_command = function(ctx, arg)
-        --                         if string.find(arg, ".") ~= nil then
-        --                             return {"fd", "-tf", "-H"}
-        --                         else
-        --                             return {"fd", "-tf"}
-        --                         end
-        --                     end,
-        --                     dir_command = {"fd", "-td"},
-        --                     fuzzy_filter = wilder.lua_fzy_filter(),
-        --                 }),
-        --                 wilder.cmdline_pipeline({
-        --                     language = "lua", -- 'python' or 'lua'
-        --                     fuzzy = 1,        -- Enable fuzzy matching
-        --                 }),
-        --                 {
-        --                     wilder.check(function(ctx, x) return x == "" end),
-        --                     wilder.history(),
-        --                 }
-        --             ),
-        --         })
-        --
-        --         wilder.set_option("renderer", wilder.popupmenu_renderer({
-        --             highlighter = wilder.basic_highlighter(),
-        --             left = { " " },
-        --             right = { " ", wilder.popupmenu_scrollbar() },
-        --             apply_incsearch_fix = false,
-        --         }))
-        --     end,
-        --     dependencies = {
-        --         "nvim-lua/plenary.nvim",
-        --         "romgrk/fzy-lua-native",
-        --     },
-        -- },
     },
-    install = { colorscheme = { "onehalfdark" } },
+    install = { colorscheme = { "gruvbox" } },
     checker = { enabled = true, notify = false },
     change_detection = { notify = false },
 })
@@ -469,7 +427,7 @@ cmp.setup({
 -- }}}
 
 -- Gui {{{
-vim.cmd("colorscheme onehalfdark")
+vim.cmd("colorscheme gruvbox")
 vim.api.nvim_set_hl(0, 'EndOfBuffer', { ctermfg = 'black', ctermbg = 'black' })
 
 -- Make transparent to match the terminal background
