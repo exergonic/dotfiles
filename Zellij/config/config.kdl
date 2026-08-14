@@ -539,7 +539,7 @@ scrollback_editor "nvim"
 
 // Whether clicking a pane to focus it also sends the click into the pane
 // default is false
-// mouse_click_through false
+mouse_click_through true
 
 // The ip address the web server should listen on when it starts
 // Default: "127.0.0.1"
