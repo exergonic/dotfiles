@@ -100,4 +100,4 @@ command -v fzf &> /dev/null && eval "$(fzf --bash)"
 # export QT_IM_MODULE=xum
 # export GTK_IM_MODULE=uim
 # unset XMODIFIERS
-command -v fastfetch &> /dev/null && fastfetch
+# command -v fastfetch &> /dev/null && fastfetch
