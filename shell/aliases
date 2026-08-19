@@ -26,8 +26,6 @@ alias lu='ls -tur'                                             # Sort by and sho
 
 # core utilities
 alias grep='grep --color=auto'
-alias mv='mv -vi'
-alias cp='cp -v'
 alias du='du -sh'
 
 # use bat instead of cat
