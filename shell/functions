@@ -282,3 +282,14 @@ wttr() {
 # }
 #
 # #curl api.openweathermap.org/data/2.5/forecast?id=524901&APPID=$API_WEATHER_OWM
+
+ssh() {
+	# Use the Windows OpenSSH client for lenovo: Git Bash's ssh (msys2-runtime)
+	# can abort with "poll: No error" when an internal select() failure leaves
+	# errno unset.  Falls through to the normal ssh everywhere else.
+	if [[ " $* " == *" lenovo "* && -x /c/Windows/System32/OpenSSH/ssh.exe ]]; then
+		command /c/Windows/System32/OpenSSH/ssh.exe "$@"
+	else
+		command ssh "$@"
+	fi
+} #// ssh
