@@ -298,9 +298,9 @@ dots_check() {
 	# One-line reminder when the dotfiles repo has unpushed or dirty state.
 	[ -d "${HOME}/.dotfiles/.git" ] || return 0
 	local st line dirty ahead behind
-	st=$(cd "${HOME}/.dotfiles" 2>/dev/null && git status --porcelain --branch 2>/dev/null) || return 0
-	line=$(printf '%s\n' "$st" | head -n 1)
-	dirty=$(printf '%s\n' "$st" | grep -vc '^##')
+	st=$(builtin cd "${HOME}/.dotfiles" 2>/dev/null && git status --porcelain --branch 2>/dev/null) || return 0
+	line=$(printf '%s\n' "$st" | grep -m1 '^##')
+	dirty=$(printf '%s\n' "$st" | grep -cE '^[ MADRCU?!][ MADRCU?!] ')
 	ahead=$(printf '%s' "$line" | grep -oE 'ahead [0-9]+' | grep -oE '[0-9]+')
 	behind=$(printf '%s' "$line" | grep -oE 'behind [0-9]+' | grep -oE '[0-9]+')
 	if [ "${dirty:-0}" -gt 0 ] || [ "${ahead:-0}" -gt 0 ] || [ "${behind:-0}" -gt 0 ]; then
