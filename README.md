@@ -24,6 +24,13 @@ Personal configuration files for my development environment.
 git clone git@github.com:exergonic/dotfiles ~/.dotfiles
 ```
 
+### Syncing
+
+`shell/dots-sync` (aliased `dots`) commits local changes, rebase-pulls, and pushes —
+to the primary remote and, when configured, to a secondary LAN remote (a bare hub),
+so syncing still works if the primary is unreachable. Interactive shells print a
+one-line reminder when the repo has unpushed or dirty state.
+
 ### Zsh
 
 Sources `shell/aliases`, `shell/functions`, and `zsh/zshrc.$HOST` automatically.
