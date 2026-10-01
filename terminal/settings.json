@@ -1,12 +1,17 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": [],
+    "actions": [
+          {
+                  "command": { "action": "sendInput", "input": "\u000a" },
+                  "id": "User.ShiftEnterNewLine"
+          }
+    ],
     "centerOnLaunch": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
     "defaultProfile": "{4a424825-7872-405b-8200-a937d4ca5606}",
-    "keybindings": 
+    "keybindings":
     [
         {
             "id": "Terminal.CopyToClipboard",
@@ -23,21 +28,25 @@
         {
             "id": null,
             "keys": "alt+shift+plus"
+        },
+        {
+          "id": "User.ShiftEnterNewLine",
+          "keys": "shift+enter"
         }
     ],
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "antialiasingMode": "cleartype",
             "bellStyle": "none",
-            "font": 
+            "font":
             {
                 "face": "CaskaydiaCove Nerd Font Mono"
             },
@@ -45,7 +54,7 @@
             "rightClickContextMenu": true,
             "showMarksOnScrollbar": true
         },
-        "list": 
+        "list":
         [
             {
                 "colorScheme": "Solarized Dark",
@@ -66,7 +75,7 @@
             {
                 "colorScheme": "One Half Dark",
                 "cursorShape": "underscore",
-                "font": 
+                "font":
                 {
                     "face": "Cascadia Code"
                 },
