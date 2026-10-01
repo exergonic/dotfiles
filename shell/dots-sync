@@ -1,0 +1,13 @@
+#!/bin/sh
+# One-command dotfiles sync across machines: commit local changes, rebase-pull, push.
+# Usage: dots [commit message]   (default message: dated sync note)
+cd "$HOME/.dotfiles" || exit 1
+MSG="$1"
+if [ -n "$(git status --porcelain)" ]; then
+    [ -n "$MSG" ] || MSG="dots: sync from $(hostname) $(date +%F)"
+    git add -A && git commit -m "$MSG" || exit 1
+    echo "dots: committed \"$MSG\""
+fi
+git pull --rebase --autostash origin master || exit 1
+git push origin master || exit 1
+echo "dots: in sync at $(git log --oneline -1)"

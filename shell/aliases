@@ -115,3 +115,6 @@ alias clipboard='xclip -selection clip'
 alias is_internets='nmcli networking connectivity check'
 alias has_internets='is_internets'
 
+# dotfiles — one-command cross-machine sync (commit, rebase-pull, push)
+alias dots='~/.dotfiles/shell/dots-sync'
+
