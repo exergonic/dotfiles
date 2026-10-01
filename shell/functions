@@ -293,3 +293,20 @@ ssh() {
 		command ssh "$@"
 	fi
 } #// ssh
+
+dots_check() {
+	# One-line reminder when the dotfiles repo has unpushed or dirty state.
+	[ -d "${HOME}/.dotfiles/.git" ] || return 0
+	local st line dirty ahead behind
+	st=$(git -C "${HOME}/.dotfiles" status --porcelain --branch 2>/dev/null) || return 0
+	line=$(printf '%s\n' "$st" | head -n 1)
+	dirty=$(printf '%s\n' "$st" | grep -vc '^##')
+	ahead=$(printf '%s' "$line" | grep -oE 'ahead [0-9]+' | grep -oE '[0-9]+')
+	behind=$(printf '%s' "$line" | grep -oE 'behind [0-9]+' | grep -oE '[0-9]+')
+	if [ "${dirty:-0}" -gt 0 ] || [ "${ahead:-0}" -gt 0 ] || [ "${behind:-0}" -gt 0 ]; then
+		printf 'dotfiles: %s dirty, %s unpushed, %s behind — run dots\n' "${dirty:-0}" "${ahead:-0}" "${behind:-0}"
+	fi
+} #// dots_check
+
+# Quiet by default: only speaks when the dotfiles repo needs attention (interactive shells only).
+[[ $- == *i* ]] && dots_check

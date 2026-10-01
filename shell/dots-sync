@@ -8,6 +8,12 @@ if [ -n "$(git status --porcelain)" ]; then
     git add -A && git commit -m "$MSG" || exit 1
     echo "dots: committed \"$MSG\""
 fi
-git pull --rebase --autostash origin master || exit 1
-git push origin master || exit 1
+if ! git pull --rebase --autostash origin master; then
+    echo "dots: origin unreachable — trying hub (lenovo)"
+    git pull --rebase --autostash hub master || exit 1
+fi
+OK=0
+git push origin master && OK=1 || echo "dots: origin push failed"
+git push hub master && OK=1 || echo "dots: hub push failed"
+[ "$OK" = "1" ] || { echo "dots: no remote accepted the push"; exit 1; }
 echo "dots: in sync at $(git log --oneline -1)"
