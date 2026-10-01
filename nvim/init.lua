@@ -42,7 +42,7 @@ vim.opt.sidescrolloff = 15
 vim.opt.numberwidth = 4
 vim.opt.relativenumber = true
 vim.opt.number = true
-vim.opt.clipboard:append('unnamedplus')
+-- vim.opt.clipboard:append('unnamedplus') -- warning: wipes system clipboard
 vim.opt.modeline = true
 vim.opt.wildmode = { 'list:longest', 'full' }
 vim.opt.autowrite = true
@@ -299,7 +299,7 @@ require("lazy").setup({
             },
         },
     },
-    install = { colorscheme = { "gruvbox" } },
+    install = { colorscheme = { "onehalfdark" } },
     checker = { enabled = true, notify = false },
     change_detection = { notify = false },
 })
@@ -427,7 +427,7 @@ cmp.setup({
 -- }}}
 
 -- Gui {{{
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme onehalfdark")
 vim.api.nvim_set_hl(0, 'EndOfBuffer', { ctermfg = 'black', ctermbg = 'black' })
 
 -- Make transparent to match the terminal background
