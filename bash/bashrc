@@ -84,6 +84,21 @@ fi
 # better cd with memory
 command -v zoxide &> /dev/null && eval "$(zoxide init bash --cmd cd)"
 
+# zoxide 0.10.0 regression, MSYS2/Git Bash/Cygwin only: the generated __zoxide_pwd
+# hands cygpath the literal text "\builtin pwd -L" instead of command-substituting
+# it, so it returns the constant "C:\builtin pwd -L".  __zoxide_oldpwd then equals
+# every later reading, the PROMPT_COMMAND hook never sees a change, and directory
+# tracking silently dies.  Fixed upstream in PR #1260, unreleased as of 0.10.0.
+# Guard is self-disabling: once a fixed zoxide ships, __zoxide_pwd stops matching.
+if command -v cygpath &> /dev/null && [[ "$(__zoxide_pwd 2>/dev/null)" == *"builtin pwd"* ]]; then
+    __zoxide_pwd() { \command cygpath -w "$(\builtin pwd -L)"; }
+fi
+
+# zoxide's init (above) replaces the ls-on-cd wrapper from shell/functions.  Re-layer
+# the listing on top of it; `cdi` and zoxide's `cd` completion stay intact, and this
+# is bash-only (zsh has no zoxide init, so shell/functions' plain cd still applies).
+cd() { __zoxide_z "$@" && ls; }
+
 
 # fzf completions and keybindings
 command -v fzf &> /dev/null && eval "$(fzf --bash)"
